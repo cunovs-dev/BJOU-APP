@@ -1,0 +1,26 @@
+@import "../../themes/default";
+
+@PrefixCls: selectBox;
+
+.@{PrefixCls}-outer {
+  :global {
+    .am-list-body {
+      border: 0 none;
+    }
+    .am-list-item {
+      padding-left: 20px;
+    }
+    .am-list-item .am-list-line .am-list-content {
+      font-size: @mediumFontSize;
+    }
+  }
+}
+
+.@{PrefixCls}-title {
+  border-right: 8px solid @primary-color;
+  margin-right: 10px;
+}
+
+.choice {
+  color: @primary-color;
+}

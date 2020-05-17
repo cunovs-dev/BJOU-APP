@@ -1,0 +1,41 @@
+@import '../../../themes/default.less';
+
+.codeBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .code {
+    flex-basis: 60%;
+  }
+  .codeBtn {
+    height: 80px;
+    border: 4px solid #00AAF0;
+    color: #00AAF0;
+    line-height: 80px;
+    border-radius: @radius-lg;
+  }
+  :global {
+    .am-button-ghost.am-button-disabled {
+      background: #ddd;
+      border-color: #ddd;
+      color: #fff;
+    }
+  }
+}
+
+.phone, .code {
+  display: flex;
+  box-shadow: 0 0 2px 2px #ddd;
+  border-radius: @radius-lg;
+  background: #fff;
+  .icon {
+    flex-shrink: 0;
+    width: 88px;
+    height: 88px;
+    background: #F5F5F5 no-repeat center center;
+    border-radius: @radius-lg 0 0 @radius-lg;
+  }
+  input::-webkit-input-placeholder {
+    font-size: @mediumFontSize;
+  }
+}

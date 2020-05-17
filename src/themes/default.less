@@ -1,0 +1,92 @@
+@import '~antd-mobile/lib/style/themes/default.less';
+
+@primary-color: #2B83D7;
+@brand-primary: #2B83D7;
+@brand-wait: #2B83D7;
+@fill-body: #ffffff;
+@fill-tab-bar: #f6f6f6;
+@primary-header-height: 90px;
+@hd: 2px;
+@infoColor: #666;
+@opacity: rgba(0, 0, 0, .5);
+@opacity: rgba(0, 0, 0, .5);
+@titleFontSize: 32px;
+@mediumFontSize: 28px;
+@smallFontSize: 24px;
+@navColor: @primary-color;
+@border-color-base: #e0e0e0; // 边框
+@color-text-base: #171717; //文字基色
+@color-text-paragraph: #717171; //段落文字
+@radius-xs: 10px;
+@radius-lg: 15px;
+@padding-list: 30px; //所有列表padding
+@list-shadow: 0 0 20px #ddd; //列表通用阴影
+@list-bottom: 20px; //列表底边距
+@statusbar-height: 50px; //状态栏高度
+@common-line-height: 1.5em;
+
+* {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+[contenteditable = "true"], input, textarea {
+  -webkit-user-select: auto !important;
+  -khtml-user-select: auto !important;
+  -moz-user-select: auto !important;
+  -ms-user-select: auto !important;
+  -o-user-select: auto !important;
+  user-select: auto !important;
+}
+
+.textOverflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.textVertical {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+:global {
+  .am-tabs-default-bar-tab {
+    font-size: @smallFontSize;
+  }
+
+  .am-tabs-default-bar-tab-active {
+    font-size: @titleFontSize;
+  }
+
+  .tag_videoPosterImage {
+    border: 2px solid #ddd;
+  }
+}
+
+.break {
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+.whiteBg {
+  min-height: 100vh;
+  background: #fff;
+}
+
+.whiteBox {
+  background-color: #f6f6f6;
+  min-height: 100vh;
+}
+
+.sign {
+  border-left: 10px solid transparent;
+  border-image: linear-gradient(#F76711, #FACB58) 1 10;
+}

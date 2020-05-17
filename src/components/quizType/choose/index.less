@@ -1,0 +1,31 @@
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.question {
+  margin-bottom: 40px;
+  font-size: @titleFontSize;
+  color: @color-text-base;
+}
+
+.prompt {
+  color: @color-text-base;
+}
+
+.button {
+  display: flex;
+  justify-content: space-around;
+}
+
+.answer {
+  width: 90%;
+  font-size: @mediumFontSize;
+  display: flex;
+  align-items: center;
+  & span {
+    margin-left: 20px;
+  }
+
+}

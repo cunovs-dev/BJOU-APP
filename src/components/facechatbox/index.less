@@ -1,0 +1,66 @@
+@import "../../themes/default";
+@PrefixCls: facechatbox;
+
+.@{PrefixCls}-outer {
+  background: #fff;
+  margin-bottom: 20px;
+  //border: 2px solid #ddd;
+  box-shadow: #d6d0d0 0 10px 10px 4px ;//边框阴影
+
+ &-img{
+   position: relative;
+   &-image{
+     width: 100%;
+     height: 22vh;
+     background-size: cover;
+     background-position: center;
+   }
+ }
+  &-info{
+    width: 100%;
+    position: absolute;
+    bottom:0;
+    background:@opacity;
+    &-title{
+      padding: 10px 0;
+      color: #fff;
+      text-indent: 1em;
+      font-size: 30px;
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+    }
+  }
+  &-price{
+    display: flex;
+    justify-content: space-between;
+     padding: 20px 10px;
+    &-box{
+      display: flex;
+      align-items: center;
+      margin-right: 40px;
+    }
+  }
+}
+.@{PrefixCls}-mask{
+  padding: 20px;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left:0;
+  right:0;
+  background: rgba(0,0,0,.5);
+  z-index: 1;
+  color:#fff;
+  font-size: 32px;
+  & span{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+  }
+  & h3{
+    margin: 0;
+    font-size: 30px;
+  }
+;
+}

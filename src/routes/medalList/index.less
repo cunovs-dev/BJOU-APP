@@ -1,0 +1,35 @@
+@import '../../themes/default.less';
+@PrefixCls:medalList;
+
+.@{PrefixCls}-disan{
+    background:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size: @titleFontSize;
+    margin: 0.2rem;
+    padding:20px;
+    border-radius: 20px;
+    img{
+        width:160px;
+        height:160px;
+
+    }
+    &-diyi{
+        display:flex;
+        //border-left: solid 10px #108ee9;
+    }
+    &-dier{
+        padding-left: 0.2rem;
+        display:flex;
+        flex-direction: column;
+        justify-content:space-around;
+        div:nth-child(1){
+            font-weight: 600;
+        }
+        div:nth-child(2){
+            font-size: @smallFontSize;
+            color:#888
+        }
+    }
+}

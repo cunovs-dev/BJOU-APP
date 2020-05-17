@@ -1,0 +1,37 @@
+@import "../../themes/default";
+
+.container {
+  :global {
+    .am-list-item {
+      border-bottom: @hd solid @border-color-base;
+    }
+    .am-list-body div:not(:last-child) .am-list-line {
+      border: 0;
+    }
+    .am-list-item .am-list-line .am-list-content {
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+}
+
+.info {
+  font-size: 38px;
+  background: #fff;
+}
+
+.wrapper {
+  padding: 0 80px;
+}
+
+.btn {
+  background: linear-gradient(#FAD25C, #F77B26);
+  border: 0;
+}
+
+.system{
+  font-size: @titleFontSize;
+  background: #fff;
+  padding: 30px 0;
+  text-align: center;
+}

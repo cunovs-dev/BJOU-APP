@@ -1,0 +1,103 @@
+@PrefixCls: discription;
+
+.clearFloat() {
+  clear: both;
+  margin: 0 auto;
+  width: 0;
+}
+
+.@{PrefixCls}-outer {
+  width: 100%;
+  overflow-y: scroll;
+
+  &-title {
+    padding: 40px 40px;
+    font-weight: 600;
+    line-height: 1.4em;
+    font-size: @titleFontSize;
+    color: @color-text-base;
+    background: #fff;
+    border-bottom: 2px solid #ddd;
+  }
+
+  &-content {
+    padding: 20px 30px 40px 30px;
+    background: #fff;
+    font-size: @mediumFontSize;
+    line-height: 1.7;
+
+    & img {
+      max-width: 100% !important;
+      max-height: 100% !important;
+      height: auto !important;
+    }
+
+    & video audio {
+      width: 100%;
+      text-align: center;
+    }
+
+    & p video {
+      width: 100%;
+    }
+
+    & p audio {
+      width: 100%;
+    }
+
+    & div video {
+      width: 100%;
+    }
+
+    & div audio {
+      width: 100%;
+    }
+
+    & div, span, p, ul, ol, li, strong {
+      max-width: 100% !important;
+      box-sizing: border-box;
+      font-size: @mediumFontSize !important;
+      word-break: break-all;
+    }
+
+    /*    & * {
+          max-width: 100% !important;
+          overflow-y: scroll;
+        }*/
+
+    :global {
+      & .content-table-div {
+        width: 100%;
+
+        & .table-div-tr {
+          margin: 5px 0;
+
+          & .table-div-tr-td {
+            margin: 5px 0;
+          }
+        }
+
+        & .clear {
+          .clearFloat
+        }
+      }
+
+      & .content-table-first-bar {
+        width: 100%;
+        height: auto;
+        overflow-y: hidden;
+        overflow-x: auto;
+        white-space: normal;
+
+        & .second-bar {
+          position: relative;
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  a {
+    font-size: @mediumFontSize;
+  }
+}

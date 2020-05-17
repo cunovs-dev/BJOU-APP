@@ -1,0 +1,67 @@
+@import '../../themes/default.less';
+
+.outer {
+  padding: 20px;
+  background-color: #fff;
+  .type {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+  .info {
+    border-bottom: 2px solid #ddd;
+    padding: 20px 0;
+    font-size: @titleFontSize;
+  }
+  .date {
+    font-size: @smallFontSize;
+    color: @color-text-paragraph;
+    text-align: right;
+  }
+  .content {
+    margin: 30px 0 0;
+    font-size: @mediumFontSize;
+    line-height: @common-line-height;
+    padding: 20px;
+    border-radius: @radius-lg;
+  }
+  .imgbox {
+    width: 100%;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    & div {
+      width: 49%;
+      height: 220px;
+      background-size: cover;
+      margin-bottom: 2%;
+      border-radius: 10px;
+    }
+  }
+}
+
+.reply {
+  margin: 20px 0;
+  font-size: @mediumFontSize;
+  line-height: @common-line-height;
+  > p {
+    padding: 20px 30px 40px;
+    margin: 0;
+    background: #fff;
+  }
+}
+
+.course{
+  font-size: @mediumFontSize;
+  margin-bottom: 20px;
+  line-height: @common-line-height;
+}
+.resource{
+  font-size: @smallFontSize;
+  color: @color-text-paragraph;
+  margin-bottom: 20px;
+  line-height: @common-line-height;
+}

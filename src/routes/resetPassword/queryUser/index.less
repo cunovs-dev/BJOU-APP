@@ -1,0 +1,61 @@
+@import "../../../themes/default";
+
+.title {
+  font-size: @titleFontSize;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+.user {
+  display: flex;
+  box-shadow: 0 0 2px 2px #ddd;
+  border-radius: @radius-lg;
+  background: #fff;
+  .icon {
+    flex-shrink: 0;
+    width: 88px;
+    height: 88px;
+    background: #F5F5F5 no-repeat center center;
+    background-size: 44px 44px;
+  }
+  input::-webkit-input-placeholder {
+    font-size: @mediumFontSize;
+  }
+}
+
+.form {
+  :global {
+    .am-list-item .am-input-label.am-input-label-5 {
+      width: auto;
+      margin-right: 20px;
+    }
+
+    .am-list-line {
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .am-button-primary {
+      border-radius: @radius-lg;
+      background-color: #00AAF0;
+      border-color: #00AAF0;
+    }
+  }
+
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .prev, .next {
+    flex-basis: 46%;
+  }
+  .prev {
+    color: @color-text-paragraph;
+  }
+  .next {
+    color: #fff;
+  }
+
+}

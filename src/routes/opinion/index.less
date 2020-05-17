@@ -1,0 +1,66 @@
+@import "../../themes/default";
+
+@PrefexCls: opinion;
+
+.@{PrefexCls}-outer {
+  width: 100%;
+  padding: 30px 0;
+  box-sizing: border-box;
+
+  &-title {
+    font-size: @mediumFontSize;
+    line-height: 1.5;
+    margin-bottom: 40px;
+    padding: 0 30px;
+    color: #00a1ff;
+  }
+}
+
+.feedback {
+  font-size: @smallFontSize;
+  color: #fff;
+}
+
+.drawer {
+  position: relative;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  & .am-drawer-sidebar {
+    background-color: #fff;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+  .radio {
+    :global {
+      .am-list-item .am-list-line .am-list-extra {
+        flex-basis: 10%;
+      }
+      .am-list-item .am-list-line .am-list-content {
+        font-size: @smallFontSize;
+      }
+    }
+  }
+
+}
+
+.lesson {
+  :global {
+
+    .am-list-item .am-list-line .am-list-extra {
+      flex-basis: 70%;
+      font-size: @mediumFontSize;
+    }
+    .am-list-item .am-list-line .am-list-content {
+      font-size: @mediumFontSize;
+    }
+    .am-list-body {
+      border-top: 0;
+    }
+  }
+}
+
+.resource {
+  font-size: @mediumFontSize;
+  padding: 20px 30px;
+  border-bottom: @hd solid #ddd;
+}

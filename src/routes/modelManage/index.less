@@ -1,0 +1,105 @@
+@import "../../themes/default";
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  .text {
+    font-size: @mediumFontSize;
+    color: @color-text-paragraph;
+    padding: 40px 120px 80px;
+    text-align: center;
+    line-height: @common-line-height;
+  }
+  .empty {
+    font-size: @titleFontSize;
+    color: #888;
+    text-align: center;
+    margin: 0 auto;
+    width: 80%;
+    height: 200px;
+    line-height: 200px;
+    border: @hd dashed @border-color-base;
+  }
+}
+
+.dragItems {
+  position: relative;
+  width: 25%;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  padding: 30px 0;
+  .dragImg {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 18px;
+  }
+  .dragText {
+    font-size: @smallFontSize;
+    color: #888;
+  }
+  .sup {
+    position: absolute;
+    top: 0;
+    right: 10px;
+  }
+}
+
+.allModel {
+  padding: 20px;
+  :global {
+    .am-grid .am-flexbox .am-flexbox-item .am-grid-item-content {
+      padding: 0;
+    }
+    .am-grid.am-grid-square .am-grid-item:before {
+      padding-bottom: 80%;
+    }
+  }
+
+  .title {
+    font-size: @titleFontSize;
+    color: @color-text-base;
+    text-align: center;
+    font-weight: bold;
+    margin: 20px 0;
+  }
+
+  .items {
+    position: relative;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    padding: 20px 0;
+    .img {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 18px;
+    }
+    .text {
+      font-size: @smallFontSize;
+      color: #888;
+    }
+    .sup {
+      position: absolute;
+      top: 0;
+      right: 10px;
+      color: @primary-color;
+    }
+  }
+}

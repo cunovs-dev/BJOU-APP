@@ -1,0 +1,39 @@
+@import "../../themes/default";
+
+.codeBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 20px;
+  .code {
+    flex-basis: 68%;
+    :global {
+      .am-list-line {
+        border: 0 !important;
+      }
+    }
+  }
+  .codeBtn {
+    color: @color-text-base;
+  }
+  :global {
+    .am-button-ghost {
+      border-color: #ddd;
+    }
+    .am-button-ghost.am-button-disabled {
+      background: #ddd;
+      border-color: #ddd;
+      color: #fff;
+    }
+
+  }
+}
+
+.wrapper {
+  padding: 0 80px;
+}
+
+.btn {
+  background: linear-gradient(#FAD25C, #F77B26);
+  border: 0;
+}

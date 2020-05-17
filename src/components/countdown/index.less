@@ -1,0 +1,91 @@
+.CountdownTimer {
+  display: flex;
+  justify-content: space-between;
+  font-size: @titleFontSize;
+  background: #fff;
+  padding: 20px 20px 20px 40px;
+  margin-bottom: 20px;
+}
+
+.box {
+  display: flex;
+}
+
+.number {
+  padding: 0.4em;
+}
+
+.icon {
+  animation: Reversal 2s linear infinite;
+  -webkit-animation: Reversal 2s linear infinite;
+  -moz-animation: Reversal 2s linear infinite;
+  -ms-animation: Reversal 2s linear infinite;
+  -o-animation: Reversal 2s linear infinite;
+}
+
+@keyframes Reversal {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+@-webkit-keyframes Reversal {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+.urgent {
+  background: #ff5b05;
+  animation: flash 1s linear infinite;
+  -webkit-animation: flash 1s linear infinite;
+  -moz-animation: flash 1s linear infinite;
+  -ms-animation: flash 1s linear infinite;
+  -o-animation: flash 1s linear infinite;
+}
+
+@keyframes flash {
+  from {
+    background-color: rgb(255, 113, 34);
+  }
+  to {
+    background-color: rgba(255, 255, 255, 1);
+  }
+}
+
+@-webkit-keyframes flash {
+  from {
+    background-color: rgb(255, 113, 34, 1);
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.timeUp {
+  color: #cb3d4d;
+}

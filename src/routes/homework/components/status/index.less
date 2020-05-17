@@ -1,0 +1,84 @@
+@import "../../../../themes/default";
+
+@PrefixCls: status;
+
+.@{PrefixCls}-status {
+  padding: 30px;
+  background: #fff;
+  &-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: @hd solid @border-color-base;
+    &-left {
+      display: flex;
+      align-items: center;
+      font-size: @mediumFontSize;
+      margin-right: 10px;
+      font-weight: bold;
+    }
+    &-right {
+      display: flex;
+      span {
+        margin-left: 10px;
+      }
+    }
+  }
+  &-time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: @mediumFontSize;
+    color: @color-text-base;
+    margin-bottom: 40px;
+    span:first-child {
+      display: flex;
+      align-items: center;
+      color: @color-text-paragraph;
+      span {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+.@{PrefixCls}-list {
+  :global {
+    .am-list-item img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+    }
+    .am-list-body {
+      border: 0;
+    }
+    .am-list-item .am-list-line .am-list-content{
+      font-size: @titleFontSize;
+    }
+    .am-list-item .am-list-line .am-list-brief{
+      font-size: @smallFontSize;
+    }
+  }
+}
+
+.grade {
+  font-size: 40px;
+  color: #ff9a1b;
+  padding-left: 40px;
+}
+
+.common {
+  padding: 30px 0;
+}
+
+.feedback {
+  padding: 30px 0;
+}
+
+.send {
+  color: #d24747;
+  margin: 40px 0;
+  font-size: @smallFontSize;
+}

@@ -1,0 +1,61 @@
+@import "../../themes/default";
+
+@PrefixCls: courselist;
+.@{PrefixCls}-outer {
+  padding: 20px;
+  & p {
+    margin: 0;
+    font-size: @titleFontSize;
+    font-weight: bold;
+  }
+  :global {
+    .am-accordion-item .am-accordion-item-active {
+      margin-bottom: 0;
+    }
+    .am-accordion .am-accordion-item .am-accordion-header {
+      border: 0 none;
+      padding: 0 40px;
+      background: #2087ca;
+      margin-bottom: 10px;
+      border-radius: @radius-xs @radius-xs 0 0;
+    }
+    .am-accordion .am-accordion-item .am-accordion-content .am-accordion-content-box {
+      border-bottom: 0 none;
+    }
+    .am-accordion .am-accordion-item .am-accordion-header {
+      color: #fff;
+    }
+  }
+}
+
+.@{PrefixCls}-part {
+  padding: 10px 20px;
+}
+
+.@{PrefixCls}-accordion {
+  border: 0 none;
+}
+
+.@{PrefixCls}-header {
+  display: flex;
+  align-items: center;
+  & span {
+    padding-right: 20px;
+    .textOverflow;
+    margin-left: 20px;
+  }
+}
+
+.@{PrefixCls}-html {
+  padding: 20px;
+  line-height: 1.8em;
+  p, span {
+    font-size: @mediumFontSize !important;
+  }
+  ul {
+    padding: 0;
+  }
+  img {
+    max-width: 100% !important;
+  }
+}

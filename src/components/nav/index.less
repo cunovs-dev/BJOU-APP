@@ -1,0 +1,35 @@
+@import '../../themes/default.less';
+
+@PrefixCls: nav;
+.@{PrefixCls}-header-box {
+  height: @primary-header-height;
+}
+
+.@{PrefixCls}-header {
+  width: 100%;
+  height: @primary-header-height;
+
+  :global {
+    .am-navbar {
+      background: @navColor;
+    }
+
+    .am-navbar-title {
+      font-size: 34px;
+      color: #fff;
+    }
+  }
+}
+
+.nav-position-fixed {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+}
+
+.shadow {
+  -moz-box-shadow: 0 10px 10px #ccdae8;
+  -webkit-box-shadow: 0 10px 10px #ccdae8;
+  box-shadow: 0 10px 10px #ccdae8;
+}

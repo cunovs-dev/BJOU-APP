@@ -1,0 +1,101 @@
+@import "../../themes/default";
+
+@PrefixCls: lessonitem;
+
+.@{PrefixCls}-outer {
+  padding: 30px 20px 30px 40px;
+  border-bottom: @hd solid @border-color-base;
+  &-top {
+    display: flex;
+    align-items: flex-start;
+
+    &-icon {
+      width: 44px;
+      height: 44px;
+      margin-right: 15px;
+
+      & img {
+        width: 44px;
+        height: 44px;
+      }
+    }
+    &-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex: 1;
+      &-title {
+        flex: 1;
+        font-size: @mediumFontSize;
+        color: @color-text-base;
+        align-self: center;
+        line-height: @common-line-height;
+        .break;
+      }
+      &-check {
+        display: flex;
+        justify-content: flex-end;
+        flex-basis: 10%;
+      }
+    }
+  }
+  &-describe {
+    font-size: @smallFontSize !important;
+    color: @color-text-paragraph;
+    margin-top: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-height: @common-line-height;
+    .break;
+    p {
+      margin: 0;
+    }
+    * {
+      font-size: @smallFontSize !important;
+    }
+    img {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+    &-mask {
+      position: relative;
+      width: 100%;
+      margin-top: -10px;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: right;
+      color: @primary-color;
+      background-image: -webkit-linear-gradient(180deg, hsla(0, 0%, 100%, .5), #fff);
+      background-image: -moz-linear-gradient(180deg, hsla(0, 0%, 100%, .5), #fff);
+      background-image: -ms-linear-gradient(180deg, hsla(0, 0%, 100%, .5), #fff);
+      background-image: -o-linear-gradient(180deg, hsla(0, 0%, 100%, .5), #fff);
+      background-image: linear-gradient(180deg, hsla(0, 0%, 100%, .5), #fff)
+    }
+  }
+  &-available {
+    font-size: @smallFontSize !important;
+    color: #c83737;
+    margin-top: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-height: @common-line-height;
+    .break;
+    p, h1, h2, h3, h4, h5, h6, ul, strong, span {
+      margin: 0;
+      font-size: @smallFontSize !important;
+      opacity: 0.7;
+    }
+  }
+}
+
+.@{PrefixCls}-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 20px 20px 20px 0;
+}

@@ -1,0 +1,38 @@
+@import '../../themes/default.less';
+
+@PrefixCls: quiz;
+.@{PrefixCls}-outer {
+  padding-bottom: 40px;
+}
+.@{PrefixCls}-describe{
+  padding: 20px 0;
+  background: #fff;
+}
+
+.@{PrefixCls}-info {
+  padding: 20px 0 0;
+
+  & > div {
+    padding: 30px;
+    border-bottom: @hd solid @border-color-base;
+    font-size: @mediumFontSize;
+    background: #fff;
+  }
+}
+
+.@{PrefixCls}-method {
+  width: 100%;
+  display: flex;
+  padding: 30px;
+  box-sizing: border-box;
+  background: #fff;
+  justify-content: space-between;
+  font-size: @mediumFontSize;
+  margin-bottom: 20px;
+}
+
+.@{PrefixCls}-achievement {
+  font-size: @titleFontSize;
+  padding: 20px;
+
+}

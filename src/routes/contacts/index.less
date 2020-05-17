@@ -1,0 +1,31 @@
+@import "../../themes/default";
+
+@PrefixCls: contacts;
+.@{PrefixCls}-searchbox {
+  :global {
+    .am-search {
+      background: @fill-body;
+    }
+    .am-search-cancel {
+      color: @primary-color;
+    }
+  }
+}
+
+.@{PrefixCls}-contactsbox {
+  :global {
+    .am-accordion{
+      border-top: 0 none;
+    }
+    .am-accordion .am-accordion-item .am-accordion-header{
+      font-size: @titleFontSize;
+      color: @color-text-paragraph;
+      background: @fill-body;
+      border: 0 none;
+
+    }
+    .am-accordion .am-accordion-item .am-accordion-content .am-accordion-content-box{
+
+    }
+  }
+}

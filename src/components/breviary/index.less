@@ -1,0 +1,42 @@
+@import "../../themes/default";
+
+@PrefixCls: breviary;
+
+.@{PrefixCls}-outer {
+  font-size: @mediumFontSize;
+  text-indent: 2em;
+  line-height:@common-line-height;
+  background: #fff;
+  color: @color-text-paragraph;
+  &-content {
+    max-height: 200px;
+    overflow: hidden;
+  }
+  &-button {
+    color: @primary-color;
+    text-align: right;
+  }
+  & p, h1, h2, h3, h4, h5 {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.@{PrefixCls}-mask {
+  position: relative;
+  width: 100%;
+  margin-top: -50px;
+  padding: 40px 20px 20px;
+  box-sizing: border-box;
+  text-align: right;
+  color: @primary-color;
+  background-image: -webkit-linear-gradient(top, hsla(0, 0%, 100%, .5), #fff);
+  background-image: -moz-linear-gradient(top, hsla(0, 0%, 100%, .5), #fff);
+  background-image: -ms-linear-gradient(top, hsla(0, 0%, 100%, .5), #fff);
+  background-image: -o-linear-gradient(top, hsla(0, 0%, 100%, .5), #fff);
+  background-image: linear-gradient(180deg, hsla(0, 0%, 100%, .5), #fff)
+}
+
+
+
+

@@ -1,0 +1,52 @@
+@PrefixCls: weekbox;
+
+.@{PrefixCls}-week {
+  display: flex;
+  flex-wrap: nowrap;
+  &-div {
+    background: #f5f8fb;
+    flex: 1;
+    margin: 0.25rem;
+    text-align: center;
+    font-size: @titleFontSize;
+    color: @primary-color;
+    border-radius: @radius-xs;
+    line-height: @common-line-height;
+  }
+}
+
+.@{PrefixCls}-population {
+  font-size: @titleFontSize;
+  padding: 0.2rem 0;
+  background: white;
+  border-radius: @radius-lg;
+}
+
+.@{PrefixCls}-firstLine {
+  padding: 0.2rem;
+  margin: 0 0.2rem;
+  border-radius: @radius-lg;
+  &-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: @mediumFontSize;
+    &-name {
+      font-size: @titleFontSize;
+    }
+    &-id {
+      color: @color-text-paragraph;
+    }
+  }
+
+  &-details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: @smallFontSize;
+    color: @color-text-paragraph;
+  }
+
+}
+

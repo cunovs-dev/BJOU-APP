@@ -1,0 +1,32 @@
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.question {
+  margin-bottom: 40px;
+  font-size: @titleFontSize;
+  color: @color-text-base;
+}
+
+.prompt {
+  color: @color-text-base;
+}
+
+.button{
+  display: flex;
+  justify-content: space-around;
+}
+
+.answer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  :global {
+    .am-list-item.am-input-item {
+      flex: 1;
+    }
+  }
+}

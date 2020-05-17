@@ -1,0 +1,70 @@
+@import "../../themes/default";
+
+.grid {
+  :global {
+    .am-grid .am-flexbox .am-flexbox-item .am-grid-item-content {
+      padding: 0;
+    }
+    .am-grid.am-grid-square .am-grid-item:before {
+      padding-bottom: 80%;
+    }
+  }
+
+  .items {
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    padding: 20px 0;
+    .img {
+      width: 80px;
+      margin-bottom: 18px;
+    }
+    .text {
+      font-size: @smallFontSize;
+      color: #888;
+    }
+  }
+}
+
+.listTitle {
+  position: relative;
+  width: 100%;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  border-top: 10px solid #f6f6f6;
+  border-bottom: @hd solid @border-color-base;
+  background: #fff;
+  margin-bottom:10px;
+  .bottom {
+    position: absolute;
+    bottom: -2px;
+    left: 20px;
+    width: 5em;
+    border-bottom: 4px solid @primary-color;
+  }
+  .more {
+    display: flex;
+    align-items: center;
+    color: @color-text-paragraph;
+    > span {
+      margin-right: 10px;
+    }
+  }
+}
+
+.list {
+  padding: 0 20px;
+}
+
+

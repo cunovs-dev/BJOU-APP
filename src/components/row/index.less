@@ -1,0 +1,1271 @@
+/**
+ * @author Lowkey
+ * @date 2020/03/18 17:02:27
+ * @Description: 吐。。。
+ */
+@import '../../themes/default';
+
+@PrefixCls: row;
+@ColorCard: white;
+@ColorInfo: white;
+.listTitle {
+  font-size: @titleFontSize;
+  color: @color-text-base;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.twoLine {
+  margin-bottom: 20px;
+  font-size: @titleFontSize;
+  color: @color-text-base;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.listContent {
+  font-size: @mediumFontSize;
+  color: @color-text-paragraph;
+}
+
+.textOverflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.img {
+  width: 220px;
+  height: 180px;
+  border-radius: @radius-xs;
+}
+
+.background {
+  flex-basis: 40%;
+  height: 160px;
+  margin-right: 20px;
+  background-size: cover;
+  background-position: center center;
+  border-radius: @radius-lg;
+}
+
+.@{PrefixCls}-imgList {
+  :global {
+    .am-list-line {
+      border: 0;
+    }
+  }
+  & img {
+    width: 220px;
+    height: 160px;
+    padding: 20px 0;
+  }
+}
+
+.@{PrefixCls}-courseImage {
+  .background;
+}
+
+.@{PrefixCls}-common {
+  :global {
+    .am-list-item.am-list-item-middle .am-list-line {
+      align-items: normal;
+    }
+    .am-list-item .am-list-line-wrap .am-list-content {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+    }
+  }
+  &-title {
+    font-size: @smallFontSize;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  & img {
+    width: 220px;
+    height: 160px;
+    padding: 20px 0;
+    border-radius: 20px;
+  }
+  &-info {
+    display: flex;
+    font-size: 26px;
+    color: @infoColor;
+    margin-top: 20px;
+    &-box {
+      display: flex;
+      align-items: center;
+      margin-right: 40px;
+      & span {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+//contacts Start
+
+.@{PrefixCls}-contacts {
+  :global {
+    .am-list-item img {
+      width: 100px;
+      height: 100px;
+    }
+    .am-list-item {
+      padding: 20px;
+      .listTitle;
+    }
+  }
+}
+
+//contacts End
+
+// taskRow Start
+
+.@{PrefixCls}-task {
+  padding: @padding-list;
+  background: #fff;
+  border-radius: @radius-lg;
+  -webkit-box-shadow: @list-shadow;
+  -moz-box-shadow: @list-shadow;
+  box-shadow: @list-shadow;
+  margin-bottom: @list-bottom;
+
+  &-title {
+    width: 100%;
+    margin-bottom: 20px;
+    border-bottom: @hd solid @border-color-base;
+    padding-bottom: 20px;
+    .listTitle;
+    &-time {
+      display: flex;
+      align-items: center;
+      font-size: @smallFontSize;
+      margin-top: 20px;
+      & span {
+        margin-left: 5px;
+        font-weight: normal;
+      }
+    }
+  }
+  &-content {
+    display: flex;
+    .listContent;
+    overflow: hidden;
+    line-height: 1.2em;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    & span:nth-child(1) {
+      vertical-align: sub;
+      margin-right: 10px;
+    }
+  }
+
+  &-available {
+    font-size: @smallFontSize;
+    color: #c83737;
+    margin-top: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-height: @common-line-height;
+    p, h1, h2, h3, h4, h5, h6, ul, strong, span {
+      margin: 0;
+      font-size: @smallFontSize !important;
+      opacity: 0.7;
+    }
+  }
+}
+
+// taskRow End
+
+//taskLesson Start
+
+.@{PrefixCls}-tasklesson {
+  padding: @padding-list;
+  background: #fff;
+  border-radius: @radius-lg;
+  -webkit-box-shadow: @list-shadow;
+  -moz-box-shadow: @list-shadow;
+  box-shadow: @list-shadow;
+  margin-bottom: @list-bottom;
+  &-title {
+    .twoLine;
+  }
+  &-container {
+    display: flex;
+  }
+  &-img {
+    .background;
+  }
+  &-content {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+    .textOverflow;
+    &-teacher, &-time {
+      .listContent;
+      .textOverflow;
+    }
+    &-time {
+      font-size: @mediumFontSize;
+    }
+  }
+}
+
+//taskLesson End
+
+//closeLesson Start
+
+.@{PrefixCls}-closelesson {
+  padding: @padding-list;
+  background: #fff;
+  //border-bottom: 1px solid @border-color-base;
+  -webkit-box-shadow: @list-shadow;
+  -moz-box-shadow: @list-shadow;
+  box-shadow: @list-shadow;
+  margin-bottom: 20px;
+  &-title {
+    .twoLine;
+  }
+  &-container {
+    display: flex;
+  }
+  &-img {
+    .background;
+  }
+  &-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-around;
+    .textOverflow;
+    &-teacher {
+      .listContent;
+      .textOverflow;
+    }
+    &-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}
+
+//closeLesson End
+
+//openinglesson Start
+.@{PrefixCls}-openinglessonout {
+  padding: 30px 30px 10px;
+  background: #fff;
+  //border-bottom: 1px solid @border-color-base;
+  -webkit-box-shadow: @list-shadow;
+  -moz-box-shadow: @list-shadow;
+  box-shadow: @list-shadow;
+  margin-bottom: 20px;
+  &-title {
+    .twoLine;
+  }
+  &-progress {
+    padding: 18px 0;
+    display: flex;
+    align-items: center;
+    &-left {
+      flex-basis: 88%;
+      :global {
+        .am-progress-outer {
+          height: 28px;
+          border-radius: 50px;
+          background: linear-gradient(#e1e1e1, #fff);
+        }
+        .am-progress-bar {
+          border: 11px solid #f34e14;
+          border-radius: 50px;
+        }
+      }
+    }
+    &-right {
+      margin-left: 20px;
+      text-align: right;
+      font-size: @titleFontSize;
+      flex-basis: 24%;
+      color: #f34e14;
+      font-weight: bold;
+    }
+  }
+}
+
+.@{PrefixCls}-openinglesson {
+
+  display: flex;
+  &-img {
+    .background;
+  }
+  &-content {
+    display: flex;
+    width: 100%;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-around;
+    .textOverflow;
+    &-teacher, &-time {
+      .listContent;
+      .textOverflow;
+    }
+    &-time {
+      //font-size: @mediumFontSize;
+    }
+    &-type {
+      display: flex;
+      align-items: center;
+      &-ending, &-attendance {
+        padding: 6px 8px;
+        .textVertical;
+        margin-right: 20px;
+        background: #ff9a1b;
+        color: #fff;
+        font-size: 24px;
+        border-radius: @radius-xs;
+
+      }
+      &-attendance {
+        background: #1eb259;
+      }
+    }
+  }
+}
+
+// openinglesson End
+
+//achivement Start
+
+.@{PrefixCls}-achievement {
+  padding: 20px 30px;
+  margin-bottom: 20px;
+  background: #fff;
+  &-title {
+    .twoLine;
+  }
+  &-container {
+    display: flex;
+  }
+  &-content {
+    display: flex;
+    width: 100%;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-around;
+    .textOverflow;
+
+    &-status {
+      display: flex;
+      align-items: center;
+      font-size: @mediumFontSize;
+      span {
+        margin-right: 20px;
+      }
+    }
+    &-time {
+      font-size: @smallFontSize;
+      color: @color-text-paragraph;
+    }
+  }
+  &-grade {
+    font-size: @mediumFontSize;
+    color: @color-text-paragraph;
+  }
+}
+
+//achivement End
+
+// teachers Start
+
+.@{PrefixCls}-teachers-outer {
+  :global {
+    .am-card-header {
+      font-size: @mediumFontSize;
+      font-weight: bold;
+    }
+    .am-card-header-content {
+      color: @primary-color;
+    }
+  }
+}
+
+.@{PrefixCls}-teachers {
+  padding: 10px;
+  background: #fff;
+  border-bottom: 1px solid @border-color-base;
+  display: flex;
+  margin-bottom: 10px;
+  &-img {
+    margin-right: 10px;
+    flex-basis: 20%;
+    & img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+  }
+  &-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-basis: 80%;
+    .textOverflow;
+    &-top {
+      &-title {
+        font-size: @titleFontSize;
+        color: @color-text-base;
+        flex-basis: 76%;
+        .textOverflow;
+      }
+      &-type {
+        margin-top: 10px;
+        font-size: @smallFontSize;
+      }
+    }
+
+    &-bottom {
+      display: flex;
+      justify-content: flex-end;
+      &-lesson {
+        font-size: @mediumFontSize;
+        //color: @color-text-paragraph;
+      }
+    }
+  }
+}
+
+// teachers End
+
+// attendance Start
+
+.@{PrefixCls}-attendance {
+  padding: @padding-list;
+  background: #fff;
+  border-bottom: 1px solid @border-color-base;
+  display: flex;
+  &-img {
+    flex-basis: 30%;
+    margin-right: 20px;
+    & img {
+      .img;
+    }
+  }
+  &-content {
+    display: flex;
+    flex-basis: 70%;
+    flex-direction: column;
+    justify-content: space-around;
+    .textOverflow;
+    &-title {
+      .listTitle;
+    }
+    &-time {
+      .listContent;
+      font-size: @mediumFontSize;
+    }
+    &-info {
+      display: flex;
+
+    }
+  }
+}
+
+// attendace End
+
+//group Start
+.@{PrefixCls}-group {
+  :global {
+    .am-list-item .am-list-line .am-list-extra {
+      flex-basis: 20%;
+    }
+  }
+}
+
+// group End
+
+// groupList Start
+
+.@{PrefixCls}-groupList {
+  padding: @padding-list;
+  background: #fff;
+  display: flex;
+  &-img {
+    margin-right: 10px;
+    & img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+  }
+  &-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    &-top {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      &-title {
+        font-size: @titleFontSize;
+        color: @color-text-base;
+      }
+      &-role {
+        font: @smallFontSize;
+        color: @color-text-paragraph;
+        margin-top: 10px;
+      }
+    }
+
+    &-bottom {
+      display: flex;
+      justify-content: flex-end;
+
+    }
+  }
+}
+
+//groupList End
+
+//achievementdetails Start
+
+.@{PrefixCls}-achievementdetails {
+  background: #fff;
+  padding: 20px;
+  border-radius: @radius-lg;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 30px;
+
+  &-top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 26px;
+    font-size: @mediumFontSize;
+    span {
+      margin-right: 10px;
+    }
+  }
+
+  &-bottom {
+    display: flex;
+    justify-content: space-between;
+    &-total {
+      color: @color-text-paragraph;
+      font-size: @mediumFontSize;
+    }
+    &-my {
+      color: @primary-color;
+      font-size: @mediumFontSize;
+    }
+  }
+
+  &-date {
+    margin-top: 20px;
+    font-size: @smallFontSize;
+    color: @color-text-paragraph;
+  }
+}
+
+// achievementdetails End
+
+.@{PrefixCls}-forum {
+
+  &-user {
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+    & img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+
+    &-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+      font-size: @mediumFontSize;
+    }
+  }
+  &-content {
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+    &-text {
+      flex: 1;
+      .listTitle;
+
+    }
+  }
+
+  &-foot {
+    display: flex;
+    justify-content: space-between;
+    color: @color-text-paragraph;
+    font-size: @smallFontSize;
+    &-message {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+}
+
+.@{PrefixCls}-forumDetails {
+  background: white;
+  &-info {
+    display: flex;
+    align-items: center;
+    font-size: @mediumFontSize;
+    padding-top: 20px;
+    img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+    }
+  }
+  &-describe {
+    font-size: @smallFontSize;
+    display: flex;
+    margin-top: 10px;
+    padding-bottom: 20px;
+    justify-content: space-between;
+    color: @color-text-paragraph;
+  }
+  &-reply {
+    display: flex;
+    font-size: @smallFontSize;
+    color: @primary-color;
+  }
+  &-more {
+    font-size: @smallFontSize;
+    color: @primary-color;
+  }
+  &-children {
+    padding: 0 30px 30px;
+    background: #f0f0f0;
+
+  }
+}
+
+//MessageListRow Start
+.@{PrefixCls}-message {
+  display: flex;
+  background: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  &-img {
+    margin-right: 20px;
+    & img {
+      width: 100px;
+      height: 100px;
+      border-radius: @radius-xs;
+    }
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex: 1;
+    .textOverflow;
+    &-top {
+      display: flex;
+      justify-content: space-between;
+      &-title {
+        font-size: @titleFontSize;
+        font-weight: bold;
+        color: @color-text-base;
+      }
+      &-date {
+        font-size: @smallFontSize;
+        color: @color-text-paragraph;
+      }
+    }
+    &-details {
+      font-size: @mediumFontSize;
+      .textOverflow;
+    }
+
+  }
+}
+
+//MessageListRow End
+.@{PrefixCls}-messagelist {
+  display: flex;
+  &-details {
+    margin-bottom: 10px;
+  }
+  &-date {
+    text-align: right;
+    font-size: @smallFontSize;
+    color: @color-text-paragraph;
+  }
+}
+
+.@{PrefixCls}-attendanceRow {
+  background: #fff;
+  margin-bottom: 20px;
+  padding: 20px 30px;
+  &-title {
+    .twoLine;
+  }
+  &-container {
+    display: flex;
+  }
+  &-content {
+    display: flex;
+    width: 100%;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-around;
+    .textOverflow;
+
+    &-status {
+      display: flex;
+      align-items: center;
+      font-size: @mediumFontSize;
+      span {
+        margin-right: 20px;
+      }
+    }
+    &-time {
+      font-size: @smallFontSize;
+      color: @color-text-paragraph;
+    }
+  }
+}
+
+.@{PrefixCls}-appeallist {
+  background: #fff;
+  //margin-bottom: 20px;
+  &-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &-content {
+    font-size: @smallFontSize;
+  }
+  &-date {
+    font-size: @smallFontSize;
+    color: @color-text-paragraph;
+  }
+}
+
+.disabled {
+  background: #e0e0e0;
+  color: #999;
+}
+
+.@{PrefixCls}-child {
+  padding-left: 10px;
+  border-bottom: @hd solid #ddd;
+  &-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: @smallFontSize;
+    color: @color-text-paragraph;
+    padding-top: 20px;
+    img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+    }
+  }
+  &-describe {
+    font-size: @smallFontSize;
+    display: flex;
+    margin-top: 10px;
+    justify-content: flex-end;
+    color: @color-text-paragraph;
+    padding-bottom: 10px;
+  }
+  &-reply {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: @smallFontSize;
+    color: @primary-color;
+  }
+  &-more {
+    font-size: @smallFontSize;
+    color: @primary-color;
+    padding-bottom: 20px;
+  }
+}
+
+.@{PrefixCls}-finalReportList {
+  background: #fff;
+  padding-bottom: 0.1rem;
+  :global {
+    .am-list-item .am-list-line .am-list-extra {
+      flex-basis: 18%;
+    }
+    .am-list-item:not(:last-child) .am-list-line {
+      border: 0 none;
+    }
+    .am-list-item.am-list-item-middle .am-list-line {
+      padding: 0 0.25rem 0 0;
+    }
+  }
+  &-item {
+    img {
+      width: 120px;
+      height: 120px;
+      border-radius: @radius-xs;
+    }
+    &-top {
+      font-size: @titleFontSize;
+      span {
+        margin-right: 20px;
+      }
+    }
+    &-email {
+      font-size: @smallFontSize;
+      color: @color-text-paragraph;
+    }
+  }
+  &-extra {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: @smallFontSize;
+    color: @primary-color;
+  }
+  &-bottom {
+    border-top: @hd solid @border-color-base;
+    padding: 0.1rem 0 0 0.25rem;
+    color: @primary-color;
+    font-size: @smallFontSize;
+  }
+}
+
+.@{PrefixCls}-reviewList {
+  padding: @padding-list;
+  background: #fff;
+  &-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-content {
+      display: flex;
+      align-items: center;
+      & img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin-right: 20px;
+      }
+      &-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        &-title {
+          font-size: @titleFontSize;
+          color: @color-text-base;
+        }
+        &-id {
+          font: @smallFontSize;
+          color: @color-text-paragraph;
+          margin-top: 10px;
+        }
+      }
+
+      &-bottom {
+        display: flex;
+        justify-content: flex-end;
+
+      }
+    }
+    &-grade {
+      font-size: 40px;
+    }
+  }
+  &-bottom {
+    font-size: @smallFontSize;
+    margin-top: 20px;
+    color: @color-text-paragraph;
+  }
+
+}
+
+.@{PrefixCls}-memberList {
+  background: #fff;
+  padding-bottom: 0.1rem;
+  :global {
+    .am-list-item .am-list-line .am-list-extra {
+      flex-basis: 18%;
+    }
+    .am-list-item:not(:last-child) .am-list-line {
+      border: 0 none;
+    }
+    .am-list-item.am-list-item-middle .am-list-line {
+      padding: 0 0.25rem 0 0;
+    }
+  }
+  &-item {
+    img {
+      width: 120px;
+      height: 120px;
+      border-radius: @radius-xs;
+    }
+    &-top {
+      font-size: @titleFontSize;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &-name {
+        display: flex;
+        align-items: center;
+        > span {
+          margin-right: 10px;
+        }
+      }
+      &-id {
+        font-size: @smallFontSize;
+        color: @color-text-paragraph;
+      }
+    }
+    &-middle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: @mediumFontSize;
+
+      &-left {
+        color: @color-text-paragraph;
+      }
+      &-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: @smallFontSize;
+        color: @primary-color;
+      }
+
+    }
+
+  }
+
+  &-bottom {
+    border-top: @hd solid @border-color-base;
+    padding: 0.1rem 0 0 0.25rem;
+    color: @primary-color;
+    font-size: @smallFontSize;
+  }
+}
+
+.@{PrefixCls}-memberAchievementList {
+
+  img {
+    width: 120px;
+    height: 120px;
+    border-radius: @radius-xs;
+  }
+  &-extra {
+    color: @primary-color;
+    > p {
+      margin: 10px 0;
+    }
+  }
+  &-content {
+    &-title {
+      font-size: @titleFontSize;
+      margin-bottom: 10px;
+    }
+    &-id {
+      font-size: @smallFontSize;
+      color: @color-text-paragraph;
+    }
+  }
+}
+
+.@{PrefixCls}-memberAchievementDetails {
+  background: #fff;
+  padding: 20px;
+  border-radius: @radius-lg;
+  margin-bottom: 30px;
+
+  &-top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 26px;
+    font-size: @mediumFontSize;
+    span {
+      margin-right: 10px;
+    }
+  }
+  &-grade {
+    margin-top: 20px;
+    font-size: @mediumFontSize;
+    text-align: right;
+    span {
+      font-size: @titleFontSize;
+      font-weight: bold;
+    }
+  }
+  &-react {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: @hd solid @border-color-base;
+    color: @color-text-paragraph;
+  }
+}
+
+.@{PrefixCls}-system {
+
+  :global {
+    .am-list-item .am-list-line .am-list-extra {
+      flex-basis: 15% !important;
+    }
+  }
+  &-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex: 1;
+    &-date {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 120px;
+      height: 120px;
+      margin-right: 20px;
+      background: @primary-color;
+      color: #fff;
+      span:first-child {
+        font-size: 40px;
+      }
+      span:last-child {
+        font-size: @smallFontSize;
+      }
+    }
+
+    &-title {
+      .twoLine;
+      font-weight: normal;
+      flex: 1;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.@{PrefixCls}-timetable {
+  padding: 30px;
+  background: #fff;
+  font-size: @mediumFontSize;
+  color: @color-text-paragraph;
+  &-title {
+    font-size: @titleFontSize;
+    padding-left: 20px;
+    font-weight: bold;
+    color: @color-text-base;
+    .sign;
+  }
+  > div {
+    margin-bottom: 20px;
+  }
+
+  &-last {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &-btn {
+    border-radius: 40px;
+  }
+}
+
+.@{PrefixCls}-collection {
+
+  :global {
+    .am-list-item .am-list-line .am-list-extra {
+      flex-basis: 15% !important;
+    }
+  }
+  &-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex: 1;
+    &-date {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 120px;
+      height: 120px;
+      margin-right: 20px;
+      background: @primary-color;
+      color: #fff;
+      span:first-child {
+        font-size: 40px;
+      }
+      span:last-child {
+        font-size: @smallFontSize;
+      }
+    }
+
+    &-title {
+      .twoLine;
+      font-weight: normal;
+      flex: 1;
+      margin-bottom: 0;
+      span {
+        color: @primary-color;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.@{PrefixCls}-noticeGK {
+  padding: 20px;
+  border-bottom: @hd solid @border-color-base;
+  background: #fff;
+  &-title {
+    font-size: @titleFontSize;
+    color: @color-text-base;
+    .textOverflow;
+    margin-bottom: 20px;
+    > span {
+      color: @primary-color;
+      margin-right: 20px;
+    }
+  }
+  &-info {
+    .twoLine;
+    font-size: @smallFontSize;
+    color: @color-text-paragraph;
+    line-height: @common-line-height;
+    margin-bottom: 0;
+  }
+}
+
+.@{PrefixCls}-progress {
+
+  :global {
+    .am-list-item {
+      border-radius: @radius-lg;
+    }
+    .am-list-item .am-list-line .am-list-extra {
+      flex-basis: 26%;
+      font-size: @smallFontSize;
+      color: @primary-color;
+    }
+  }
+
+  &-content {
+
+    display: flex;
+    align-items: center;
+    color: @color-text-paragraph;
+    font-size: @mediumFontSize;
+
+    &-date {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-radius: 50%;
+      background: #4dd865;
+      color: #fff;
+      text-align: center;
+      font-size: @smallFontSize;
+      margin-right: 20px;
+    }
+
+    &-lesson {
+      margin-right: 20px;
+    }
+  }
+
+}
+
+.@{PrefixCls}-progressDetails {
+  padding: 30px;
+  background: #fff;
+  font-size: @mediumFontSize;
+  color: @color-text-paragraph;
+  margin-bottom: 30px;
+  &-title {
+    font-size: @titleFontSize;
+    padding-left: 20px;
+    font-weight: bold;
+    color: @color-text-base;
+    .sign;
+  }
+  > div {
+    margin-bottom: 20px;
+  }
+
+}
+
+.@{PrefixCls}-courseGK {
+  background: #fff;
+  padding: 20px 0 20px 0;
+  border-radius: @radius-lg;
+  margin-bottom: 20px;
+  &-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-right: 20px;
+    .sign;
+    > div {
+      margin-left: 20px;
+    }
+  }
+  &-content {
+    display: flex;
+    justify-content: space-around;
+    border-top: @hd solid #ddd;
+    padding: 30px 30px 10px 30px;
+    &-item {
+      text-align: center;
+      :first-child {
+        font-size: @titleFontSize;
+        color: @primary-color;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      :last-child {
+        font-size: @mediumFontSize;
+        color: @color-text-paragraph;
+      }
+      > p {
+        margin: 0;
+      }
+    }
+  }
+}

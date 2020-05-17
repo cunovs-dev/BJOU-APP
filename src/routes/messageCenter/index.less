@@ -1,0 +1,44 @@
+@import "../../themes/default";
+@PrefixCls: messageCenter;
+
+.@{PrefixCls}-title {
+  padding: 0.2rem 0.3rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: @mediumFontSize;
+  &-content {
+    align-items: center;
+    display: flex
+  }
+}
+
+.@{PrefixCls}-content {
+  :global {
+    .am-list-body {
+      padding: 0.2rem 0;
+    }
+  }
+  margin: 0 0.3rem 0.3rem 0.3rem;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.reset{
+  :global{
+    .am-list-body {
+      border: 0 none;
+    }
+    .am-list-body div:not(:last-child) .am-list-line{
+      border: 0 none;
+    }
+    .am-list-item:not(:last-child) .am-list-line{
+      border: 0 none;
+    }
+    .am-list-item .am-list-line .am-list-content{
+      padding: 20px 0;
+    }
+  }
+}
+
+

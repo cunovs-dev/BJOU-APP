@@ -1,0 +1,80 @@
+@import "../../themes/default";
+
+.top {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  background-size: cover;
+  background-position: center center;
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: #fff;
+    border-radius: 60px 60px 0 0;
+  }
+}
+
+.info {
+  position: absolute;
+  bottom: 80px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  padding: 0 40px;
+  box-sizing: border-box;
+  img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    margin-right: 40px;
+  }
+  .right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    height: 120px;
+    font-size: @mediumFontSize;
+
+    .rightTop {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .username {
+        font-size: @titleFontSize;
+        display: flex;
+        align-items: center;
+        span {
+          margin-right: 20px;
+        }
+      }
+    }
+
+  }
+
+}
+
+.list {
+  margin-bottom: 40px;
+  :global {
+    .am-list-body {
+      border: 0;
+    }
+    .am-list-item .am-list-line .am-list-extra {
+      flex-basis: 70%;
+    }
+    .am-list-body div:not(:last-child) .am-list-line {
+      border: 0;
+    }
+    .am-list-item {
+      border-bottom: @hd solid @border-color-base;
+    }
+  }
+}

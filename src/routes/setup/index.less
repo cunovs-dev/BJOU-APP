@@ -1,0 +1,42 @@
+@PrefixCls: setup;
+
+.content {
+  :global {
+    .am-list-item .am-list-line .am-list-extra {
+      flex-basis: 70%;
+    }
+  }
+  .list {
+    .avatar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: auto 0;
+      & > span {
+        position: absolute;
+        width: 130px;
+        height: 56px;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+      }
+    }
+    .icon-img-box {
+      float: right;
+      & img {
+        width: 80px;
+        height: 80px;
+        border: 6px solid #fff;
+        border-radius: 50%;
+      }
+    }
+    .text{
+      margin: 20px 0;
+    }
+  }
+}
+
+
+

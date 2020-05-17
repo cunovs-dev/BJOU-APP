@@ -1,0 +1,47 @@
+@import '../../themes/default.less';
+
+@PrefixCls: medal;
+
+.@{PrefixCls}-imag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  img {
+    height: 280px;
+    width: 280px;
+  }
+}
+
+.@{PrefixCls}-title {
+  color: #888;
+  display: flex;
+  align-items: center;
+}
+
+.@{PrefixCls}-text {
+  background: white;
+  font-size: @mediumFontSize;
+  margin-bottom: 20px;
+  color: @color-text-paragraph;
+  span {
+    color: @color-text-base;
+  }
+}
+
+.@{PrefixCls}-name {
+  margin: 0;
+  text-align: center;
+  color: #ffc947;
+  letter-spacing: 0.2em;
+}
+
+.@{PrefixCls}-info {
+  padding: 40px 100px;
+  letter-spacing: 0.4em;
+}
+
+.@{PrefixCls}-title {
+  color: @color-text-paragraph;
+  font-size: @titleFontSize;
+}

@@ -1,0 +1,69 @@
+@import "../../themes/default";
+
+@PrefixCls: DaiJianTou;
+
+.@{PrefixCls}-population {
+  border-radius: 50px;
+  padding: 0.3rem 0.3rem 0.1rem 0.3rem;
+  color: white;
+  background: linear-gradient(#3376B2, #2385C7);
+  &-title {
+    border-bottom: solid 1px;
+    font-size: @titleFontSize;
+    text-align: center;
+    padding-bottom: 0.3rem;
+    .textOverflow
+  }
+  &-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &-left {
+      padding: 0.4rem 0;
+      min-height: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      div {
+        font-size: @mediumFontSize;
+      }
+    }
+    &-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &-imag {
+        position: relative;
+        width: 1.8rem;
+        height: 1.8rem;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        &-content {
+          color: @primary-color;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          text-align: center;
+        }
+        &-tips {
+          padding: 0.2rem 0;
+        }
+      }
+    }
+  }
+}
+
+.@{PrefixCls}-disan {
+  width: 0;
+  height: 0;
+  border-top: 35px solid #2385C7;
+  border-bottom: 5px solid transparent;
+  border-right: 35px solid transparent;
+  border-left: 35px solid transparent;
+  position: relative;
+  top: -0.1rem;
+  left: 50%;
+  transform: translate(-50%);
+}

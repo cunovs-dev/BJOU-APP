@@ -1,0 +1,51 @@
+@import '../../themes/default.less';
+
+@PrefixCls: progressTag;
+
+.tag-xs {
+  font-size: @smallFontSize;
+}
+
+.tag-normal {
+  font-size: @mediumFontSize;
+}
+
+.outer {
+  position: relative;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0.1em 0.4em;
+  font-variant: tabular-nums;
+  list-style: none;
+  -webkit-font-feature-settings: 'tnum';
+  font-feature-settings: 'tnum';
+  display: inline-block;
+  width: 40%;
+  height: 1.8em;
+  line-height: 1.8em;
+  margin-right: 8px;
+  white-space: nowrap;
+  color: #FFF;
+  background: #efefef;
+  .bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: transparent;
+    transition:width .5s linear;
+  }
+
+  .text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    margin: auto auto;
+    text-align: center;
+  }
+}
+

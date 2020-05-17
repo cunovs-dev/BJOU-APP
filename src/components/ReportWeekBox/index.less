@@ -1,0 +1,78 @@
+@PrefixCls: weekbox;
+
+.@{PrefixCls}-week {
+  display: flex;
+  flex-wrap: nowrap;
+  &-div {
+    background: #f5f8fb;
+    flex: 1;
+    margin: 0.25rem;
+    text-align: center;
+    font-size: @titleFontSize;
+    color: @primary-color;
+    border-radius: @radius-xs;
+    line-height: @common-line-height;
+  }
+  &-divII {
+    font-size: @titleFontSize;
+    flex: 1;
+    text-align: center;
+  }
+}
+
+.@{PrefixCls}-population {
+  font-size: @titleFontSize;
+  padding: 0.2rem 0;
+  background: white;
+  border-radius: @radius-lg;
+}
+
+.@{PrefixCls}-firstLine {
+  padding: 0.2rem;
+  margin: 0 0.2rem;
+  border-radius: @radius-lg;
+  &-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: @mediumFontSize;
+    &-name {
+      display: flex;
+      align-items: center;
+      font-size: @titleFontSize;
+      > div {
+        margin-right: 20px;
+      }
+    }
+    &-id {
+      color: @color-text-paragraph;
+    }
+  }
+
+  &-details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: @smallFontSize;
+    color: @color-text-paragraph;
+  }
+
+}
+
+.@{PrefixCls}-bottom {
+  padding: 20px 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.28rem;
+  border-top: solid 1px @border-color-base;
+  &-qingkuang {
+    padding: 0.07rem 0.1rem;
+    display: table;
+    vertical-align: middle;
+    color: white;
+    background: red;
+    border-radius: 7px;
+  }
+}

@@ -1,0 +1,50 @@
+@import "../../../../themes/default";
+
+.grade {
+  display: flex;
+  justify-content:space-between;
+  padding: 20px 40px;
+  flex: 1;
+  border-radius: @radius-lg;
+  font-size: @mediumFontSize;
+  .right {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    color: @color-text-base;
+    justify-content: flex-end;
+    .box {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 10px;
+      border-radius: @radius-lg;
+     .total{
+       font-size: @titleFontSize;
+       margin-right: 20px;
+     }
+      .result{
+        font-size: 60px;
+        color:#ff9a1b;
+      }
+    }
+  }
+
+  .feedback {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-right: 40px;
+    padding: 10px;
+    width: 180px;
+    height: 80px;
+    color: #fff;
+    background: -webkit-linear-gradient(left top, #3491be, #22a364); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(bottom right, #3491be, #22a364); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(bottom right, #3491be, #22a364); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to bottom right, #3491be, #22a364); /* 标准的语法 */
+    border-radius: @radius-lg;
+  }
+
+}
+

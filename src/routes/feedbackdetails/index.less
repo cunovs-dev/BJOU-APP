@@ -1,0 +1,72 @@
+@PrefexCls: feedbackdetails;
+
+.@{PrefexCls}-type {
+  margin: 20px 10px;
+
+  & p {
+    font-size: @mediumFontSize;
+    padding: 20px;
+    padding-bottom: 30px;
+    margin: 0;
+    background: #fff;
+  }
+}
+
+.outer {
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.info {
+  margin-bottom: 20px;
+}
+
+.label {
+  background: #fff;
+  margin: 0 10px;
+  padding: 10px;
+}
+
+.button {
+  margin: 40px 0;
+}
+
+.@{PrefexCls}-list {
+  :global {
+    .am-list-body {
+      border: 0;
+    }
+
+    .am-list-item .am-list-line .am-list-extra {
+      flex-basis: 20%;
+    }
+  }
+}
+
+.@{PrefexCls}-hasError {
+  :global {
+    .am-card {
+      .am-card-header .am-card-header-content {
+        color: red;
+      }
+
+      .am-list-content {
+        color: red;
+      }
+
+      .am-card-footer-content {
+        color: red;
+      }
+    }
+  }
+}
+
+.picker {
+  :global {
+    .am-list-item .am-list-line .am-list-extra {
+      flex-basis: 100% !important;
+      text-align: left;
+    }
+  }
+}

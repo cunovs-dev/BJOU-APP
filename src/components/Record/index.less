@@ -1,0 +1,35 @@
+
+.outer {
+  padding: 20px;
+  .button {
+    width: 120px;
+    height: 120px;
+    font-size: @smallFontSize;
+    border-radius: 50%;
+    line-height: 120px;
+    text-align: center;
+    color: #fff;
+    transition: box-shadow 1.5s ease;
+    margin: 0 auto;
+    background: linear-gradient(#ff1959, #ff5978);
+    margin-top: 20px;
+  }
+}
+
+@keyframes pulse {
+  70% {
+    box-shadow: 0 0 0 20px rgba(222, 33, 33, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(222, 33, 33, 0);
+  }
+}
+
+.active {
+  box-shadow: 0 0 0 10px rgba(222, 33, 33, .5);
+  animation: pulse 1s infinite;
+}
+
+.sup {
+  color: @primary-color;
+}

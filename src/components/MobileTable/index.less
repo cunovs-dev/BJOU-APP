@@ -1,0 +1,37 @@
+@import "../../themes/default";
+
+.container {
+  padding: 20px 0;
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  .thead {
+    display: table-header-group;
+    background: #F4F3F8;
+    .tr {
+      display: table-row;
+      > div {
+        display: table-cell;
+        text-align: center;
+        padding: 20px 0;
+        border: @hd solid #ddd;
+      }
+    }
+  }
+  .tbody {
+    display: table-row-group;
+    background: #F4F3F8;
+    .tr:nth-child(odd) {
+      background: #FFF6E5;
+    }
+    .tr {
+      display: table-row;
+      > div {
+        display: table-cell;
+        text-align: center;
+        padding: 20px 0;
+        border: @hd solid #ddd;
+      }
+    }
+  }
+}

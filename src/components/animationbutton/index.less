@@ -1,0 +1,61 @@
+@import "../../themes/default";
+
+@PrefixCls: animationbutton;
+.transition {
+  transition: all 1s;
+  -moz-transition: all 1s; /* Firefox 4 */
+  -webkit-transition: all 1s; /* Safari 和 Chrome */
+  -o-transition: all 1s; /* Opera */
+}
+
+.@{PrefixCls}-outer {
+
+  &-box {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: @opacity;
+    color: #fff;
+    .transition;
+    &-container {
+      padding: 80px;
+      display: flex;
+      font-size: @titleFontSize;
+      :global {
+        .am-icon {
+          width: 120px;
+          height: 120px;
+        }
+      }
+
+      & div {
+        flex-basis: 32%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
+    }
+  }
+
+  &-icon {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background: @primary-color;
+    padding: 20px;
+    border-radius: 50%;
+    color: #fff;
+  }
+}
+
+.rotate {
+  transform: rotate(45deg);
+  -ms-transform: rotate(45deg); /* IE 9 */
+  -moz-transform: rotate(45deg); /* Firefox */
+  -webkit-transform: rotate(45deg); /* Safari 和 Chrome */
+  -o-transform: rotate(45deg);
+  background: transparent;
+  .transition
+}

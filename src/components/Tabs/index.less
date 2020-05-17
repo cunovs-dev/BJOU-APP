@@ -1,0 +1,46 @@
+@import "../../themes/default";
+
+.tabmenu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: @titleFontSize;
+  color: @color-text-base;
+  padding: 20px 80px 60px;
+  text-align: center;
+  .tab-item {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    .inner {
+      margin-right: 16px;
+      width: 1em;
+      height: 1em;
+      border: 2*@hd solid #d9d9d9;
+      border-radius: 50%;
+    }
+    .active {
+      position: relative;
+      margin-right: 16px;
+      width: 32px;
+      height: 32px;
+      border: 2*@hd solid @primary-color;
+      border-radius: 50%;
+      .dot {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin: auto auto;
+        width: 18px;
+        height: 18px;
+        background-color: @primary-color;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+
+

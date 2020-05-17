@@ -1,0 +1,66 @@
+@import "../../themes/default";
+
+@PrefixCls: lessondetails;
+.@{PrefixCls}-outer {
+  max-height: 100vh;
+}
+
+.@{PrefixCls}-list {
+  :global {
+    .am-list-body {
+      border: 0 none;
+    }
+    .am-list-item:not(:last-child) .am-list-line {
+      border: 0 none;
+    }
+  }
+}
+
+.@{PrefixCls}-teacher {
+  font-size: 30px;
+  padding: 20px 20px 120px;
+  line-height: @common-line-height;
+  text-indent: 2em;
+  background: #fff;
+}
+
+.@{PrefixCls}-tagbox {
+  padding-bottom: 0;
+  &-item {
+    background: #fff;
+  }
+}
+
+.@{PrefixCls}-lessonInfo {
+  padding: 20px;
+
+  &-title {
+    font-size: @titleFontSize;
+    color: @color-text-base;
+    font-weight: bold;
+    padding: 20px;
+  }
+}
+
+.items {
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  padding: 20px 0;
+  .img {
+    width: 110px;
+    margin-bottom: 18px;
+  }
+  .text {
+    font-size: @smallFontSize;
+    color: #888;
+  }
+}

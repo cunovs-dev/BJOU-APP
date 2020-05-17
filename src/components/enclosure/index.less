@@ -1,0 +1,46 @@
+@import "../../themes/default";
+
+.outer {
+  padding: 20px;
+  display: flex;
+  background: #fff;
+  border-radius: @radius-lg;
+}
+
+.img {
+  margin-right: 20px;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  .textOverflow;
+  .left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .textOverflow;
+    span {
+      .textOverflow;
+      padding-right: 30px;
+    }
+    span:last-child {
+      font-size: @smallFontSize;
+      color: @color-text-paragraph;
+      margin-top: 10px;
+    }
+  }
+  .right {
+    padding: 0.2em 0.6em;
+    text-align: center;
+    background: #f0f8fd;
+    font-size: @smallFontSize;
+    color: #3492cf;
+    border: @hd solid #3492cf;
+    border-radius: @radius-xs;
+    .textVertical;
+  }
+}
+

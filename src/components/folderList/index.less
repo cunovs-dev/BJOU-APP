@@ -1,0 +1,48 @@
+@import "../../themes/default";
+
+.outer {
+  padding: 30px;
+  display: flex;
+  background: #fff;
+  border-radius: @radius-lg;
+}
+
+.img {
+  margin-right: 20px;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  .left {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    span {
+      flex-wrap: wrap;
+      padding-right: 30px;
+    }
+    span:last-child {
+      font-size: @smallFontSize;
+      color: @color-text-paragraph;
+      margin-top: 10px;
+    }
+  }
+  .right {
+    flex-basis: 12%;
+    width: 100%;
+    padding: 0.4em 0.6em;
+    text-align: center;
+    background: #f0f8fd;
+    font-size: @smallFontSize;
+    color: #3492cf;
+    border: @hd solid #3492cf;
+    border-radius: @radius-xs;
+    .textVertical;
+  }
+}
+

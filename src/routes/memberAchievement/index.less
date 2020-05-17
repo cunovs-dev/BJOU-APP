@@ -1,0 +1,25 @@
+@import "../../themes/default";
+
+.outer{
+  .title {
+    padding: 30px 20px 20px;
+    font-size: @titleFontSize;
+    font-weight: bold;
+    line-height: @common-line-height;
+    background: #fff;
+    border-bottom: @hd solid @border-color-base;
+  }
+  :global {
+    .am-list-body{
+      border: 0;
+    }
+    .am-list-item:not(:last-child) .am-list-line {
+      border: 0;
+    }
+    .am-list-item .am-list-line .am-list-content {
+      padding: 20px 0;
+    }
+  }
+}
+
+

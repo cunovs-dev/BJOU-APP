@@ -1,0 +1,16 @@
+@import "../../themes/default";
+
+@PrefixCls: group;
+.@{PrefixCls}-outer {
+  padding: 0 20px;
+  :global {
+    .am-list-item:not(:last-child) .am-list-line {
+      border: 0;
+    }
+    .am-list-item .am-list-line .am-list-content {
+      padding: 20px 0;
+    }
+  }
+}
+
+

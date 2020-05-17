@@ -1,0 +1,27 @@
+@import '../../themes/default.less';
+
+.card {
+  padding: 30px 20px 0 20px;
+  background: #fff;
+  border-bottom: @hd solid @border-color-base;
+  .title {
+    font-size: @titleFontSize;
+    color: @color-text-base;
+    .sign;
+    padding-left: 30px;
+    margin-bottom: 30px;
+  }
+  .info {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    text-align: center;
+    color: @color-text-paragraph;
+    font-size: @mediumFontSize;
+    > div {
+      flex-basis: 33%;
+      margin-bottom: 20px;
+      .textOverflow;
+    }
+  }
+}

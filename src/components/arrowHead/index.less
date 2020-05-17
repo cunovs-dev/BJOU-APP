@@ -1,0 +1,25 @@
+@import "../../themes/default";
+
+@PrefixCls: arrowHead;
+
+.@{PrefixCls}-population {
+  border-radius: 20px;
+  padding: 0.3rem;
+  min-height:100px;
+  color: white;
+  background: linear-gradient(#3376B2, #2385C7);
+
+}
+
+.@{PrefixCls}-disan {
+  width: 0;
+  height: 0;
+  border-top: 35px solid #2385C7;
+  border-bottom: 5px solid transparent;
+  border-right: 35px solid transparent;
+  border-left: 35px solid transparent;
+  position: relative;
+  top: -0.1rem;
+  left: 50%;
+  transform: translate(-50%);
+}

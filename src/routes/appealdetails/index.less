@@ -1,0 +1,47 @@
+@import "../../themes/default";
+
+@PrefexCls: appealdetails;
+
+.@{PrefexCls}-outer {
+  width: 100%;
+  padding: 30px 20px;
+  box-sizing: border-box;
+
+  &-title {
+    font-size: @mediumFontSize;
+    line-height: 1.5;
+    margin-bottom: 40px;
+    padding: 0 30px;
+    color: #00a1ff;
+  }
+}
+
+.content {
+  padding: 20px;
+  background: #fff;
+  .text {
+    margin-top: 20px;
+    font-size: @mediumFontSize;
+  }
+  >p{
+    text-align: right;
+    font-size: @smallFontSize;
+    color: @color-text-paragraph;
+  }
+}
+
+.imgbox {
+  width: 100%;
+  margin: 20px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  & div {
+    width: 49%;
+    height: 220px;
+    background-size: cover;
+    margin-bottom: 2%;
+    border-radius: 10px;
+  }
+}

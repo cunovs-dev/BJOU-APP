@@ -1,0 +1,64 @@
+@import '../../themes/default.less';
+
+@PrefixCls: quizDetails;
+.@{PrefixCls}-outer {
+  min-height: 100vh;
+  &-container {
+    padding: 20px;
+  }
+}
+
+.@{PrefixCls}-info {
+  padding: 20px 0 0;
+
+  & > div {
+    padding: 40px 20px;
+    border-bottom: @hd solid @border-color-base;
+    font-size: @mediumFontSize;
+    background: #fff;
+  }
+}
+
+.@{PrefixCls}-method {
+  width: 100%;
+  display: flex;
+  padding: 40px 30px;
+  box-sizing: border-box;
+  background: #fff;
+  justify-content: space-between;
+  font-size: @mediumFontSize;
+  margin-bottom: 20px;
+}
+
+.@{PrefixCls}-achievement {
+  font-size: @titleFontSize;
+  padding: 20px;
+
+}
+
+.@{PrefixCls}-my-drawer {
+  position: relative;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  & .am-drawer-sidebar {
+    background-color: #fff;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+.list {
+  width: 500px;
+  background: #fff;
+  height: 100%;
+  :global {
+    .am-list-item .am-list-line .am-list-extra {
+      font-size: @mediumFontSize;
+    }
+  }
+
+}
+
+.active {
+  border-left: 8px solid @primary-color;
+}

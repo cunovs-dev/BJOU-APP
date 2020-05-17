@@ -1,0 +1,99 @@
+@import "../../themes/default";
+
+@PrefixCls: innerhtml;
+
+.clearFloat() {
+  clear: both;
+  margin: 0 auto;
+  width: 0;
+}
+
+.@{PrefixCls}-outer {
+  margin: 15px;
+  overflow: hidden;
+  font-size: @titleFontSize;
+  line-height: @common-line-height;
+  word-break: break-all;
+  word-wrap: break-word;
+
+  & h1, h2, h3, h4, h5, h6, ul, ol {
+    margin: 0.1em 0 !important;
+    padding: 0;
+    font-size: @titleFontSize !important;
+  }
+
+  & p, span, a {
+    font-size: @mediumFontSize !important;
+  }
+
+  & strong {
+    font-size: @mediumFontSize !important;
+  }
+
+  & div {
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  ul, li, ol {
+    list-style: none;
+  }
+
+  img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    height: auto !important;
+  }
+
+  table {
+    > tbody {
+      > tr {
+        /*        display: flex;
+                flex-direction: column;
+                align-items: flex-start;*/
+      }
+    }
+  }
+
+  & .clear {
+    .clearFloat
+  }
+
+  :global {
+    & .content-table-div {
+      width: 100%;
+      padding-bottom: 10px;
+
+      & .table-div-tr {
+        padding: 10px 0;
+
+        & .table-div-tr-td {
+          padding: 10px 0;
+        }
+      }
+
+      & .clear {
+        .clearFloat
+      }
+    }
+
+    & .content-table-first-bar {
+      width: 100%;
+      height: auto;
+      overflow-y: hidden;
+      overflow-x: auto;
+      //white-space: nowrap;
+
+      & .second-bar {
+        position: relative;
+        //display: inline-block;
+      }
+    }
+
+    .lessondetails-lessonInfo .@{PrefixCls}-outer div p {
+      max-width: 94% !important;
+    }
+  }
+}
+

@@ -1,0 +1,46 @@
+@import "../../themes/default";
+
+@PrefixCls: introduction;
+
+.@{PrefixCls}-outer {
+  font-size: @mediumFontSize;
+  text-indent: 2em;
+  line-height: @common-line-height;
+  background: #fff;
+  color: @color-text-paragraph;
+  padding: 0 20px;
+  &-content {
+    overflow: hidden;
+  }
+  &-button {
+    color: @primary-color;
+    text-align: right;
+
+  }
+  & p, h1, h2, h3, h4, h5 {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.@{PrefixCls}-mask {
+  position: relative;
+  width: 100%;
+  padding-top: 80px;
+  margin-top: -50px;
+  text-align: center;
+}
+
+.open {
+  height: 100% !important;
+
+}
+
+.vague {
+  background-image: -webkit-linear-gradient(top, hsla(0, 0%, 100%, .5), #fff);
+  background-image: -moz-linear-gradient(top, hsla(0, 0%, 100%, .5), #fff);
+  background-image: -ms-linear-gradient(top, hsla(0, 0%, 100%, .5), #fff);
+  background-image: -o-linear-gradient(top, hsla(0, 0%, 100%, .5), #fff);
+}
+
+

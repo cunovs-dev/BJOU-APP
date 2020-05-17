@@ -1,0 +1,39 @@
+@import '../../themes/default.less';
+
+.codeBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 20px;
+  .code {
+    flex-basis: 68%;
+    :global {
+     .am-list-line {
+        border: 0 !important;
+      }
+    }
+  }
+  .codeBtn {
+    color: @color-text-base;
+  }
+  :global {
+    .am-button-ghost {
+      border-color: #ddd;
+    }
+    .am-button-ghost.am-button-disabled {
+      background: #ddd;
+      border-color: #ddd;
+      color: #fff;
+    }
+
+  }
+}
+
+.overlay {
+  :global {
+    .am-popover-inner {
+      font-size: @smallFontSize !important;
+    }
+  }
+}
+

@@ -1,0 +1,49 @@
+@import "../../themes/default";
+
+@PrefixCls: review;
+
+.@{PrefixCls}-outer {
+  padding: 0 20px;
+  .top {
+
+    .title {
+      padding-bottom: 16px;
+      font-size: @titleFontSize;
+      border-bottom: @hd solid #fff;
+      line-height: @common-line-height;
+    }
+    .group, .info, .date {
+      margin-top: 10px;
+      font-size: @smallFontSize;
+      line-height: @common-line-height;
+    }
+    .info {
+      display: flex;
+      justify-content: space-between;
+    }
+    .date {
+      font-size: @mediumFontSize;
+      text-align: right;
+    }
+  }
+  .contnt {
+    .item {
+      display: flex;
+      justify-content: space-between;
+      font-size: @mediumFontSize;
+    }
+    .teacher {
+      display: flex;
+      justify-content: space-between;
+      font-size: @titleFontSize;
+      > div {
+        color: @primary-color;
+      }
+    }
+    .details{
+      text-align: right;
+      color: @primary-color;
+    }
+  }
+}
+
