@@ -29,7 +29,7 @@ export default modelExtend(model, {
   },
   effects: {
     * query ({ payload }, { call, put }) {
-      const { data = {}, code, message = '请稍后再试' } = yield call(queryStudentInfo, payload, true);
+      const { data = {}, code, message = '请稍后再试' } = yield call(queryStudentInfo, payload);
       if (code === 0) {
         yield put({
           type: 'updateState',

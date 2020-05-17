@@ -134,14 +134,14 @@ class Setup extends React.Component {
             >
               <span className={styles.text}> 修改密码</span>
             </List.Item>
-            <List.Item
-              thumb={<Icon type={getLocalIcon('/set/wechat.svg')} />}
-              arrow="horizontal"
-              onClick={() => {
-              }}
-            >
-              <span className={styles.text}> 绑定微信/解绑微信</span>
-            </List.Item>
+            {/*<List.Item*/}
+            {/*  thumb={<Icon type={getLocalIcon('/set/wechat.svg')} />}*/}
+            {/*  arrow="horizontal"*/}
+            {/*  onClick={() => {*/}
+            {/*  }}*/}
+            {/*>*/}
+            {/*  <span className={styles.text}> 绑定微信/解绑微信</span>*/}
+            {/*</List.Item>*/}
           </List>
           <ActivityIndicator animating={this.state.isUploading} toast text="上传中..." />
         </div>

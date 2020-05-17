@@ -72,7 +72,8 @@ export async function queryProgressList (payload) {
     url: GetProgressList,
     method: 'get',
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -81,7 +82,8 @@ export async function queryGetTimetable (payload) {
     url: GetTimetable,
     method: 'get',
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -90,7 +92,8 @@ export async function queryApplyList (payload) {
     url: GetApplyList,
     method: 'get',
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -100,7 +103,8 @@ export async function queryCollectionList (payload) {
     url: `${GetCollectionList}?currentPage=${currentPage}&pageSize=${pageSize}`,
     method: 'get',
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -122,7 +126,8 @@ export async function queryExamList (payload) {
     url: GetExamGK,
     method: 'get',
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -131,7 +136,8 @@ export async function queryNoticeDetails (payload) {
     url: GetNoticeDetails,
     method: 'get',
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -140,6 +146,7 @@ export async function queryCourseGK (payload) {
     url: GetCourseGK,
     method: 'get',
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }

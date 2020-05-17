@@ -21,11 +21,11 @@ const ApplyList = (props) => {
   const getState = () => {
     switch (applyState) {
       case '申请中':
-        return 'red';
+        return '#ff5656';
       case '已完成':
-        return 'green';
+        return '#2ff72f';
       default :
-        return 'red';
+        return '#ff5656';
     }
   };
   return (

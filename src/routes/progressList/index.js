@@ -60,7 +60,6 @@ function ProgressList ({ location, dispatch, progressList, loading }) {
             {cnIsArray(list) && list.map((item, i) => {
               return progressRow(item, i, handlerChangeRouteClick, dispatch);
             })}
-            <WhiteSpace size="lg" />
           </Refresh>
                           :
           <NoContent />

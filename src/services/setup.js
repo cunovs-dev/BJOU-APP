@@ -16,7 +16,8 @@ export async function setBKPortalAvatar (payload) {
     url: SetBKPortalAvatar,
     data: payload,
     hasToken: false,
-    method: 'put'
+    method: 'put',
+    fetchType: 'portal'
   });
 }
 
@@ -42,7 +43,8 @@ export async function queryResetTypes (payload) {
   return request({
     url: GetResetTypes,
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -50,7 +52,8 @@ export async function sendCode (payload) {
   return request({
     url: SendCode,
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -99,6 +102,7 @@ export async function queryAccount (payload) {
   return request({
     url: GetAccount,
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }

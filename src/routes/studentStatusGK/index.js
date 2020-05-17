@@ -17,8 +17,7 @@ const { api: { EnclosureDownload } } = config;
 
 function StudentStatusGK ({ location, dispatch, studentStatusGK }) {
   const { data } = studentStatusGK;
-  const { studentNumber = '', headImg = '', majorLevel, userName, mobilePhone, arrangement, studentState, className, email, schoolYear, schoolTerm, createUser } = data;
-  console.log(studentNumber);
+  const { studentNumber = '', registNumber = '-', headImg = '', majorLevel, majorName,userName, mobilePhone, classNumber, studentState, className, ruleNumber, schoolYear, schoolTerm, createUser } = data;
   return (
     <div>
       <div className={styles.top} style={{ backgroundImage: `url(${bg})` }}>
@@ -33,7 +32,7 @@ function StudentStatusGK ({ location, dispatch, studentStatusGK }) {
               </div>
             </div>
             <div>
-              {className}
+              {majorName}
             </div>
           </div>
         </div>
@@ -47,6 +46,24 @@ function StudentStatusGK ({ location, dispatch, studentStatusGK }) {
           >
             学号
           </List.Item>
+          <List.Item
+            thumb={<Icon type={getLocalIcon('/sprite/studentID.svg')} />}
+            extra={ruleNumber === '' ? '-' : ruleNumber}
+          >
+            规则号
+          </List.Item>
+          <List.Item
+            thumb={<Icon type={getLocalIcon('/sprite/studentID.svg')} />}
+            extra={className === '' ? '-' : className}
+          >
+            班名称
+          </List.Item>
+          <List.Item
+            thumb={<Icon type={getLocalIcon('/sprite/studentID.svg')} />}
+            extra={classNumber === '' ? '-' : classNumber}
+          >
+            班号
+          </List.Item>
           {/*<List.Item thumb={<Icon type={getLocalIcon('/sprite/email.svg')} />} extra={email}>邮箱</List.Item>*/}
           <List.Item thumb={<Icon type={getLocalIcon('/sprite/phone.svg')} />}
                      extra={mobilePhone || '未知'}>手机号</List.Item>
@@ -56,7 +73,8 @@ function StudentStatusGK ({ location, dispatch, studentStatusGK }) {
           <List.Item thumb={<Icon type={getLocalIcon('/sprite/enrollmentdate.svg')} />}
                      extra={schoolTerm}
           >招生季度</List.Item>
-          {/*<List.Item thumb={<Icon type={getLocalIcon('/sprite/createUser.svg')} />} extra={createUser}>招生单位</List.Item>*/}
+          <List.Item thumb={<Icon type={getLocalIcon('/sprite/createUser.svg')} />}
+                     extra={registNumber || '-'}>电子注册证</List.Item>
         </List>
       </div>
     </div>

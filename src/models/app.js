@@ -17,6 +17,7 @@ import md5 from 'md5';
 const encrypt = (word) => {
   return md5(word, 'hex');
 };
+
 const { userTag: { username, usertoken, userid, useravatar, portalToken, portalUserName, portalUserId, userloginname } } = config,
   { _cg } = cookie,
   getInfoUser = () => {
@@ -86,21 +87,19 @@ export default {
           others[portalToken] = _cg(portalToken);
           if (bkIdentity()) {
             dispatch({
-              type: 'queryMoodleToken',
+              type: 'query',
               payload: {
-                username: _cg(userloginname),
-                usersn: encrypt(`${_cg(userloginname)}f3c28dd72e61f16e173a353405af1fbd`)
+                userid: others[userid],
+                usertoken: others[usertoken]
               }
             });
           }
-          if (others.portalToken !== '') {
-            dispatch({
-              type: 'queryPortalUser',
-              payload: {
-                access_token: others.portalToken
-              }
-            });
-          }
+          dispatch({
+            type: 'queryPortalUser',
+            payload: {
+              access_token: others.portalToken
+            }
+          });
           if (others.usertoken !== '' || others.portalToken !== '') {
             dispatch({
               type: 'updateUsers'
@@ -120,27 +119,6 @@ export default {
     }
   },
   effects: {
-    * queryMoodleToken ({ payload }, { call, put }) {
-      const data = yield call(queryMoodleToken, payload);
-      if (data.success) {
-        const { id: moodleUserId = '', token = '' } = data,
-          users = {
-            user_token: token,
-            user_id: moodleUserId
-          };
-        setLoginIn(users);
-        yield put({
-          type: 'query',
-          payload: {
-            userid: moodleUserId,
-            usertoken: token
-          }
-        });
-      } else {
-        Toast.fail(data.message || '查询信息失败');
-      }
-    },
-
     * query ({ payload }, { call, put }) {
       if (_cg(usertoken) === '') {
         yield put(routerRedux.push({
@@ -178,16 +156,22 @@ export default {
     },
 
     * queryPortalUser ({ payload }, { call, put }) {
-      const { data, code, message = '个人信息获取失败' } = yield call(queryPortalUser);
-      if (code === 0) {
-        const { userId = '', userName = '' } = data;
-        const infos = {
-          portalUserId: userId,
-          portalUserName: userName
-        };
-        setSession(infos);
+      if (_cg(portalToken) === '' || !_cg(portalToken)) {
+        yield put(routerRedux.push({
+          pathname: '/login'
+        }));
       } else {
-        Toast.fail(message);
+        const { data, code, message = '个人信息获取失败' } = yield call(queryPortalUser);
+        if (code === 0) {
+          const { userId = '', userName = '' } = data;
+          const infos = {
+            portalUserId: userId,
+            portalUserName: userName
+          };
+          setSession(infos);
+        } else {
+          Toast.fail(message);
+        }
       }
     },
 
@@ -257,6 +241,29 @@ export default {
       }
       cnSetAllLocalFiles(targetFiles);
       if (cb) cb();
+    },
+    * queryMoodleToken ({ payload }, { call, put }) {
+      const data = yield call(queryMoodleToken, {
+        username: _cg(userloginname),
+        usersn: encrypt(`${_cg(userloginname)}f3c28dd72e61f16e173a353405af1fbd`)
+      });
+      if (data.success) {
+        const { id: moodleUserId = '', token = '' } = data,
+          users = {
+            user_token: token,
+            user_id: moodleUserId
+          };
+        setLoginIn(users);
+        setSession({ orgCode: 'bjou_student' });
+        yield put(routerRedux.push({
+          pathname: '/',
+          query: {
+            orgCode: 'bjou_student'
+          }
+        }));
+      } else {
+        Toast.fail(data.message || '查询信息失败');
+      }
     }
   },
   reducers: {

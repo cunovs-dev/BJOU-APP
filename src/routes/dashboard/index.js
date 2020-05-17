@@ -110,9 +110,10 @@ const Dashboard = ({ dashboard, loadingTask, loadingAllTask, dispatch }) => {
       );
     },
 
-    gridClick = ({ path, text }) => {
+    gridClick = ({ path, text, queryType }) => {
       handlerChangeRouteClick(path, {
-        name: text
+        name: text,
+        queryType
       }, dispatch);
     };
   return (

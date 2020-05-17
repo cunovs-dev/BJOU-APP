@@ -36,12 +36,16 @@ const Login = (props) => {
               isDoubleTake: false
             }
           });
-          if (buttonIndex !== 2) {
-            setSession({ orgCode: buttonIndex === 0 ? 'bjou_student' : 'ouchn_student' });
+          if (buttonIndex === 0) {
+            props.dispatch({
+              type: 'login/queryMoodleToken'
+            });
+          } else if (buttonIndex === 1) {
+            setSession({ orgCode: 'ouchn_student' });
             props.dispatch(routerRedux.push({
               pathname: '/',
               query: {
-                orgCode: buttonIndex === 0 ? 'bjou_student' : 'ouchn_student'
+                orgCode: 'ouchn_student'
               }
             }));
           }

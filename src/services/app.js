@@ -25,7 +25,8 @@ export async function queryUserInfo (data) {
     url: GetUserInfo,
     method: 'get',
     data,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -33,7 +34,7 @@ export async function queryMoodleUserInfo (data) {
   return request({
     url: GetMoodleUserInfo,
     method: 'get',
-    data,
+    data
   });
 }
 
@@ -163,7 +164,8 @@ export async function querySchoolCalendar (payload) {
     url: GetSchoolCalendar,
     method: 'get',
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -173,7 +175,8 @@ export async function queryInformationGK (payload) {
     url: GetInformationGK,
     method: 'get',
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -182,7 +185,8 @@ export async function queryGraduationInfo (payload) {
     url: GetGraduationInfo,
     method: 'get',
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -208,7 +212,8 @@ export async function queryPaymentState (payload) {
   return request({
     url: GetPaymentState,
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -216,7 +221,8 @@ export async function queryStudentInfo (payload) {
   return request({
     url: GetStudentInfo,
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -224,7 +230,8 @@ export async function queryPortalUser (payload) {
   return request({
     url: GetPortalUser,
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType:'portal'
   });
 }
 
@@ -242,7 +249,8 @@ export async function queryFiles (payload) {
   return request({
     url: EnclosureDownload,
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 

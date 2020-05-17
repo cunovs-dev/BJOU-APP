@@ -132,12 +132,16 @@ function Set ({ location, dispatch, mine, app }) {
           wrapProps
         },
         (buttonIndex) => {
-          if (buttonIndex !== 2) {
-            setSession({ orgCode: buttonIndex === 0 ? 'bjou_student' : 'ouchn_student' });
+          if (buttonIndex === 0) {
+            dispatch({
+              type: 'app/queryMoodleToken'
+            });
+          } else if (buttonIndex === 1) {
+            setSession({ orgCode: 'ouchn_student' });
             dispatch(routerRedux.push({
               pathname: '/',
               query: {
-                orgCode: buttonIndex === 0 ? 'bjou_student' : 'ouchn_student'
+                orgCode: 'ouchn_student'
               }
             }));
           }

@@ -74,6 +74,15 @@ const fetch = (options) => {
   }
   switch (method.toLowerCase()) {
     case 'get':
+      if (fetchType === 'portal') {
+        return axios.get(url, { params: cloneData },
+          {
+            headers: {
+              'x-requested-with': 'XMLHttpRequest'
+            }
+          }
+        );
+      }
       return axios.get(url, {
         params: cloneData
       });
@@ -82,11 +91,23 @@ const fetch = (options) => {
         data: cloneData
       });
     case 'post':
+      if (fetchType === 'portal') {
+        return axios.post(url,qs.stringify(cloneData, {
+            indices: false
+          }),
+          {
+            headers: {
+              'x-requested-with': 'XMLHttpRequest'
+            }
+          }
+        );
+      }
       if (fetchType === 'json') {
         return axios.post(url, JSON.stringify(cloneData),
           {
             headers: {
-              'Content-Type': 'application/json;charset=UTF-8'
+              'Content-Type': 'application/json;charset=UTF-8',
+              'x-requested-with': 'XMLHttpRequest'
             }
           }
         );

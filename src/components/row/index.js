@@ -892,12 +892,12 @@ module.exports = {
       <div className={styles[`${PrefixCls}-system`]} key={informationId}>
         <List.Item
           wrap
-          extra={
-            <Tag
-              text={state === '1' ? '已读' : '未读'}
-              color={state === '1' ? 'green' : 'blue'}
-              size="xs" />
-          }
+          // extra={
+          //   <Tag
+          //     text={state === '1' ? '已读' : '未读'}
+          //     color={state === '1' ? 'green' : 'blue'}
+          //     size="xs" />
+          // }
           onClick={(e) => onClick(rowData, dispatch, e)}
         >
           <div className={styles[`${PrefixCls}-system-content`]}>
@@ -930,18 +930,18 @@ module.exports = {
     // 移动端和pc端共用一个接口，但展示方式不一样 ，数据要做处理
     const year = parseInt(semesterYear, 10);
     const season = semesterYear.replace(/[ \d]/g, '');
-    const passed = courses.filter(ev => ev.isPass === 2).length || 0;
+    const passed = courses.filter(ev => ev.isPass === 1).length || 0;
     let totalScore;
     totalScore = courses.reduce((totalPrice, _) => totalPrice + _.course.courseScore, 0);
 
     return (
-      <div className={styles[`${PrefixCls}-progress`]}>
+      <div className={styles[`${PrefixCls}-progress`]} key={index}>
         <List.Item
           wrap
           className={styles[`${PrefixCls}-progress-list`]}
           arrow="horizontal"
           key={index}
-          extra={<span>{`${passed}门以通过`}</span>}
+          extra={<span>{`${passed}门已通过`}</span>}
           onClick={() => onClick('progressDetails', { index }, dispatch)}
         >
           <div className={styles[`${PrefixCls}-progress-content`]}>

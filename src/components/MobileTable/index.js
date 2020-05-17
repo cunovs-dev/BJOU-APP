@@ -30,7 +30,7 @@ const MobileTable = (props) => {
               <div>{item.normalScore}</div>
               <div>{item.rollScore}</div>
               <div>{item.totalScore}</div>
-              <div style={{ color: item.isPass ? 'green' : 'red' }}>{item.state}</div>
+              <div style={{ color: item.state === '及格' ? 'green' : 'red' }}>{item.state}</div>
             </div>
           ))
                            :
