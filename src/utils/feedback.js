@@ -95,7 +95,6 @@ module.exports = {
           for (const x in values) {
             if (choice.value == values[x]) {
               choice.checked = true;
-
               return;
             }
           }

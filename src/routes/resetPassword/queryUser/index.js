@@ -9,21 +9,11 @@ import { connect } from 'dva';
 import { InputItem, WhiteSpace, Button, Toast, Icon } from 'components';
 import { routerRedux } from 'dva/router';
 import Nav from 'components/nav';
-import { getLocalIcon, pattern, config, cookie } from 'utils';
+import { getLocalIcon, pattern, getValideError } from 'utils';
 import user from 'themes/images/login/user.png';
 import styles from './index.less';
 
-const { userTag: { portalToken, portalUserId } } = config,
-  { _cg } = cookie;
-
 class QueryUser extends React.Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      isDisabled: true
-    };
-  }
-
   moveInput = () => { // 解决android键盘挡住input
     this.refs.button.scrollIntoView(true);
   };
@@ -34,7 +24,8 @@ class QueryUser extends React.Component {
 
   onSubmit = () => {
     this.props.form.validateFields({
-      force: true
+      force: true,
+      first: true
     }, (error) => {
       if (!error) {
         this.props.dispatch({
@@ -44,15 +35,15 @@ class QueryUser extends React.Component {
           }
         });
       } else {
-        Toast.fail('请检查输入的信息');
+        Toast.fail(getValideError(error));
       }
     });
   };
 
   render () {
     const { loading } = this.props;
-    const { isDisabled } = this.state;
-    const { getFieldProps, getFieldError } = this.props.form;
+    const { getFieldProps, getFieldError, getFieldsValue } = this.props.form;
+    console.log(getFieldsValue(['accountName']).accountName === undefined);
     return (
       <div>
         <Nav title="找回密码" dispatch={this.props.dispatch} />
@@ -84,14 +75,14 @@ class QueryUser extends React.Component {
           <WhiteSpace size="lg" />
           <div className={styles.button} ref="button">
             <Button className={styles.prev} onClick={this.handlerPrev} inline>
-              上一步
+              返回
             </Button>
             <Button
               className={styles.next}
               loading={loading}
               inline
               type="primary"
-              // disabled={isDisabled}
+              disabled={getFieldsValue(['accountName']).accountName === ''}
               onClick={this.onSubmit}
             >
               下一步
@@ -107,5 +98,5 @@ class QueryUser extends React.Component {
 
 export default connect(({ resetPassword, loading }) => ({
   resetPassword,
-  loading: loading.effects['resetPassword/queryAccount']|| loading.effects['resetPassword/queryResetTypes']
+  loading: loading.effects['resetPassword/queryAccount'] || loading.effects['resetPassword/queryResetTypes']
 }))(createForm()(QueryUser));

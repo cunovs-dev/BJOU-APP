@@ -2,7 +2,7 @@ import { parse } from 'qs';
 import modelExtend from 'dva-model-extend';
 import { model } from 'models/common';
 import { Toast } from 'components';
-import { queryNoticeList } from 'services/list';
+import { queryNoticeList, queryNoticeTabs } from 'services/list';
 
 const namespace = 'system';
 const getDefaultPaginations = () => ({
@@ -10,14 +10,23 @@ const getDefaultPaginations = () => ({
   currentPage: 1,
   pageSize: 10
 });
+const getTabs = (arr) => {
+  if (cnIsArray(arr)) {
+    return JSON.parse(JSON.stringify(arr)
+      .replace(/categoryName/g, 'title'));
+  }
+  return [];
+};
 export default modelExtend(model, {
   namespace,
   state: {
     list: [],
     scrollerTop: 0,
     paginations: getDefaultPaginations(),
-    categoryId: 'bktzgg',
-    selectIndex: 0
+    categoryId: '',
+    selectIndex: 0,
+    tabs: [],
+    searchVal: ''
   },
   subscriptions: {
     setup ({ dispatch, history }) {
@@ -29,13 +38,15 @@ export default modelExtend(model, {
               payload: {
                 list: [],
                 scrollerTop: 0,
+                selectIndex: 0,
+                categoryId: '',
                 paginations: getDefaultPaginations()
               }
             });
             dispatch({
-              type: 'queryList',
+              type: 'queryNoticeTabs',
               payload: {
-                categoryId: 'bktzgg'
+                parentId: 'tzgl'
               }
             });
           }
@@ -73,6 +84,26 @@ export default modelExtend(model, {
       }
       if (callback) {
         callback();
+      }
+    },
+    * queryNoticeTabs ({ payload }, { call, put }) {
+      const { code, data = [], message = '请稍后再试' } = yield call(queryNoticeTabs, payload);
+      if (code === 0) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            tabs: getTabs(data) || [],
+            categoryId: data[0].categoryId || ''
+          }
+        });
+        yield put({
+          type: 'queryList',
+          payload: {
+            categoryId: data[0].categoryId || ''
+          }
+        });
+      } else {
+        Toast.fail(message, 2);
       }
     }
   }

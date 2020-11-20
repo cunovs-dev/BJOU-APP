@@ -1,7 +1,7 @@
 import { routerRedux } from 'dva/router';
 import { Modal, Toast } from 'components';
 import { resource } from 'utils/defaults';
-import { doDecode, cookie, config, userToken, downLoadFile } from 'utils';
+import { doDecode, cookie, config, userToken, downLoadFile, renderSize } from 'utils';
 
 const { userTag: { userid, usertoken }, api: { downFiles } } = config,
   { _cg } = cookie;
@@ -30,25 +30,12 @@ const handlerCourseClick = (params, courseid, dispatch) => {
   let downloadProgress;
   if ((modname || modulename) === 'resource') {
     const {
-      fileurl: fileUrl = '', mimetype: mimeType = '', filename: fileName = '', fileIdPrefix = '', fileOpenCallback = () => {
+      fileurl: fileUrl = '', mimetype: mimeType = '', filename: fileName = '', fileIdPrefix = '', filesize: fileSize = '', fileOpenCallback = () => {
       }
     } = contents[0];
-    downloadProgress = (text = 0) => {
-      if (dispatch) {
-        dispatch({
-          type: 'app/updateState',
-          payload: {
-            downloadProgress: text
-          }
-        });
-      } else {
-        fileOpenCallback(text !== 0);
-      }
-    };
-    if (fileUrl !== '') {
-      downloadProgress('加载中...');
+    const downLoading = () => {
       cnGetOrDownAndOpenFile({
-        fileName: `${fileIdPrefix !== '' ? fileIdPrefix : courseid}_${fileName}`,
+        fileName: `${fileIdPrefix !== '' ? fileIdPrefix : courseid}_${id}_${fileName}`,
         fileUrl: `${fileUrl}${fileUrl.indexOf('?') === -1 ? '?' : '&'}token=${userToken()}`,
         mimeType
       }, (e) => {
@@ -64,6 +51,58 @@ const handlerCourseClick = (params, courseid, dispatch) => {
         }
         Toast.offline(msg || '发生未知错误。');
       });
+    };
+    downloadProgress = (text = 0) => {
+      if (dispatch) {
+        dispatch({
+          type: 'app/updateState',
+          payload: {
+            downloadProgress: text
+          }
+        });
+      } else {
+        fileOpenCallback(text !== 0);
+      }
+    };
+    if (dispatch && instance !== '') {
+      dispatch({ // 文件更新状态
+        type: 'lessondetails/updateCompleteStatus',
+        payload: {
+          resourceid: instance
+        }
+      });
+    }
+    if (fileUrl !== '') {
+      if (/\.rar/.test(fileUrl)) {
+        alert('压缩包文件', '当前文件在移动端可能无法解压，建议使用PC端下载并解压', [
+          { text: '仍要下载',
+            onPress: () => {
+              downloadProgress('加载中...');
+              downLoading();
+            } },
+          {
+            text: '取消',
+            onPress: () => console.log('cancel')
+          }
+        ]);
+        return;
+      }
+      if (fileSize > 5242880) {
+        alert('大文件', `当前文件共${renderSize(fileSize)},下载需消耗大量流量和时间，建议使用PC端下载`, [
+          { text: '仍要下载',
+            onPress: () => {
+              downloadProgress('加载中...');
+              downLoading();
+            } },
+          {
+            text: '取消',
+            onPress: () => console.log('cancel')
+          }
+        ]);
+        return;
+      }
+      downloadProgress('加载中...');
+      downLoading();
       return;
     }
   }
@@ -101,8 +140,20 @@ const handlerCourseClick = (params, courseid, dispatch) => {
         break;
       }
       targets.pathname = 'lessondetails/queryResource';
+      targets.notRoute = true;
+      targets.param = {
+        dispatch,
+        modname: modname || modulename
+      };
+      break;
     case 'url':
       if (downloadProgress) downloadProgress('加载中...');
+      dispatch({
+        type: 'lessondetails/updateUrlStatus',
+        payload: {
+          urlid: instance
+        }
+      });
       let { pathname: targetPathname = 'lessondetails/queryUrl' } = targets;
       targets.pathname = targetPathname;
       targets.notRoute = true;
@@ -168,6 +219,21 @@ const handlerCourseClick = (params, courseid, dispatch) => {
         courseid,
         modname: modname || modulename
       };
+      break;
+    case 'mdlres':
+      const { coursewareID } = params;
+      targets.pathname = '/courseware';
+      targets.param = {
+        coursewareID
+      };
+      break;
+    case 'ouwiki':
+      if ((modname || modulename) !== '') {
+        alert('兼容性问题', '请使用网页版学习平台参与此活动。', [
+          { text: '知道了', onPress: () => console.log('cancel') }
+        ]);
+        // Toast.offline(`暂不支持${(modname || modulename)}类型标签，请使用PC端打开。`);
+      }
       break;
     default:
       if ((modname || modulename) !== '') {

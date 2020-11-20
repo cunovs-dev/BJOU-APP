@@ -6,7 +6,7 @@
 import React from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
-import { Layout, WhiteSpace, Icon, List, Tabs, Badge, Grid } from 'components';
+import { Layout, WhiteSpace, Icon, List, Tabs, Badge, Grid, ActionSheet } from 'components';
 import Refresh from 'components/pulltorefresh';
 import { noticeGKRow } from 'components/row';
 import { moduleGridsGK } from 'utils/defaults';
@@ -19,10 +19,18 @@ import NoContent from 'components/nocontent';
 import { ListSkeleton } from 'components/skeleton';
 import styles from './index.less';
 
+const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
+let wrapProps;
+if (isIPhone) {
+  wrapProps = {
+    onTouchStart: e => e.preventDefault()
+  };
+}
 const PrefixCls = 'dashboardGK';
 const DashboardGK = ({ dashboardGK, loading, dispatch }) => {
   const { Header, BaseLine } = Layout,
-    { list, refreshing = false, scrollerTop } = dashboardGK,
+    { list, refreshing = false, scrollerTop, infoGK = {}, studentIds, currentId } = dashboardGK,
+    { headImg = '' } = infoGK,
     onRefresh = (type) => {
       dispatch({
         type: `${PrefixCls}/updateState`,
@@ -74,54 +82,94 @@ const DashboardGK = ({ dashboardGK, loading, dispatch }) => {
         name: text,
         queryType
       }, dispatch);
+    },
+
+    showActionSheet = () => {
+      const BUTTONS = [...studentIds, '取消'];
+      ActionSheet.showActionSheetWithOptions({
+          options: BUTTONS,
+          cancelButtonIndex: BUTTONS.length - 1,
+          maskClosable: true,
+          'data-seed': 'logId',
+          wrapProps
+        },
+        (buttonIndex) => {
+          if (buttonIndex !== BUTTONS.length - 1) {
+            dispatch({
+              type: `${PrefixCls}/changeCode`,
+              payload: {
+                code: BUTTONS[buttonIndex]
+              }
+            });
+          }
+        }
+      );
     };
   return (
     <div className={styles.outer}>
-      <Header handlerClick={() => handlerChangeRouteClick('homepage', {}, dispatch)} />
-      <div className={styles.content}>
-        <div className={styles.grid}>
-          <Grid
-            data={moduleGridsGK}
-            hasLine={false}
-            columnNum={3}
-            renderItem={renderItem}
-            onClick={gridClick}
-          />
+      <Header
+        headImg={headImg}
+        handlerClick={() => handlerChangeRouteClick('homepage', {}, dispatch)}
+      />
+      {
+        cnIsArray(studentIds) && studentIds.length > 1 ?
+        <div className={styles.studentBox}>
+          <List.Item
+            onClick={showActionSheet}
+            thumb={<Icon type={getLocalIcon('/sprite/studentID.svg')} />}
+            extra={<Icon type={getLocalIcon('/sprite/exchange.svg')} color="#2B83D7" size="sm" />}
+          >
+            <span className={styles.studentId}>学号</span>
+            <span>{currentId}</span>
+          </List.Item>
         </div>
-        <WhiteSpace size="xs" />
-        <div className={styles.listTitle}>
-          <div>
-            通知公告
-          </div>
-          <div className={styles.more} onClick={() => handlerChangeRouteClick('systemGK', {}, dispatch)}>
-            <span>更多</span>
-            <Icon type={getLocalIcon('/sprite/right-square.svg')} />
-          </div>
-          <div className={styles.bottom} />
-        </div>
+                                                       :
+        null
+      }
+
+      <div className={styles.grid}>
+        <Grid
+          data={moduleGridsGK}
+          hasLine={false}
+          columnNum={3}
+          renderItem={renderItem}
+          onClick={gridClick}
+        />
+      </div>
+      <WhiteSpace size="xs" />
+      <div className={styles.listTitle}>
         <div>
-          <div className={styles.list}>
-            {loading && !refreshing ?
-             <ListSkeleton />
-                                    :
-             cnIsArray(list) && list.length > 0 ?
-             <Refresh
-               refreshing={refreshing}
-               onRefresh={() => onRefresh('queryList')}
-               onScrollerTop={() => onScrollerTop()}
-               scrollerTop={scrollerTop}
-             >
-               {list.map((item) => {
-                 return noticeGKRow(item, handlerPortalNoticeClick, dispatch);
-               })}
-               <BaseLine />
-             </Refresh>
-                                                :
-             <NoContent />
-            }
-          </div>
+          通知公告
+        </div>
+        <div className={styles.more} onClick={() => handlerChangeRouteClick('systemGK', {}, dispatch)}>
+          <span>更多</span>
+          <Icon type={getLocalIcon('/sprite/right-square.svg')} />
+        </div>
+        <div className={styles.bottom} />
+      </div>
+      <div>
+        <div className={styles.list}>
+          {loading && !refreshing ?
+           <ListSkeleton />
+                                  :
+           cnIsArray(list) && list.length > 0 ?
+           <Refresh
+             refreshing={refreshing}
+             onRefresh={() => onRefresh('queryList')}
+             onScrollerTop={() => onScrollerTop()}
+             scrollerTop={scrollerTop}
+           >
+             {list.map((item) => {
+               return noticeGKRow(item, handlerPortalNoticeClick, dispatch);
+             })}
+             <BaseLine />
+           </Refresh>
+                                              :
+           <NoContent />
+          }
         </div>
       </div>
+
     </div>
   );
 };

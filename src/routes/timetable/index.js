@@ -13,8 +13,9 @@ import styles from './index.less';
 
 const PrefixCls = 'timetable';
 
-function Timetable ({ location, dispatch, timetable, loading }) {
+function Timetable ({ location, dispatch, timetable, app, loading }) {
   const { list, refreshing, scrollerTop } = timetable,
+    { courseIdNumbers = {} } = app,
     { name = '课程表' } = location.query,
     onRefresh = () => {
       dispatch({
@@ -53,10 +54,9 @@ function Timetable ({ location, dispatch, timetable, loading }) {
             onScrollerTop={onScrollerTop.bind(null)}
             scrollerTop={scrollerTop}
           >
-            {cnIsArray(list) && list.map((item) => {
-              return timetableRow(item.course || {}, handlerLessonListClick, dispatch);
+            {cnIsArray(list) && list.map((item, i) => {
+              return timetableRow(item.course || {}, i, handlerLessonListClick, courseIdNumbers, dispatch);
             })}
-            <WhiteSpace size="lg" />
           </Refresh>
                           :
           <NoContent />
@@ -66,7 +66,8 @@ function Timetable ({ location, dispatch, timetable, loading }) {
   );
 }
 
-export default connect(({ loading, timetable }) => ({
+export default connect(({ loading, timetable, app }) => ({
   loading: loading.effects[`${PrefixCls}/queryList`],
-  timetable
+  timetable,
+  app
 }))(Timetable);

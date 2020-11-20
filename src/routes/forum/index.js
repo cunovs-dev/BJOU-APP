@@ -1,7 +1,7 @@
 import React from 'react';
 import Nav from 'components/nav';
 import { connect } from 'dva';
-import { Icon, List, Button, NoticeBar } from 'components';
+import { Icon, List, Button, NoticeBar, Modal } from 'components';
 import Introduction from 'components/introduction';
 import { getImages, getDurationDay, getLocalIcon } from 'utils';
 import { forumRow } from 'components/row';
@@ -18,7 +18,8 @@ class Forum extends React.Component {
     super(props);
     this.state = {
       height: 0,
-      startTime: 0
+      startTime: 0,
+      visible: true
     };
   }
 
@@ -40,14 +41,22 @@ class Forum extends React.Component {
     localStorage.removeItem('replyOpen');
   }
 
-  componentWillUnmount () {
-
-  }
+  showAlert = (text) => {
+    return (
+      <Modal
+        visible={this.state.visible}
+        transparent
+        footer={[{ text: '我知道了', onPress: () => this.setState({ visible: false }) }]}
+      >
+        {text}
+      </Modal>
+    );
+  };
 
   render () {
-    const { data: { id, course, intro, discussions = [], cancreatediscussions, numdiscussions = 0, maxattachments, maxbytes, blockafter, blockperiod, warnafter, name: forumName = '', groupid, type = '' }, scrollerTop, hasMore } = this.props.forum,
+    const { data: { id, course, intro, discussions = [], cancreatediscussions, numdiscussions = 0, maxattachments, maxbytes, blockafter, blockperiod, warnafter, name: forumName = '', groupid, type = '', _useScriptFunc = false }, scrollerTop, hasMore } = this.props.forum,
       { name = '', courseid, forumid, cmid } = this.props.location.query;
-    const { groups } = this.props.app,
+    const { groups, _useJavaScriptMessage } = this.props.app,
       onRefresh = (callback) => {
         this.props.dispatch({
           type: `${PrefixCls}/queryList`,
@@ -57,7 +66,7 @@ class Forum extends React.Component {
             forumid,
             cmid,
             callback
-          },
+          }
         });
       },
       onEndReached = (callback) => {
@@ -68,7 +77,7 @@ class Forum extends React.Component {
             forumid,
             cmid,
             callback
-          },
+          }
         });
       },
       onScrollerTop = (top) => {
@@ -76,14 +85,13 @@ class Forum extends React.Component {
           this.props.dispatch({
             type: `${PrefixCls}/updateState`,
             payload: {
-              scrollerTop: top,
-            },
+              scrollerTop: top
+            }
           });
         }
       },
       getContents = (lists) => {
-        const result = [];
-        result.push(
+        return (
           <ListView
             layoutHeader={''}
             dataSource={lists}
@@ -96,13 +104,11 @@ class Forum extends React.Component {
             onScrollerTop={onScrollerTop.bind(null)}
             scrollerTop={scrollerTop}
             useBodyScroll
-          />,
+          />
         );
-
-        return result;
       };
     return (
-      <div >
+      <div>
         <Nav
           title={forumName || name}
           dispatch={this.props.dispatch}
@@ -114,28 +120,28 @@ class Forum extends React.Component {
               }, this.props.dispatch)}
             >
               课程反馈
-            </span >
+            </span>
           }
         />
         {type === 'qanda' ?
-          <NoticeBar
-            marqueeProps={{ loop: true }}
-            mode="closable"
-            icon={null}
-          >这是一个问题和解答讨论区。为了能看到其他人的回应，您首先需要发表您的解答</NoticeBar > : ''}
+         <NoticeBar
+           marqueeProps={{ loop: true }}
+           mode="closable"
+           icon={null}
+         >这是一个问题和解答讨论区。为了能看到其他人的回应，您首先需要发表您的解答</NoticeBar> : ''}
         {blockperiod > 0 ?
-          <NoticeBar
-            marqueeProps={{ loop: true }}
-            mode="closable"
-            icon={null}
-          >{`${getDurationDay(blockperiod)}内最多发 ${blockafter}个帖子`}</NoticeBar > : ''}
-        <div className={styles[`${PrefixCls}-head`]} >
-          <div className={styles[`${PrefixCls}-head-title`]} >
+         <NoticeBar
+           marqueeProps={{ loop: true }}
+           mode="closable"
+           icon={null}
+         >{`${getDurationDay(blockperiod)}内最多发 ${blockafter}个帖子`}</NoticeBar> : ''}
+        <div className={styles[`${PrefixCls}-head`]}>
+          <div className={styles[`${PrefixCls}-head-title`]}>
             {forumName || name}
-          </div >
+          </div>
           <Introduction data={intro} dispatch={this.props.dispatch} courseid={course} />
-        </div >
-        <div className={styles[`${PrefixCls}-button`]} >
+        </div>
+        <div className={styles[`${PrefixCls}-button`]}>
           {cancreatediscussions ? <Button
             type="primary"
             inline
@@ -147,25 +153,28 @@ class Forum extends React.Component {
               id,
               course,
               type: 'add',
-              groupid,
+              groupid
             }, this.props.dispatch)}
           >
             开启一个新话题
-          </Button > : null}
-        </div >
-        <div className={styles.reset} style={{ height: this.state.height }} >
-          <div className={styles[`${PrefixCls}-title`]} >
+          </Button> : null}
+        </div>
+        <div className={styles.reset} style={{ height: this.state.height }}>
+          <div className={styles[`${PrefixCls}-title`]}>
             <Icon type={getLocalIcon('/sprite/talk.svg')} />
-            <div >{`话题(${numdiscussions})`}</div >
-          </div >
+            <div>{`话题(${numdiscussions})`}</div>
+          </div>
           {
             discussions.length > 0 ?
-              getContents(discussions)
-              :
-              <NoContent isLoading={this.props.loadForum} />
+            getContents(discussions)
+                                   :
+            <NoContent isLoading={this.props.loadForum} />
           }
-        </div >
-      </div >
+        </div>
+        {
+          _useJavaScriptMessage && _useScriptFunc && this.showAlert(_useJavaScriptMessage.info)
+        }
+      </div>
     );
   }
 }

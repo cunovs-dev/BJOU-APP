@@ -19,11 +19,11 @@ const SuccessPage = ({ dispatch }) => {
         alt=""
       />
       <WhiteSpace size="lg" />
-      <div>找回成功</div>
+      <div>修改成功 密码已更新</div>
       <WhiteSpace size="lg" />
       <WhiteSpace size="lg" />
       <WhiteSpace size="lg" />
-      <Button style={{ width: '100%' }} type="primary" onClick={handlerClick}>前往首页</Button>
+      <Button style={{ width: '100%' }} type="primary" onClick={handlerClick}>前往登录</Button>
     </div>
   );
 };

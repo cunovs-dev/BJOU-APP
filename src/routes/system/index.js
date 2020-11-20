@@ -6,7 +6,18 @@
 
 import React from 'react';
 import { connect } from 'dva';
-import { WhiteSpace, Icon, List, Layout, SegmentedControl, WingBlank, Tabs, Popover } from 'components';
+import {
+  WhiteSpace,
+  Icon,
+  List,
+  Layout,
+  Toast,
+  SegmentedControl,
+  WingBlank,
+  Tabs,
+  SearchBar,
+  Popover
+} from 'components';
 import { getLocalIcon } from 'utils';
 import { systemRow } from 'components/row';
 import { handlerPortalNoticeClick } from 'utils/commonevents';
@@ -19,23 +30,20 @@ const PrefixCls = 'system';
 
 @connect(({ system, loading }) => ({
   system,
-  loading: loading.effects['system/queryList']
+  loading: loading.effects['system/queryList'] || loading.effects['system/queryNoticeTabs']
 }))
+
+
 
 class System extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {
-      noticeType: props.system.categoryId,
-      visible: false
-    };
+    // this.state = {
+    //   visible: false,
+    // };
   }
 
   onSelect = (opt) => {
-    this.setState({
-      noticeType: opt.props.value,
-      visible: false
-    });
     this.props.dispatch({
       type: `${PrefixCls}/queryList`,
       payload: {
@@ -43,13 +51,22 @@ class System extends React.Component {
         isRefresh: true
       }
     });
+    this.props.dispatch({
+      type: `${PrefixCls}/updateState`,
+      payload: {
+        categoryId: opt.props.value,
+        searchVal: ''
+      }
+    });
   };
 
   handlerChange = (tab, index) => {
-    this.props.dispatch({
+    const { categoryId = '' } = tab;
+    const { dispatch } = this.props;
+    dispatch({
       type: `${PrefixCls}/queryList`,
       payload: {
-        categoryId: index === 1 ? 'gzzd' : this.state.noticeType,
+        categoryId,
         isRefresh: true
       }
     });
@@ -57,21 +74,72 @@ class System extends React.Component {
       type: `${PrefixCls}/updateState`,
       payload: {
         selectIndex: index,
+        categoryId,
         list: [],
-        scrollerTop: 0
+        scrollerTop: 0,
+        searchVal: ''
+      }
+    });
+  };
+
+  onSearch = (val) => {
+    if (val !== '') {
+      const { categoryId } = this.props.system;
+      this.props.dispatch({
+        type: `${PrefixCls}/queryList`,
+        payload: {
+          isRefresh: true,
+          categoryId,
+          title: val
+        }
+      });
+      this.props.dispatch({
+        type: `${PrefixCls}/updateState`,
+        payload: {
+          searchVal: val
+        }
+      });
+    } else {
+      Toast.fail('请输入标题名称');
+    }
+  };
+
+  onCancel = () => {
+    const { categoryId } = this.props.system;
+    this.props.dispatch({
+      type: `${PrefixCls}/queryList`,
+
+      payload: {
+        isRefresh: true,
+        categoryId
+      }
+    });
+    this.props.dispatch({
+      type: `${PrefixCls}/updateState`,
+      payload: {
+        searchVal: ''
+      }
+    });
+  };
+
+  onChange = (value) => {
+    this.props.dispatch({
+      type: `${PrefixCls}/updateState`,
+      payload: {
+        searchVal: value
       }
     });
   };
 
   render () {
-    const { [PrefixCls]: { list, paginations, scrollerTop, selectIndex }, loading, dispatch } = this.props,
-      { noticeType } = this.state,
+    const { [PrefixCls]: { list, paginations, scrollerTop, selectIndex, categoryId, tabs, searchVal = '' }, loading, dispatch } = this.props,
       onRefresh = (callback) => {
         dispatch({
           type: `${PrefixCls}/queryList`,
           payload: {
             isRefresh: true,
-            categoryId: selectIndex === 1 ? 'gzzd' : noticeType
+            categoryId,
+            title: searchVal !== '' ? searchVal : null
           },
           callback
         });
@@ -80,7 +148,8 @@ class System extends React.Component {
         dispatch({
           type: `${PrefixCls}/queryList`,
           payload: {
-            categoryId: selectIndex === 1 ? 'gzzd' : noticeType
+            categoryId,
+            title: searchVal !== '' ? searchVal : null
           },
           callback
         });
@@ -98,8 +167,7 @@ class System extends React.Component {
       getContents = (lists) => {
         const { currentPage, count, pageSize } = paginations,
           hasMore = (count > 0) && ((currentPage > 1 ? currentPage - 1 : 1) * pageSize < count);
-        const result = [];
-        result.push(
+        return (
           <ListView
             layoutHeader={''}
             dataSource={lists}
@@ -114,16 +182,23 @@ class System extends React.Component {
           />
         );
 
-        return result;
       },
       renderOverlay = () => {
-
         return [
-          <Popover.Item disabled={noticeType === 'bktzgg'} key="bktzgg" value="bktzgg">通知公告</Popover.Item>,
-          <Popover.Item disabled={noticeType === 'xytz'}
-                        key="xytz"
-                        value="xytz"
-          >学院通知</Popover.Item>
+          <Popover.Item
+            disabled={categoryId === 'bktzgg'}
+            key="bktzgg"
+            value="bktzgg"
+          >
+            通知公告
+          </Popover.Item>,
+          <Popover.Item
+            disabled={categoryId === 'yxtz'}
+            key="yxtz"
+            value="yxtz"
+          >
+            学院通知
+          </Popover.Item>
         ];
       },
 
@@ -132,7 +207,7 @@ class System extends React.Component {
           {
             title:
               <div className={styles.tab}>
-                <span>{this.state.noticeType === 'bktzgg' ? '通知公告' : '学院通知'}</span>
+                <span>{categoryId === 'bktzgg' ? '通知公告' : '学院通知'}</span>
                 <Popover
                   overlayClassName="fortest"
                   overlayStyle={{ color: 'currentColor' }}
@@ -151,18 +226,26 @@ class System extends React.Component {
           { title: <div>规章制度</div> }
         ];
       };
-
     return (
       <div>
         <Header isPure />
         <div className={styles.outer}>
           <Tabs
-            tabs={renderTabs()}
+            tabs={tabs}
             initialPage={0}
+            swipeable={false}
             page={selectIndex}
             onChange={this.handlerChange}
+            renderTabBar={props => <Tabs.DefaultTabBar {...props} page={4} />}
           />
-          {list.length > 0 ? getContents(list) : <NoContent isLoading={loading} />}
+          <SearchBar
+            placeholder="标题名称"
+            onSubmit={this.onSearch}
+            onCancel={this.onCancel}
+            onChange={this.onChange}
+            value={searchVal}
+          />
+          {list.length > 0 && !loading ? getContents(list) : <NoContent isLoading={loading} />}
         </div>
       </div>
     );

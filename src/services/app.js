@@ -1,6 +1,6 @@
 import { request, config } from 'utils';
 
-const { api: { userLogout, GetBaseInfo, GetUserInfo, GetMoodleUserInfo, GetMedalList, AddContacts, DeleteContacts, GetAttendance, GetAttendanceList, AccessTime, Log, OpinionAdd, SeedOpinionFiles, GetVersion, GetAppealDetail, ReplyAppeal, ReadAppeal, UploadRunningLogsApi, GetSchoolCalendar, GetGraduationInfo, GetMenusApi, sendMenusApi, GetPaymentState, GetStudentInfo, GetPortalUser, Collection, GetInformationGK, EnclosureDownload, GetMoodleToken } } = config;
+const { api: { userLogout, GetBaseInfo, GetUserInfo, GetMoodleUserInfo, GetMedalList, AddContacts, DeleteContacts, GetAttendance, GetAttendanceList, AccessTime, Log, OpinionAdd, SeedOpinionFiles, GetVersion, GetAppealDetail, ReplyAppeal, ReadAppeal, UploadRunningLogsApi, GetSchoolCalendar, GetGraduationInfo, GetMenusApi, sendMenusApi, GetPaymentState, GetStudentInfo, GetPortalUser, Collection, GetInformationGK, EnclosureDownload, GetMoodleToken, CheckFirstLogin, GetPersonal, GetCurrentUser, ChangCode, RefreshAttendance } } = config;
 
 
 export async function logout () {
@@ -25,7 +25,17 @@ export async function queryUserInfo (data) {
     url: GetUserInfo,
     method: 'get',
     data,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
+  });
+}
+
+
+export async function queryPersonal (data) {
+  return request({
+    url: GetPersonal,
+    method: 'get',
+    data
   });
 }
 
@@ -33,7 +43,7 @@ export async function queryMoodleUserInfo (data) {
   return request({
     url: GetMoodleUserInfo,
     method: 'get',
-    data,
+    data
   });
 }
 
@@ -163,7 +173,8 @@ export async function querySchoolCalendar (payload) {
     url: GetSchoolCalendar,
     method: 'get',
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -173,7 +184,8 @@ export async function queryInformationGK (payload) {
     url: GetInformationGK,
     method: 'get',
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -182,7 +194,8 @@ export async function queryGraduationInfo (payload) {
     url: GetGraduationInfo,
     method: 'get',
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -208,7 +221,8 @@ export async function queryPaymentState (payload) {
   return request({
     url: GetPaymentState,
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -216,7 +230,8 @@ export async function queryStudentInfo (payload) {
   return request({
     url: GetStudentInfo,
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -224,7 +239,8 @@ export async function queryPortalUser (payload) {
   return request({
     url: GetPortalUser,
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -242,7 +258,8 @@ export async function queryFiles (payload) {
   return request({
     url: EnclosureDownload,
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -251,5 +268,39 @@ export async function queryMoodleToken (payload) {
     url: GetMoodleToken,
     data: payload,
     hasToken: false
+  });
+}
+
+export async function checkFirstLogin (payload) {
+  return request({
+    url: CheckFirstLogin,
+    data: payload,
+    hasToken: false
+  });
+}
+
+export async function queryCurrentUser (payload) {
+  return request({
+    url: GetCurrentUser,
+    data: payload,
+    hasToken: false,
+    fetchType: 'portal'
+  });
+}
+
+export async function changeCode (payload) {
+  return request({
+    url: ChangCode,
+    data: payload,
+    hasToken: false,
+    fetchType: 'portal'
+  });
+}
+
+export async function refreshAttendance (data) {
+  return request({
+    url: RefreshAttendance,
+    method: 'get',
+    data
   });
 }

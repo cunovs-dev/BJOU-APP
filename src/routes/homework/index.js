@@ -6,7 +6,7 @@
 import React from 'react';
 import Nav from 'components/nav';
 import { connect } from 'dva';
-import { Button, WingBlank, List, WhiteSpace } from 'components';
+import { Button, WingBlank, List, WhiteSpace, Modal } from 'components';
 import { getImages, getErrorImg, getLocalIcon, changeLessonDate } from 'utils';
 import Introduction from 'components/introduction';
 import { ContentSkeleton } from 'components/skeleton';
@@ -20,13 +20,14 @@ const PrefixCls = 'homework';
 @connect(({ homework, loading, app }) => ({ // babel装饰器语法糖
   homework,
   app,
-  loading: loading.effects[`${PrefixCls}/queryHomework`],
+  loading: loading.effects[`${PrefixCls}/queryHomework`]
 }))
 class Homework extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      startTime: 0
+      startTime: 0,
+      visible: true
     };
   }
 
@@ -47,22 +48,30 @@ class Homework extends React.Component {
     });
   }
 
-  componentWillUnmount () {
-
-  }
+  showAlert = (text) => {
+    return (
+      <Modal
+        visible={this.state.visible}
+        transparent
+        footer={[{ text: '我知道了', onPress: () => this.setState({ visible: false }) }]}
+      >
+        {text}
+      </Modal>
+    );
+  };
 
   render () {
     const { name, assignId, cmid } = this.props.location.query,
-      { users: currentUser = {} } = this.props.app,
+      { users: currentUser = {}, _useJavaScriptMessage } = this.props.app,
       { data, comments } = this.props.homework,
       { loading } = this.props,
-      { assignmentsName, coursesName, intro = '', introattachments, coursesId: courseid = '' } = data;
+      { assignmentsName, coursesName, intro = '', introattachments, coursesId: courseid = '', _useScriptFunc = false } = data;
     //用户文件，以课程id_用户id开头；课程文件，以课程id_模块id开头.
     const getFileIdPrefix = (type = '') => {
       return type === '' ? `${courseid}_${cmid}` : `${courseid}_${currentUser.userid || ''}`;
     };
     return (
-      <div style={{ height: '100vh', background: '#fff' }} >
+      <div style={{ height: '100vh', background: '#fff' }}>
         <Nav
           title={name || assignmentsName}
           dispatch={this.props.dispatch}
@@ -75,47 +84,49 @@ class Homework extends React.Component {
               }, this.props.dispatch)}
             >
               课程反馈
-            </span >
+            </span>
           }
         />
         {
-          loading ? <ContentSkeleton /> : <div >
-            <div className={styles[`${PrefixCls}-top`]} >
-              <div className={styles[`${PrefixCls}-top-title`]} >{assignmentsName}</div >
-              <div className={styles[`${PrefixCls}-top-course`]} >
+          loading ? <ContentSkeleton /> : <div>
+            <div className={styles[`${PrefixCls}-top`]}>
+              <div className={styles[`${PrefixCls}-top-title`]}>{assignmentsName}</div>
+              <div className={styles[`${PrefixCls}-top-course`]}>
                 {coursesName}
-              </div >
-            </div >
+              </div>
+            </div>
             {intro !== '' && !loading ?
-              <Introduction data={intro} dispatch={this.props.dispatch} courseid={courseid} /> : ''}
+             <Introduction data={intro} dispatch={this.props.dispatch} courseid={courseid} /> : ''}
             <Enclosure data={introattachments} fileIdPrefix={getFileIdPrefix()} />
-            <List className={styles.replylist} >
+            <List className={styles.replylist}>
               <List.Item
                 arrow="horizontal"
                 extra={`评论(${comments.length})`}
                 multipleLine
                 onClick={
                   comments.length > 0 ?
-                    (e) => handlerChangeRouteClick(
-                      'details',
-                      {
-                        name: '评论',
-                        type: 'comments',
-                      },
-                      this.props.dispatch,
-                      e)
-                    :
-                    null
+                  (e) => handlerChangeRouteClick(
+                    'details',
+                    {
+                      name: '评论',
+                      type: 'comments'
+                    },
+                    this.props.dispatch,
+                    e)
+                                      :
+                  null
                 }
               >
                 作业备注
-              </List.Item >
-            </List >
+              </List.Item>
+            </List>
             <Status {...data} assignId={assignId} fileIdPrefix={getFileIdPrefix('u')} dispatch={this.props.dispatch} />
-          </div >
+          </div>
         }
-
-      </div >
+        {
+          _useJavaScriptMessage && _useScriptFunc && this.showAlert(_useJavaScriptMessage.info)
+        }
+      </div>
     );
   }
 }

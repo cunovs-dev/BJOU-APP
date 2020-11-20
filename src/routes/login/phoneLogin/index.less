@@ -46,13 +46,17 @@
     background: #F5F5F5 no-repeat center center;
     background-size: 44px 44px;
   }
+  input::placeholder {
+    font-size: @mediumFontSize;
+    padding-top: 0.4em;
+  }
   input::-webkit-input-placeholder {
     font-size: @mediumFontSize;
+    padding-top: 0.4em;
   }
 }
 
 .form {
-  margin-top: 80px;
   :global {
     .am-list-item .am-input-label.am-input-label-5 {
       width: auto;

@@ -5,7 +5,7 @@ import { WhiteSpace, List, Icon, ActivityIndicator, Toast } from 'components';
 import Nav from 'components/nav';
 import FileUpload from 'react-fileupload';
 import { routerRedux } from 'dva/router';
-import { getErrorImg, getPortalAvatar, getLocalIcon, config, cookie } from 'utils';
+import { getErrorImg, getPortalAvatar, getLocalIcon, config, cookie, bkIdentity } from 'utils';
 import { handlerChangeRouteClick } from 'utils/commonevents';
 import doUserAvatarUpload from 'utils/formsubmit';
 import styles from './index.less';
@@ -45,7 +45,7 @@ class Setup extends React.Component {
     const { name = '编辑个人信息' } = this.props.location.query,
       uploadSuccess = (res) => {
         const { data: { fileId } } = res;
-        _cs('portalHeadImg', fileId);
+        _cs(bkIdentity() ? 'portalHeadImg' : 'portalHeadImgGK', fileId);
         this.props.dispatch({
           type: 'setup/setPortalAvatar',
           payload: {
@@ -97,7 +97,7 @@ class Setup extends React.Component {
                   </p>
                   <div className={styles['icon-img-box']}>
                     <img
-                      src={getPortalAvatar(EnclosureDownload, _cg('portalHeadImg'))}
+                      src={getPortalAvatar(EnclosureDownload, _cg(bkIdentity() ? 'portalHeadImg' : 'portalHeadImgGK'))}
                       alt="icon"
                       onError={(el => getErrorImg(el, 'user'))}
                     />
@@ -134,14 +134,14 @@ class Setup extends React.Component {
             >
               <span className={styles.text}> 修改密码</span>
             </List.Item>
-            <List.Item
-              thumb={<Icon type={getLocalIcon('/set/wechat.svg')} />}
-              arrow="horizontal"
-              onClick={() => {
-              }}
-            >
-              <span className={styles.text}> 绑定微信/解绑微信</span>
-            </List.Item>
+            {/*<List.Item*/}
+            {/*  thumb={<Icon type={getLocalIcon('/set/wechat.svg')} />}*/}
+            {/*  arrow="horizontal"*/}
+            {/*  onClick={() => {*/}
+            {/*  }}*/}
+            {/*>*/}
+            {/*  <span className={styles.text}> 绑定微信/解绑微信</span>*/}
+            {/*</List.Item>*/}
           </List>
           <ActivityIndicator animating={this.state.isUploading} toast text="上传中..." />
         </div>

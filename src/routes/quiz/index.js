@@ -19,15 +19,17 @@ import styles from './index.less';
 const PrefixCls = 'quiz';
 const alert = Modal.alert;
 
-@connect(({ quiz, loading }) => ({ // babel装饰器语法糖
+@connect(({ quiz, loading, app }) => ({ // babel装饰器语法糖
   quiz,
-  loading: loading.effects[`${PrefixCls}/queryQuiz`],
+  app,
+  loading: loading.effects[`${PrefixCls}/queryQuiz`]
 }))
 class Quiz extends PureComponent {
   constructor (props) {
     super(props);
     this.state = {
-      startTime: 0
+      startTime: 0,
+      visible: true
     };
   }
 
@@ -39,7 +41,7 @@ class Quiz extends PureComponent {
         courseid,
         quizid,
         cmid
-      },
+      }
     });
 
     this.setState(() => ({
@@ -104,15 +106,28 @@ class Quiz extends PureComponent {
             navmethod
           },
           dispatch, e)
-      },
+      }
     ]);
+  };
+
+  showAlert = (text) => {
+    return (
+      <Modal
+        visible={this.state.visible}
+        transparent
+        footer={[{ text: '我知道了', onPress: () => this.setState({ visible: false }) }]}
+      >
+        {text}
+      </Modal>
+    );
   };
 
   render () {
     const { name, cmid } = this.props.location.query,
-      { data: { id, intro, options = {}, supportedMsg, buttontext, hasquestions, visiblebutton, attempts = [], feedbacktext, hasfeedback, finalgrade, grademethod, maxgrade, isfinished, preventnewattemptreasons = [], courseid, name: quizName = '', navmethod = '', timelimit = 0, sumgrades, decimalpoints }, info = {} } = this.props.quiz,
+      { data: { id, intro, options = {}, supportedMsg, buttontext, hasquestions, visiblebutton, attempts = [], feedbacktext, hasfeedback, finalgrade, grademethod, maxgrade, isfinished, preventnewattemptreasons = [], courseid, name: quizName = '', navmethod = '', timelimit = 0, sumgrades, decimalpoints, _useScriptFunc = false }, info = {} } = this.props.quiz,
       { preventaccessreasons = [] } = options,
       { loading, dispatch } = this.props;
+    const { _useJavaScriptMessage } = this.props.app;
     const method = this.getMethod(grademethod);
     const gradePros = {
       isfinished,
@@ -125,7 +140,7 @@ class Quiz extends PureComponent {
       dispatch: this.props.dispatch
     };
     return (
-      <div className={styles[`${PrefixCls}-outer`]} >
+      <div className={styles[`${PrefixCls}-outer`]}>
         <Nav
           title={name || quizName}
           dispatch={dispatch}
@@ -137,64 +152,64 @@ class Quiz extends PureComponent {
               }, dispatch)}
             >
               课程反馈
-            </span >
+            </span>
           }
         />
-        {loading ? <ContentSkeleton /> : <div >
+        {loading ? <ContentSkeleton /> : <div>
           {hasquestions === 0 ?
-            <NoticeBar
-              marqueeProps={{ loop: true }}
-              mode="closable"
-              icon={null}
-            >
-              尚未添加试题
-            </NoticeBar > : ''}
+           <NoticeBar
+             marqueeProps={{ loop: true }}
+             mode="closable"
+             icon={null}
+           >
+             尚未添加试题
+           </NoticeBar> : ''}
           {intro !== '' ?
-            <div className={styles[`${PrefixCls}-describe`]} >
-              <Introduction data={intro} courseid={courseid} dispatch={this.props.dispatch} />
-            </div >
-            : ''}
-          <div className={styles[`${PrefixCls}-info`]} >
+           <div className={styles[`${PrefixCls}-describe`]}>
+             <Introduction data={intro} courseid={courseid} dispatch={this.props.dispatch} />
+           </div>
+                        : ''}
+          <div className={styles[`${PrefixCls}-info`]}>
             {cnIsArray(options.accessrules) && options.accessrules.map((item, i) => {
-              return <div key={i} >{item}</div >;
+              return <div key={i}>{item}</div>;
             })}
-          </div >
-          <div className={styles[`${PrefixCls}-method`]} >
-            <span >评分方法</span >
-            <span >{this.getMethod(grademethod)}</span >
-          </div >
+          </div>
+          <div className={styles[`${PrefixCls}-method`]}>
+            <span>评分方法</span>
+            <span>{this.getMethod(grademethod)}</span>
+          </div>
           {
             cnIsArray(attempts) && attempts.length > 0
-              ?
-              <Status
-                data={attempts}
-                decimalpoints={decimalpoints}
-                maxgrade={maxgrade}
-                sumgrades={sumgrades}
-                dispatch={dispatch}
-              />
-              :
-              ''
+            ?
+            <Status
+              data={attempts}
+              decimalpoints={decimalpoints}
+              maxgrade={maxgrade}
+              sumgrades={sumgrades}
+              dispatch={dispatch}
+            />
+            :
+            ''
           }
           {finalgrade >= 0 ? <GradeBox {...gradePros} /> : null}
           <WhiteSpace size="lg" />
           <WhiteSpace size="lg" />
-          <WingBlank >
+          <WingBlank>
             {visiblebutton && !supportedMsg ?
-              <Button
-                type="primary"
-                onClick={timelimit > 0 ? this.showModal : handlerChangeRouteClick
-                  .bind(null, 'quizDetails',
-                    {
-                      quizid: id,
-                      name,
-                      ...info,
-                      navmethod,
-                      timelimit,
-                    },
-                    dispatch)}
-              >{buttontext}</Button > : ''}
-          </WingBlank >
+             <Button
+               type="primary"
+               onClick={timelimit > 0 ? this.showModal : handlerChangeRouteClick
+                 .bind(null, 'quizDetails',
+                   {
+                     quizid: id,
+                     name,
+                     ...info,
+                     navmethod,
+                     timelimit
+                   },
+                   dispatch)}
+             >{buttontext}</Button> : ''}
+          </WingBlank>
           {!visiblebutton && preventnewattemptreasons.length > 0 ?
             /* <NoticeBar
                marqueeProps={{ loop: true }}
@@ -203,22 +218,25 @@ class Quiz extends PureComponent {
              >
                {preventnewattemptreasons[0]}
              </NoticeBar > */
-            <StatusBox status={'unuseful'} content={preventnewattemptreasons[0]} color="#d24747" />
-            :
-            ''
+           <StatusBox status={'unuseful'} content={preventnewattemptreasons[0]} color="#d24747" />
+                                                                 :
+           ''
           }
           {preventaccessreasons.length > 0 ?
-            <StatusBox status={'unuseful'} content={preventaccessreasons[0]} color="#d24747" />
-            :
-            ''}
+           <StatusBox status={'unuseful'} content={preventaccessreasons[0]} color="#d24747" />
+                                           :
+           ''}
           {
             supportedMsg ?
-              <StatusBox status={'unuseful'} content={supportedMsg} color="#d24747" />
-              :
-              ''
+            <StatusBox status={'unuseful'} content={supportedMsg} color="#d24747" />
+                         :
+            ''
           }
-        </div >}
-      </div >
+        </div>}
+        {
+          _useJavaScriptMessage && _useScriptFunc && this.showAlert(_useJavaScriptMessage.info)
+        }
+      </div>
     );
   }
 }

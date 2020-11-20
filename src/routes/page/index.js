@@ -58,9 +58,10 @@ class Page extends React.PureComponent {
 
   render () {
     const { page } = this.props;
-    const {cmid = '' } = this.props.location.query;
+    const { cmid = '' } = this.props.location.query,
+      { _useJavaScriptMessage } = this.props.app;
     return (
-      <CoursePage dispatch={this.props.dispatch} propDatas={page} cmid={cmid} pathname={'page'} />
+      <CoursePage dispatch={this.props.dispatch} propDatas={page} cmid={cmid} pathname={'page'} alertInfo={_useJavaScriptMessage} />
     );
   }
 }

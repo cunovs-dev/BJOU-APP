@@ -1,15 +1,30 @@
 import { routerRedux } from 'dva/router';
-import { login, authentication, portalLogin, queryPortalToken, sendPhoneLoginCode } from 'services/login';
-import { queryUserInfo, queryFiles } from 'services/app';
+import {
+  login,
+  authentication,
+  portalLogin,
+  queryPortalToken,
+  sendPhoneLoginCode,
+  queryLoginTips,
+  queryCaptchaImg
+} from 'services/login';
+import { queryUserInfo, queryFiles, queryMoodleToken, checkFirstLogin } from 'services/app';
 import { sendCode } from 'services/setup';
 import { Toast } from 'antd-mobile';
 import modelExtend from 'dva-model-extend';
+import CryptoJS from 'crypto-js';
+import { setLoginIn, setSession, config, cookie } from 'utils';
 import md5 from 'md5';
-import { setLoginIn, setSession, config } from 'utils';
 import { pageModel } from './common';
 
-const { appId } = config;
+const { userTag: { bkStudentNumber, portalToken, userLoginId,userloginname } } = config,
+  { _cg } = cookie;
 const encrypt = (word) => {
+  return CryptoJS.SHA1(word)
+    .toString();
+};
+
+const encryptMd5 = (word) => {
   return md5(word, 'hex');
 };
 
@@ -20,18 +35,22 @@ export default modelExtend(pageModel, {
     state: true,
     loadPwd: '',
     buttonState: true, // 登录按钮状态
-    isDoubleTake: false
+    isDoubleTake: false,
+    content: '',
+    captchaImg: ''
   },
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(({ pathname }) => {
-        if (pathname === '/login') {
+        if (pathname.startsWith('/login')) {
           dispatch({
             type: 'updateState',
             payload: {
               state: true,
               loadPwd: '',
+              content: '',
               buttonState: true,
+              captchaImg: '',
               isDoubleTake: false
             }
           });
@@ -40,44 +59,6 @@ export default modelExtend(pageModel, {
     }
   },
   effects: {
-    // * login ({ payload }, { call, put }) {
-    //   yield put({
-    //     type: 'updateState',
-    //     payload: {
-    //       buttonState: false
-    //     }
-    //   });
-    //   const { from = '/', password = '', username: userloginname } = payload;
-    //   const data = yield call(login, payload, true);
-    //   yield put({
-    //     type: 'updateState',
-    //     payload: {
-    //       buttonState: true
-    //     }
-    //   });
-    //   if (data && data.success) {
-    //     const { fullname = '', userid = '', token = '', userpictureurl = '' } = data,
-    //       users = {
-    //         user_name: fullname,
-    //         user_pwd: password,
-    //         user_token: token,
-    //         user_id: userid,
-    //         user_avatar: userpictureurl,
-    //         user_login_name: userloginname
-    //       };
-    //     setLoginIn(users);
-    //     yield put({
-    //       type: 'app/updateUsers',
-    //       payload: {}
-    //     });
-    //     yield put(routerRedux.replace({
-    //       pathname: from
-    //     }));
-    //   } else {
-    //     Toast.offline(data.error);
-    //   }
-    // }
-
     * authentication ({ payload }, { call, put }) {
       yield put({
         type: 'updateState',
@@ -87,19 +68,36 @@ export default modelExtend(pageModel, {
       });
       const { password = '', username: userloginname } = payload;
       const { data, message = '请稍后再试', code } = yield call(authentication, {
+        ...payload,
         username: userloginname,
-        password: encrypt(password)
+        password: encrypt(password),
+        systemType: cnDeviceType()
       }, true);
       if (code === 0) {
-        setSession({ userloginname, userpwd: password });
+        setSession({ userloginname });
         const { loginId = '', secret = '' } = data;
         yield put({
           type: 'portalLogin',
           payload: {
             username: loginId,
-            password: secret
+            password: secret,
+            systemType: cnDeviceType()
           }
         });
+      } else if (code === -2) {
+        yield put({
+          type: 'queryCaptchaImg',
+          payload: {
+            capatcaKey: userloginname
+          }
+        });
+        yield put({
+          type: 'updateState',
+          payload: {
+            buttonState: true
+          }
+        });
+        Toast.fail(message);
       } else {
         yield put({
           type: 'updateState',
@@ -133,7 +131,6 @@ export default modelExtend(pageModel, {
         loginMode: 'SmsLogin'
       }, true);
       if (code === 0) {
-        // setSession({ userloginname, userpwd: password });
         const { loginId = '', secret = '' } = data;
         yield put({
           type: 'portalLogin',
@@ -160,8 +157,9 @@ export default modelExtend(pageModel, {
           buttonState: false
         }
       });
-      const { code, message = '请稍后再试' } = yield call(portalLogin, payload, true);
+      const { code, data, message = '请稍后再试' } = yield call(portalLogin, payload, true);
       if (code === 0) {
+        setSession({ userLoginId: data });
         yield put({
           type: 'queryPortalToken'
         });
@@ -179,9 +177,12 @@ export default modelExtend(pageModel, {
     * queryPortalToken (_, { call, put }) {
       const { data, code, message = '获取token失败' } = yield call(queryPortalToken);
       if (code === 0) {
-        setSession({ portalToken: data });
-        yield put({ // 判断用户类型
-          type: 'queryUserInfo'
+        setSession({ portalToken: data || '' });
+        yield put({
+          type: 'queryUserInfo',
+          payload: {
+            systemType: cnDeviceType()
+          }
         });
       } else {
         yield put({
@@ -191,6 +192,57 @@ export default modelExtend(pageModel, {
           }
         });
         Toast.fail(message);
+      }
+    },
+
+    * checkFirstLogin ({ payload }, { call, put }) {
+      const { access_token = '', orgCode = '' } = payload;
+      const { data = {}, code, message = '请稍后再试' } = yield call(checkFirstLogin, { access_token });
+      if (code === 0) {
+        const { firstLogin, userId } = data;
+        setSession({ portalUserId: userId });
+        if (firstLogin) {
+          yield put(routerRedux.push({
+            pathname: 'firstLogin',
+            query: {
+              userId
+            }
+          }));
+        } else {
+          yield put(routerRedux.push({
+            pathname: '/',
+            query: {
+              orgCode
+            }
+          }));
+        }
+      } else {
+        Toast.fail(message);
+      }
+    },
+
+    * queryMoodleToken ({ payload }, { call, put }) {
+      const data = yield call(queryMoodleToken, {
+        username: _cg(bkStudentNumber) || _cg(userLoginId).length >= 11 ? _cg(userloginname) : _cg(userLoginId), // 由于测试账号没有学号，保证测试账号能登录
+        usersn: encryptMd5(`${_cg(bkStudentNumber) || _cg(userLoginId).length>=11?_cg(userloginname):_cg(userLoginId)}f3c28dd72e61f16e173a353405af1fbd`)
+      });
+      if (data.success) {
+        const { id: moodleUserId = '', token = '' } = data,
+          users = {
+            user_token: token,
+            user_id: moodleUserId
+          };
+        setLoginIn(users);
+        setSession({ orgCode: 'bjou_student' });
+        yield put({
+          type: 'checkFirstLogin',
+          payload: {
+            access_token: _cg(portalToken) || '',
+            orgCode: 'bjou_student'
+          }
+        });
+      } else {
+        Toast.fail(data.message || '查询信息失败');
       }
     },
 
@@ -212,11 +264,13 @@ export default modelExtend(pageModel, {
       });
       const { data = {}, code, message = '请稍后再试' } = yield call(queryUserInfo, payload, true);
       if (code === 0) {
-        const { orgList = [], userId = '', userName = '', headImg } = data;
+        const { orgList = [], userId = '', userName = '', headImg, studentNumber = '' } = data;
         const infos = {
           portalUserId: userId,
           portalUserName: userName,
-          portalHeadImg: headImg
+          username: userName,
+          portalHeadImg: headImg,
+          bkStudentNumber: studentNumber
         };
         setSession(infos);
         if (orgList.length > 1) {
@@ -228,13 +282,21 @@ export default modelExtend(pageModel, {
           });
           setSession({ doubleTake: true });
         } else if (orgList.length === 1) {
-          setSession({ orgCode: orgList[0].orgCode });
-          yield put(routerRedux.push({
-            pathname: '/',
-            query: {
-              orgCode: orgList[0].orgCode
-            }
-          }));
+          if (orgList[0].orgCode === 'bjou_student') {
+            yield put({
+              type: 'queryMoodleToken'
+            });
+            setSession({ orgCode: orgList[0].orgCode });
+          } else {
+            setSession({ orgCode: orgList[0].orgCode });
+            yield put({
+              type: 'checkFirstLogin',
+              payload: {
+                access_token: _cg(portalToken) || '',
+                orgCode: orgList[0].orgCode
+              }
+            });
+          }
         }
       } else {
         yield put({
@@ -251,7 +313,33 @@ export default modelExtend(pageModel, {
       if (code === 0) {
 
       } else {
+        Toast.fail(message);
+      }
+    },
+    * queryLoginTips ({ payload }, { call, put }) {
+      const { data, success, message = '未知错误，请稍后再试' } = yield call(queryLoginTips, payload);
+      if (success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            content: data
+          }
+        });
+      } else {
+        Toast.fail(message);
+      }
+    },
+    * queryCaptchaImg ({ payload }, { call, put }) {
 
+      const { data, success, message = '验证码获取失败' } = yield call(queryCaptchaImg, payload);
+      if (success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            captchaImg: data
+          }
+        });
+      } else {
         Toast.fail(message);
       }
     }

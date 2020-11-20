@@ -11,23 +11,28 @@ const PrefixCls = 'achievementdetails';
 const AchievementDetails = ({ location, dispatch, achievementdetails, app }) => {
   const { gradeItems, refreshing, scrollerTop, courseid: retrunCourseid = '', coursename, graderaw = '' } = achievementdetails,
     { groups } = app,
-    { name, grade, courseid } = location.query,
+    { name, courseid } = location.query,
     getGroups = (group, id) => {
       const arr = [];
-      if (cnIsArray(groups) && groups.length > 0) {
-        groups.filter(item => item.courseid.toString() === id.toString())
-          .map((data) => {
-            arr.push({
-              label: data.name,
-              value: data.id
-            });
+      const newArr = groups.filter(item => item.courseid.toString() === id.toString());
+      if (cnIsArray(groups) && groups.length > 0 && newArr.length > 0) {
+        newArr.map((data) => {
+          arr.push({
+            label: data.name,
+            value: data.id
           });
+        });
         return arr[0].label;
       }
       return '';
     },
     onRefresh = () => {
-
+      dispatch({
+        type: `${PrefixCls}/refreshGrade`,
+        payload: {
+          courseid
+        }
+      });
     },
     onScrollerTop = (top) => {
       if (typeof top !== 'undefined' && !isNaN(top * 1)) {

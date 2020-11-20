@@ -90,7 +90,7 @@ class SetPhoneOrMail extends React.Component {
         this.props.dispatch({
           type: 'setPhoneOrMail/updatePhoneOrEmail',
           payload: {
-            userId: _cg(portalUserId),
+            access_token: _cg(portalToken),
             ...this.props.form.getFieldsValue()
           }
         });

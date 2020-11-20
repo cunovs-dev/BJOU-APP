@@ -20,16 +20,20 @@ class NoContent extends React.Component {
 
   componentDidMount () {
     const currentHeight = getOffsetTopByBody(this.lv);
-    setTimeout(() => (
+    this.timer = setTimeout(() => (
       this.setState((state) => ({
         height: state.height - currentHeight
       }))
     ), 0);
   }
 
+  componentWillUnmount () {
+    clearTimeout(this.timer);
+  }
+
   render () {
     return (
-      <div ref={el => this.lv = el} className={styles.outer} >
+      <div ref={el => this.lv = el} className={styles.outer}>
         <img src={this.props.isLoading ? loading : this.props.images} alt="" />
         <p className={styles.content}>{this.props.isLoading ? '加载中...' : this.props.context}</p>
       </div>

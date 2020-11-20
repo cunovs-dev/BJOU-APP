@@ -38,11 +38,12 @@ class AttendanceHead extends React.Component {
             <div className={styles[`${PrefixCls}-population-content-left`]} >
               <div >开课时间:{`${changeLessonDate(startdate)}-${changeLessonDate(enddate)}`}</div >
               <div >{`周全勤天数要求:${dayPass}次/周`}</div >
-              <div >实际教学周数:{weeks}</div >
+              <div >实际教学周数:{weeks}</div>
             </div >
             <div className={styles[`${PrefixCls}-population-content-right`]} >
-              <div style={{ backgroundImage: `url(${Huise})` }}
-                   className={styles[`${PrefixCls}-population-content-right-imag`]}
+              <div
+                style={{ backgroundImage: `url(${Huise})` }}
+                className={styles[`${PrefixCls}-population-content-right-imag`]}
               >
                 <div className={styles[`${PrefixCls}-population-content-right-imag-content`]} >
                   <div style={{ fontSize: '0.6rem' }} >{this.getPassedNum(passedWeeks)}</div >

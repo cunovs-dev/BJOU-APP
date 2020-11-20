@@ -17,7 +17,7 @@ class Refresh extends React.Component {
     super(props);
     this.state = {
       down: true,
-      height: 300,
+      height: 200
     };
   }
 
@@ -32,16 +32,14 @@ class Refresh extends React.Component {
       if (this._isMounted) {
         timer = setTimeout(() => this.setState(() => ({
           height: hei
-        })), 300);
+        })), 0);
       }
-      console.log(hei)
     }
     timer2 = setTimeout(() => {
       if (this.props.scrollerTop > 0) {
         el.scrollTop = this.props.scrollerTop;
       }
-    },300);
-
+    }, 0);
   }
 
   componentWillReceiveProps (nextProps) {
@@ -51,14 +49,15 @@ class Refresh extends React.Component {
       if (this._isMounted) {
         timer = setTimeout(() => this.setState(() => ({
           height: hei
-        })), 300);
+        })), 0);
       }
     }
     timer2 = setTimeout(() => {
       if (this.props.scrollerTop > 0 && this.props.scrollerTop !== nextProps.scrollerTop) {
         el.scrollTop = this.props.scrollerTop;
       }
-    },300);
+    }, 0);
+
   }
 
 
@@ -80,7 +79,7 @@ class Refresh extends React.Component {
         ref={el => this.ptr = el}
         style={{
           height: this.state.height,
-          overflow: 'auto',
+          overflow: 'auto'
         }}
         indicator={this.state.down ? {} : { deactivate: '上拉可以刷新' }}
         direction={this.state.down ? 'down' : 'up'}
@@ -88,15 +87,15 @@ class Refresh extends React.Component {
         onRefresh={this.props.onRefresh}
       >
         {this.props.children || ''}
-      </PullToRefresh >
+      </PullToRefresh>
     );
   }
 }
 
 Refresh.defaultProps = {
-  refreshing: false,
+  refreshing: false
 };
 Refresh.propTypes = {
-  onRefresh: PropTypes.func.isRequired,
+  onRefresh: PropTypes.func.isRequired
 };
 export default Refresh;

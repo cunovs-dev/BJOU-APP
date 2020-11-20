@@ -19,11 +19,11 @@ function Teachers ({ location, dispatch, teachers, loading }) {
       dispatch({
         type: `${PrefixCls}/updateState`,
         payload: {
-          refreshing: true,
-        },
+          refreshing: true
+        }
       });
       dispatch({
-        type: `${PrefixCls}/queryList`,
+        type: `${PrefixCls}/queryList`
       });
     },
     onScrollerTop = (top) => {
@@ -31,44 +31,44 @@ function Teachers ({ location, dispatch, teachers, loading }) {
         dispatch({
           type: `${PrefixCls}/updateState`,
           payload: {
-            scrollerTop: top,
-          },
+            scrollerTop: top
+          }
         });
       }
     };
   return (
-    <div className={styles.whiteBox} >
+    <div className={styles.whiteBox}>
       <Nav title="我的老师" hasShadow dispatch={dispatch} />
       <WhiteSpace size="lg" />
-      <div className={styles[`${PrefixCls}-outer`]} >
+      <div className={styles[`${PrefixCls}-outer`]}>
         {
-          loading ?
-            <ListSkeleton />
-            :
-            listData.length > 0 ?
-              <Refresh
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-                onScrollerTop={onScrollerTop.bind(null)}
-                scrollerTop={scrollerTop}
-              >
-                {cnIsArray(listData) && listData.map((item) => {
-                  return teachersRow(item, handlerChangeRouteClick, dispatch);
-                })
-                }
-                <WhiteSpace size="lg" />
-              </Refresh >
-              :
-              <NoContent />
+          loading && !refreshing ?
+          <ListSkeleton />
+                                :
+          listData.length > 0 ?
+          <Refresh
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            onScrollerTop={onScrollerTop.bind(null)}
+            scrollerTop={scrollerTop}
+          >
+            {cnIsArray(listData) && listData.map((item) => {
+              return teachersRow(item, handlerChangeRouteClick, dispatch);
+            })
+            }
+            <WhiteSpace size="lg" />
+          </Refresh>
+                              :
+          <NoContent />
         }
 
-      </div >
+      </div>
 
-    </div >
+    </div>
   );
 }
 
 export default connect(({ loading, teachers }) => ({
   loading: loading.effects[`${PrefixCls}/queryList`],
-  teachers,
+  teachers
 }))(Teachers);

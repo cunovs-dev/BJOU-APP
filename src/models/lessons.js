@@ -17,7 +17,8 @@ export default modelExtend(model, {
   state: {
     list: [],
     refreshing: false,
-    scrollerTop: 0
+    scrollerTop: 0,
+    selectedIndex: 0
   },
   subscriptions: {
     setup ({ dispatch, history }) {
@@ -28,7 +29,8 @@ export default modelExtend(model, {
               type: 'updateState',
               payload: {
                 list: [],
-                refreshing: false
+                refreshing: false,
+                selectedIndex: 0
               }
             });
             dispatch({
@@ -50,6 +52,12 @@ export default modelExtend(model, {
           userid,
           value: courseid
         });
+      yield put({
+        type: 'updateState',
+        payload: {
+          list:[],
+        }
+      });
       if (success) {
         yield put({
           type: 'updateState',

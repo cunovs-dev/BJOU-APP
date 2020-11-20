@@ -12,6 +12,9 @@ const PrefixCls = 'page';
 class CoursePage extends React.Component {
   constructor (props) {
     super(props);
+    this.state = {
+      visible: true
+    };
   }
 
   componentWillMount () {
@@ -22,19 +25,31 @@ class CoursePage extends React.Component {
 
   }
 
+  showAlert = (text) => {
+    return (
+      <Modal
+        visible={this.state.visible}
+        transparent
+        footer={[{ text: '我知道了', onPress: () => this.setState({ visible: false }) }]}
+      >
+          {text}
+      </Modal>
+    );
+  };
+
   render () {
-    const { propDatas, dispatch, pathname, cmid } = this.props;
-    const { data: { content = '', cm = {}, name: pageName = '加载中...' }, isOpen = false, viewImages = [], viewImageIndex = -1, queryName = '' } = propDatas,
+    const { propDatas, dispatch, pathname, cmid, alertInfo } = this.props;
+    const { data: { content = '', cm = {}, name: pageName = '加载中...', _useScriptFunc = false }, isOpen = false, viewImages = [], viewImageIndex = -1, queryName = '' } = propDatas,
       { course: courseId = '' } = cm,
       getContents = () => {
         return {
-          __html: content,
+          __html: content
         };
       },
       handleDivClick = (e) => {
         e.stopPropagation();
         //处理绑定的script脚本
-        if (cnExecCallbackFn) {
+        if (cnExecFunction) {
           let targetEl = e.target,
             counts = 0;
           while (targetEl != null && !targetEl.hasAttribute('exec_script_func')) {
@@ -66,8 +81,8 @@ class CoursePage extends React.Component {
               type: `${pathname}/updateState`,
               payload: {
                 isOpen: true,
-                viewImageIndex: curImageIndex,
-              },
+                viewImageIndex: curImageIndex
+              }
             });
             return;
           }
@@ -78,14 +93,14 @@ class CoursePage extends React.Component {
         dispatch({
           type: `${pathname}/updateState`,
           payload: {
-            isOpen: false,
-          },
+            isOpen: false
+          }
         });
       };
 
     return (
 
-      <div >
+      <div>
         <Nav
           title={getTitle(queryName || pageName)}
           dispatch={dispatch}
@@ -97,25 +112,28 @@ class CoursePage extends React.Component {
               }, dispatch)}
             >
               课程反馈
-            </span >
+            </span>
           }
         />
-        <div className={styles[`${PrefixCls}-outer`]} >
-          <div className={styles[`${PrefixCls}-outer-title`]} >
+        <div className={styles[`${PrefixCls}-outer`]}>
+          <div className={styles[`${PrefixCls}-outer-title`]}>
             {queryName || pageName}
-          </div >
+          </div>
           <WhiteSpace size="sm" />
-          <div className={styles[`${PrefixCls}-outer-content`]} >
+          <div className={styles[`${PrefixCls}-outer-content`]}>
             <div dangerouslySetInnerHTML={getContents()} onClick={handleDivClick} ref={ref => {
               this.contentElement = ref;
             }} />
-          </div >
-        </div >
+          </div>
+        </div>
         {
           isOpen && viewImageIndex !== -1 ?
-            <WxImageViewer onClose={onClose} urls={viewImages} index={viewImageIndex} /> : ''
+          <WxImageViewer onClose={onClose} urls={viewImages} index={viewImageIndex} /> : ''
         }
-      </div >
+        {
+          alertInfo && _useScriptFunc && this.showAlert(alertInfo.info)
+        }
+      </div>
     );
   }
 }
@@ -123,7 +141,7 @@ class CoursePage extends React.Component {
 CoursePage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   propDatas: PropTypes.object.isRequired,
-  pathname: PropTypes.string.isRequired,
+  pathname: PropTypes.string.isRequired
 };
 
 export default CoursePage;

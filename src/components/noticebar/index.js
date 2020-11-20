@@ -16,6 +16,7 @@ class Notice extends React.Component {
         marqueeProps={{ loop: true }}
         mode="closable"
         style={{ background: '#fdeeb9' }}
+        action={<Icon onClick={this.props.handlerClose} type="cross" size="xs" />}
       >
         <div
           onClick={this.props.handlerClick}
@@ -23,8 +24,8 @@ class Notice extends React.Component {
           // dangerouslySetInnerHTML={{ __html: this.props.content }}
         >
           {deleteHtmlTag(this.props.content)}
-        </div >
-      </NoticeBar >
+        </div>
+      </NoticeBar>
     );
   }
 }
@@ -32,6 +33,7 @@ class Notice extends React.Component {
 Notice.propTypes = {};
 Notice.defaultProps = {
   content: '',
-  handlerClick: null
+  handlerClick: null,
+  handlerClose: null
 };
 export default Notice;

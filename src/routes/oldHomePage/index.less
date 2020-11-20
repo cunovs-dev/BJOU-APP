@@ -1,0 +1,78 @@
+@import "../../themes/default";
+
+@PrefixCls: oldHomePage;
+.@{PrefixCls}-top {
+  position: relative;
+  z-index: 999;
+  padding-bottom: 100px;
+  background: #fff;
+  -moz-box-shadow: 0 5px 20px #ddd;
+  -webkit-box-shadow: 0 8px 20px #ddd;
+  box-shadow: 0 5px 15px #e0e0e0;
+  &-bg {
+    width: 100%;
+    height: 340px;
+    background-size: cover;
+    background-position: center center;
+    transform: scale(1.1);
+    -webkit-filter: blur(8px);
+    -moz-filter: blur(8px);
+    -o-filter: blur(8px);
+    -ms-filter: blur(8px);
+    filter: blur(8px);
+  }
+
+  &-avatar {
+    width: 500px;
+    position: absolute;
+    top: 180px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    & img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 6px solid #fff;
+      -moz-box-shadow: 0 10px 15px #c0d3e6;
+      -webkit-box-shadow: 0 10px 15px #c0d3e6;
+      box-shadow: 0 10px 15px #c0d3e6;
+    }
+
+  }
+
+}
+
+.@{PrefixCls}-info {
+  margin-top: 80px;
+  text-align: center;
+  &-username {
+    font-size: @titleFontSize;
+    font-weight: bold;
+    color: @color-text-base;
+  }
+  &-signature {
+    margin-top: 20px;
+    font-size: @smallFontSize;
+    color: @color-text-paragraph;
+
+     & p{
+       margin: 0;
+     }
+  }
+  &-button {
+    margin-top: 30px;
+  }
+}
+
+.@{PrefixCls}-list {
+  margin-bottom:40px;
+  :global {
+    .am-list-item .am-list-line .am-list-extra {
+      flex-basis: 70%;
+    }
+  }
+}

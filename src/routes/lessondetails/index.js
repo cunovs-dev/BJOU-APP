@@ -17,6 +17,7 @@ import ReactDOM from 'react-dom';
 import Refresh from 'components/pulltorefresh';
 import { getOffsetTopByBody, getLocalIcon, getImages, cookie } from 'utils';
 import { masterGrids } from 'utils/defaults';
+import Notice from 'components/noticebar';
 import { handlerChangeRouteClick, handlerDivInnerHTMLClick } from 'utils/commonevents';
 import Photoheader from 'components/photoheader';
 import PhotoBox from 'components/photobox';
@@ -126,10 +127,10 @@ class LessonDetails extends React.Component {
 
   render () {
     const { courseid = '' } = this.props.location.query,
-      { data: { name = '', summary = '', section0Summary = '', summaryformat = 0, master, tutor, courseImage, guide, resources, id = '', attendanceRule = '', attendance = {}, enddate, startdate, fullname, isAttendance }, refreshing, scrollerTop, selected, activityIndex, accordionIndex } = this.props.lessondetails,
+      { data: { name = '', summary = '', section0Summary = '', summaryformat = 0, master, tutor, courseImage, guide, resources, id = '', attendanceRule = '', attendance = {}, enddate, startdate, fullname, isAttendance, _useScriptFlag = false, _useScriptFunc = false }, refreshing, scrollerTop, selected, activityIndex, accordionIndex } = this.props.lessondetails,
       { weekStat = 0, config = {} } = attendance,
       { day_pass = '0' } = config,
-      { users: { userid } } = this.props.app,
+      { users: { userid },_useJavaScriptMessage } = this.props.app,
       dispatch = this.props.dispatch,
       props = {
         courseid,
@@ -155,7 +156,7 @@ class LessonDetails extends React.Component {
           }
         });
         this.props.dispatch({
-          type: `${PrefixCls}/queryDetails`,
+          type: `${PrefixCls}/refreshLessonDetails`,
           payload: {
             userid,
             courseid
@@ -229,6 +230,13 @@ class LessonDetails extends React.Component {
           isTeacher={!!isMaster(master, userid)}
           hasAttendance={isAttendance}
         />
+        {
+          _useScriptFlag || _useScriptFunc
+          ?
+          <Notice content={_useJavaScriptMessage.warn} />
+          :
+          null
+        }
         <div className={styles[`${PrefixCls}-tagbox`]}>
           <Tabs
             tabs={isMaster(master, userid) ? tabs : tabs.slice(0, tabs.length - 1)}

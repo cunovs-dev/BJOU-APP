@@ -7,7 +7,7 @@ import { allModule } from 'utils/defaults';
 import { routerRedux } from 'dva/router';
 import { Toast } from 'components';
 
-const { userTag: { userid } } = config,
+const { userTag: { userLoginId } } = config,
   { _cg, _cs } = cookie;
 
 
@@ -63,9 +63,9 @@ export default modelExtend(model, {
   },
   effects: {
     * sendMenus ({ payload, callback }, { call, put }) {
-      const { success, message = '请稍后再试' } = yield call(sendMenus, { ...payload, userId: _cg(userid) });
+      const { success, message = '请稍后再试' } = yield call(sendMenus, { ...payload, userId: _cg(userLoginId) });
       if (success) {
-        _cs(`menu_${_cg(userid)}`, payload.userConfig);
+        _cs(`menu_${_cg(userLoginId)}`, payload.userConfig);
         Toast.success('修改成功');
         if (callback) callback();
         yield put({
@@ -79,7 +79,7 @@ export default modelExtend(model, {
       }
     },
     * querys ({ payload }, { put }) {
-      const selectedMenu = _cg(`menu_${_cg(userid)}`);
+      const selectedMenu = _cg(`menu_${_cg(userLoginId)}`);
       yield put({
         type: 'updateState',
         payload: {

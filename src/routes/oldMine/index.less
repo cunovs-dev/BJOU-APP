@@ -1,0 +1,66 @@
+@import "../../themes/default";
+
+@PrefixCls: oldMine;
+.@{PrefixCls}-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 300px;
+  padding: 40px;
+  background: -webkit-linear-gradient(@primary-color, #3574b0);
+
+  &-content {
+    display: flex;
+    &-info {
+      display: flex;
+      flex-direction: column;
+      margin-left: 20px;
+
+      &-username {
+        color: #fff;
+        font-size: 36px;
+        font-weight: bold;
+      }
+      &-chapters {
+        color: #fff;
+        font-size: 26px;
+      }
+    }
+    & img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+    }
+
+  }
+  &-homepage {
+    display: flex;
+    align-self: flex-end;
+  }
+}
+
+.@{PrefixCls}-info {
+  font-size: 38px;
+  margin-bottom: 120px;
+  &-head {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 20px;
+
+    &-integral {
+      display: flex;
+      align-items: center;
+    }
+    &-change {
+      display: flex;
+      align-items: center;
+    }
+  }
+  :global {
+    .am-list-body {
+      border: 0;
+    }
+  }
+}
+
+

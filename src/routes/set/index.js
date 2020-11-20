@@ -20,7 +20,7 @@ import {
   ActionSheet
 } from 'components';
 import Nav from 'components/nav';
-import { getImages, getErrorImg, getLocalIcon, renderSize, cookie, setSession } from 'utils';
+import { getImages, getErrorImg, getLocalIcon, renderSize, cookie, setSession, bkIdentity } from 'utils';
 import { handlerChangeRouteClick } from 'utils/commonevents';
 import { routerRedux } from 'dva/router';
 import { baseURL, api } from 'utils/config';
@@ -119,7 +119,7 @@ function Set ({ location, dispatch, mine, app }) {
 
     handlerHelpClick = () => {
       if (cnOpen) {
-        cnOpen(HelpUrl());
+        cnOpen(HelpUrl(`/cnvhelp/${bkIdentity() ? 'bk' : 'gk'}/index.html`));
       }
     },
     showActionSheet = () => {
@@ -132,12 +132,16 @@ function Set ({ location, dispatch, mine, app }) {
           wrapProps
         },
         (buttonIndex) => {
-          if (buttonIndex !== 2) {
-            setSession({ orgCode: buttonIndex === 0 ? 'bjou_student' : 'ouchn_student' });
+          if (buttonIndex === 0) {
+            dispatch({
+              type: 'app/queryMoodleToken'
+            });
+          } else if (buttonIndex === 1) {
+            setSession({ orgCode: 'ouchn_student' });
             dispatch(routerRedux.push({
               pathname: '/',
               query: {
-                orgCode: buttonIndex === 0 ? 'bjou_student' : 'ouchn_student'
+                orgCode: 'ouchn_student'
               }
             }));
           }
@@ -195,7 +199,7 @@ function Set ({ location, dispatch, mine, app }) {
       {
         _cg('doubleTake')
         ?
-        <div className={styles.system} onClick={showActionSheet}>系统切换</div>
+        <div className={styles.system} onClick={showActionSheet}>身份切换</div>
         :
         null
       }

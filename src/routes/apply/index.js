@@ -21,7 +21,7 @@ const Apply = ({ apply, loading, location, dispatch }) => {
             <ApplyList params={item} key={i} />
           ))
                           :
-          <NoContent loading={loading} />
+          <NoContent isLoading={loading} />
         }
       </div>
     </div>
@@ -31,5 +31,6 @@ const Apply = ({ apply, loading, location, dispatch }) => {
 
 export default connect(({ apply, loading }) => ({
   apply,
-  loading
-}))(Apply);
+  loading: loading.effects['apply/queryList']
+}))
+(Apply);

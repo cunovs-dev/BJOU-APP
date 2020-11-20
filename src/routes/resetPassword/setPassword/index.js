@@ -8,6 +8,7 @@ import { createForm } from 'rc-form';
 import { connect } from 'dva';
 import { InputItem, WhiteSpace, WingBlank, Button, Toast, ActivityIndicator, Icon } from 'components';
 import { routerRedux } from 'dva/router';
+import { getValideError } from 'utils';
 import ResetForm from 'components/Form/resetForm';
 import Nav from 'components/nav';
 import styles from './index.less';
@@ -24,29 +25,41 @@ class SetPassword extends React.Component {
     this.timer = null;
   }
 
-  componentDidMount () {
-    this.props.dispatch({
-      type: 'resetPassword/queryPasswordRule',
-    });
-  }
+  // componentDidMount () {
+  //   this.props.dispatch({
+  //     type: 'resetPassword/queryPasswordRule'
+  //   });
+  // }
 
   onSubmit = () => {
-    const { code = '', userId = '' } = this.props.location.query;
     this.formRef.props.form.validateFields({
-      force: true
+      force: true,
+      first: true
     }, (error) => {
       if (!error) {
         const { password } = this.formRef.getItemsValue();
         this.props.dispatch({
-          type: 'resetPassword/resetPassword',
+          type: 'resetPassword/validRule',
           payload: {
-            userId,
-            password,
-            code
-          }
+            characters: password
+          },
+          callback: this.setPassword
         });
       } else {
-        Toast.fail('请检查输入的信息');
+        Toast.fail(getValideError(error));
+      }
+    });
+  };
+
+  setPassword = () => {
+    const { code = '', userId = '' } = this.props.location.query;
+    const { password } = this.formRef.getItemsValue();
+    this.props.dispatch({
+      type: 'resetPassword/resetPassword',
+      payload: {
+        userId,
+        password,
+        code
       }
     });
   };

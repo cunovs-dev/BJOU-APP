@@ -1,12 +1,13 @@
 import { routerRedux } from 'dva/router';
 import { Toast } from 'antd-mobile';
 import modelExtend from 'dva-model-extend';
-import md5 from 'md5';
-import { sendCode, verifyCode, resetPassword, queryPasswordRule, queryResetTypes, queryAccount } from 'services/setup';
+import CryptoJS from 'crypto-js';
+import { sendCode, verifyCode, resetPassword, queryPasswordRule, queryResetTypes, queryAccount,validRule } from 'services/setup';
 import { pageModel } from './common';
 
 const encrypt = (word) => {
-  return md5(word, 'hex');
+  return CryptoJS.SHA1(word)
+    .toString();
 };
 export default modelExtend(pageModel, {
   namespace: 'resetPassword',
@@ -74,6 +75,8 @@ export default modelExtend(pageModel, {
               [data[0].receiveType]: data[0].receiveNumber
             }
           }));
+        } else if (cnIsArray(data) && data.length === 0) {
+          Toast.fail('该账号未绑定手机或邮箱');
         }
       } else {
         Toast.fail(message);
@@ -120,6 +123,20 @@ export default modelExtend(pageModel, {
             rules: data
           }
         });
+      } else {
+        Toast.fail(message);
+      }
+    },
+    * validRule ({ payload, callback }, { call, put }) {
+      const { data = {}, code, message = '请稍后再试' } = yield call(validRule, payload);
+      if (code === 0) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            rules: data
+          }
+        });
+        if (callback) callback();
       } else {
         Toast.fail(message);
       }

@@ -20,9 +20,6 @@ const PrefixCls = 'lessons';
 class Lessons extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {
-      selectedIndex: 0
-    };
   }
 
   handlerChange = (e) => {
@@ -32,15 +29,17 @@ class Lessons extends React.Component {
         queryType: e.nativeEvent.selectedSegmentIndex
       }
     });
-    this.setState({
-      selectedIndex: e.nativeEvent.selectedSegmentIndex
+    this.props.dispatch({
+      type: 'lessons/updateState',
+      payload: {
+        selectedIndex: e.nativeEvent.selectedSegmentIndex
+      }
     });
   };
 
   render () {
     const { name = '课程' } = this.props.location.query,
-      { selectedIndex } = this.state,
-      { [PrefixCls]: { list, refreshing, scrollerTop }, loading, dispatch } = this.props,
+      { [PrefixCls]: { list, refreshing, scrollerTop, selectedIndex }, loading, dispatch } = this.props,
       onRefresh = () => {
         dispatch({
           type: `${PrefixCls}/updateState`,
@@ -66,7 +65,6 @@ class Lessons extends React.Component {
           });
         }
       };
-
     return (
       <div>
         <Nav title={name} isGoBack={false} navFixed={false} />
@@ -93,7 +91,7 @@ class Lessons extends React.Component {
             >
               {cnIsArray(list) && list.map((item) => {
                 if (selectedIndex === 1) {
-                  return closeLessonRow(item);
+                  return closeLessonRow(item, handlerLessonListClick, dispatch);
                 }
                 return openingLessonRow(item, handlerLessonListClick, (e) => {
                   e.stopPropagation();

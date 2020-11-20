@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import React from 'react';
 import { connect } from 'dva';
-import { Button, Flex, WingBlank, WhiteSpace, List, Icon, Modal, Badge, ActivityIndicator, Toast } from 'components';
+import { Button, Flex, WingBlank, WhiteSpace, List, Icon, Modal, Badge, Toast } from 'components';
 import { getImages, getErrorImg, getLocalIcon, renderSize } from 'utils';
 import CarouselGrid from 'components/carouselgrid';
 import { handlerChangeRouteClick, handleGridClick } from 'utils/commonevents';

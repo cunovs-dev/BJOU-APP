@@ -24,10 +24,10 @@ const PhotoBox = (props) => (
                className={styles[`${PrefixCls}-tutorteacher`]}
                onClick={props.handlerChartClick.bind(null, 'conversation', {
                  fromuserid: item.id,
-                 name: item.userData.fullname
+                 name: item.userData ? item.userData.fullname : ''
                }, props.dispatch)}
              >
-                {item.roleData ? item.roleData.roleName : ''}：{item.userData.fullname || ''}
+                {item.roleData ? item.roleData.roleName : ''}：{item.userData ? item.userData.fullname : ''}
               </span>
            )) : null}
         {props.master.length > 0 ?

@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { connect } from 'dva';
-import { WhiteSpace, Icon, List, Layout } from 'components';
+import { WhiteSpace, Icon, SearchBar, Toast, List, Layout, Tabs, } from 'components';
 import { getLocalIcon } from 'utils';
 import { systemRow } from 'components/row';
 import { handlerPortalNoticeClick } from 'utils/commonevents';
@@ -25,18 +25,88 @@ const PrefixCls = 'systemGK';
 class SystemGK extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {};
   }
 
+  onSearch = (val) => {
+    if (val !== '') {
+      const { categoryId } = this.props.systemGK;
+      this.props.dispatch({
+        type: `${PrefixCls}/queryList`,
+        payload: {
+          isRefresh: true,
+          categoryId,
+          title: val
+        }
+      });
+      this.props.dispatch({
+        type: `${PrefixCls}/updateState`,
+        payload: {
+          searchVal: val
+        }
+      });
+    } else {
+      Toast.fail('请输入标题名称');
+    }
+  };
+
+  onCancel = () => {
+    const { categoryId } = this.props.systemGK;
+    this.props.dispatch({
+      type: `${PrefixCls}/queryList`,
+      payload: {
+        isRefresh: true,
+        categoryId
+      }
+    });
+    this.props.dispatch({
+      type: `${PrefixCls}/updateState`,
+      payload: {
+        searchVal: ''
+      }
+    });
+  };
+
+  onChange = (value) => {
+    this.props.dispatch({
+      type: `${PrefixCls}/updateState`,
+      payload: {
+        searchVal: value
+      }
+    });
+  };
+
+  handlerChange = (tab, index) => {
+    const { categoryId = '' } = tab;
+    const { dispatch } = this.props;
+    dispatch({
+      type: `${PrefixCls}/queryList`,
+      payload: {
+        categoryId,
+        isRefresh: true
+      }
+    });
+    this.props.dispatch({
+      type: `${PrefixCls}/updateState`,
+      payload: {
+        selectIndex: index,
+        categoryId,
+        list: [],
+        scrollerTop: 0,
+        searchVal: ''
+      }
+    });
+  };
+
   render () {
-    const { [PrefixCls]: { list, paginations, scrollerTop }, loading, dispatch } = this.props,
+    const { [PrefixCls]: { list, paginations, scrollerTop, searchVal, selectIndex, categoryId, tabs,  }, loading, dispatch } = this.props,
 
       onRefresh = (callback) => {
         dispatch({
           type: `${PrefixCls}/queryList`,
           payload: {
             isRefresh: true,
-            categoryId: 'gktzgg'
+            categoryId,
+            title: searchVal !== '' ? searchVal : null
           },
           callback
         });
@@ -45,7 +115,8 @@ class SystemGK extends React.Component {
         dispatch({
           type: `${PrefixCls}/queryList`,
           payload: {
-            categoryId: 'gktzgg'
+            categoryId,
+            title: searchVal !== '' ? searchVal : null
           },
           callback
         });
@@ -63,8 +134,7 @@ class SystemGK extends React.Component {
       getContents = (lists) => {
         const { currentPage, count, pageSize } = paginations,
           hasMore = (count > 0) && ((currentPage > 1 ? currentPage - 1 : 1) * pageSize < count);
-        const result = [];
-        result.push(
+        return (
           <ListView
             layoutHeader={''}
             dataSource={lists}
@@ -78,21 +148,28 @@ class SystemGK extends React.Component {
             scrollerTop={scrollerTop}
           />
         );
-
-        return result;
       };
 
     return (
       <div>
         <Header isPure />
         <div className={styles.outer}>
-          <div className={styles.listTitle}>
-            <div>
-              通知公告
-            </div>
-            <div className={styles.bottom} />
-          </div>
-          {list.length > 0 ? getContents(list) : <NoContent isLoading={loading} />}
+          <Tabs
+            tabs={tabs}
+            initialPage={0}
+            swipeable={false}
+            page={selectIndex}
+            onChange={this.handlerChange}
+            renderTabBar={props => <Tabs.DefaultTabBar {...props} page={4} />}
+          />
+          <SearchBar
+            placeholder="标题名称"
+            onSubmit={this.onSearch}
+            onCancel={this.onCancel}
+            onChange={this.onChange}
+            value={searchVal}
+          />
+          {list.length > 0 && !loading ? getContents(list) : <NoContent isLoading={loading} />}
         </div>
       </div>
     );

@@ -8,7 +8,7 @@ import { queryCurrentTask, queryAllTask } from 'services/task';
 import { queryMenus, queryPaymentState } from 'services/app';
 import * as query from 'services/message';
 
-const { userTag: { userid, usertoken } } = config,
+const { userTag: { userid, usertoken, userLoginId } } = config,
   { _cg, _cs } = cookie,
   adapter = (list) => {
     cnIsArray(list) && list.map((item) => {
@@ -36,32 +36,34 @@ export default modelExtend(model, {
     taskAllList: [],
     refreshing: false,
     selectIndex: 0,
-    sysNotice: 0,
+    sysNotice: {},
     taskTop: 0,
     lessonTop: 0,
     payState: 2,
-    menus: [
-      {
-        id: '0',
-        icon: require('themes/images/grids/more.png'),
-        text: '更多',
-        path: 'modelManage'
-      }
-    ]
+    menus: {
+      id: '0',
+      icon: require('themes/images/grids/more.png'),
+      text: '更多',
+      path: 'modelManage'
+    },
+    menuStr: ''
   },
 
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(({ pathname, action }) => {
-
         if (pathname === '/dashboard' || pathname === '/' && bkIdentity()) {
           if (action === 'PUSH') {
             dispatch({
               type: 'updateState',
               payload: {
                 taskTop: 0,
-                lessonTop: 0
+                lessonTop: 0,
+                menuStr: ''
               }
+            });
+            dispatch({
+              type: 'queryMenus'
             });
           }
           dispatch({
@@ -70,9 +72,7 @@ export default modelExtend(model, {
           dispatch({
             type: 'query'
           });
-          dispatch({
-            type: 'queryMenus'
-          });
+
           dispatch({
             type: 'querySysNotice',
             payload: {
@@ -137,7 +137,7 @@ export default modelExtend(model, {
         yield put({
           type: 'updateState',
           payload: {
-            sysNotice: data.data[0]
+            sysNotice: data.data[0] || {}
           }
         });
       } else {
@@ -145,25 +145,13 @@ export default modelExtend(model, {
       }
     },
     * queryMenus ({ payload }, { call, put, select }) {
-      yield put({
-        type: 'updateState',
-        payload: {
-          menus: [{
-            id: '0',
-            icon: require('themes/images/grids/more.png'),
-            text: '更多',
-            path: 'modelManage'
-          }]
-        }
-      });
-      const { menus } = yield select(_ => _.dashboard);
-      const { success, data, message = '请稍后再试' } = yield call(queryMenus, { userId: _cg(userid) });
+      const { success, data, message = '请稍后再试' } = yield call(queryMenus, { userId: _cg(userLoginId) });
       if (success) {
-        _cs(`menu_${_cg(userid)}`, data.userConfig);
+        _cs(`menu_${_cg(userLoginId)}`, data.userConfig);
         yield put({
           type: 'updateState',
           payload: {
-            menus: [...getMenus(data.userConfig), ...menus]
+            menuStr: data.userConfig
           }
         });
       } else {

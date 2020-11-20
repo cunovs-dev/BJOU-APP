@@ -9,21 +9,24 @@ import { connect } from 'dva';
 import { Layout, WhiteSpace, Icon, List, Tabs, Badge, Grid } from 'components';
 import Refresh from 'components/pulltorefresh';
 import { taskRow, taskLessonRow } from 'components/row';
-import { getLocalIcon } from 'utils';
+import { getLocalIcon, config, cookie } from 'utils';
 import {
   handlerLessonListClick,
   handlerChangeRouteClick,
   handlerCourseClick,
   handlerDivInnerHTMLClick
 } from 'utils/commonevents';
+import { allModule } from 'utils/defaults';
 import Notice from 'components/noticebar';
 import TimeLine from 'components/timeline/index';
 import bell from '../../themes/images/others/bell.png';
 import NoContent from 'components/nocontent';
 import { ListSkeleton } from 'components/skeleton';
-import styles from './index.less';
-import { _cg } from '../../utils/cookie';
 
+import styles from './index.less';
+
+const { userTag: { userLoginId } } = config,
+  { _cg } = cookie;
 const PrefixCls = 'dashboard';
 const Dashboard = ({ dashboard, loadingTask, loadingAllTask, dispatch }) => {
   const tabs = [
@@ -32,7 +35,7 @@ const Dashboard = ({ dashboard, loadingTask, loadingAllTask, dispatch }) => {
   ];
 
   const { Header, BaseLine } = Layout,
-    { taskList, taskAllList, refreshing = false, selectIndex = 0, count, sysNotice, lessonTop, taskTop, menus, payState } = dashboard,
+    { taskList, taskAllList, refreshing = false, selectIndex = 0, count, sysNotice, lessonTop, taskTop, menus, payState, menuStr } = dashboard,
     moreMessage = (text) => {
       dispatch(routerRedux.push({
         pathname: '/details',
@@ -42,6 +45,14 @@ const Dashboard = ({ dashboard, loadingTask, loadingAllTask, dispatch }) => {
           name: '通知详情'
         }
       }));
+    },
+    handlerClose = () => {
+      dispatch({
+        type: `${PrefixCls}/updateState`,
+        payload: {
+          refreshing: false
+        }
+      });
     },
     onTabsChange = (tab, index) => {
       dispatch({
@@ -92,28 +103,40 @@ const Dashboard = ({ dashboard, loadingTask, loadingAllTask, dispatch }) => {
       const { icon = '', text = '', badge = false } = el;
       return (
         badge ?
-        (
-          <div className={styles.items}>
-            <Badge text={0} overflowCount={99}>
+          (
+            <div className={styles.items}>
+              <Badge text={0} overflowCount={99}>
+                <img className={styles.img} src={icon} alt="" />
+              </Badge>
+              <div className={styles.text}>{text}</div>
+            </div>
+          )
+          :
+          (
+            <div className={styles.items}>
               <img className={styles.img} src={icon} alt="" />
-            </Badge>
-            <div className={styles.text}>{text}</div>
-          </div>
-        )
-              :
-        (
-          <div className={styles.items}>
-            <img className={styles.img} src={icon} alt="" />
-            <div className={styles.text}>{text}</div>
-          </div>
-        )
+              <div className={styles.text}>{text}</div>
+            </div>
+          )
       );
     },
 
-    gridClick = ({ path, text }) => {
+    gridClick = ({ path, text, queryType }) => {
       handlerChangeRouteClick(path, {
-        name: text
+        name: text,
+        queryType
       }, dispatch);
+    },
+
+    getMenus = (str) => {
+      const arr = [];
+      cnIsArray(str.split(',')) && str.split(',')
+        .map(item => {
+          arr.push(
+            allModule.find(ev => ev.id === item)
+          );
+        });
+      return arr;
     };
   return (
     <div className={styles.outer}>
@@ -124,20 +147,29 @@ const Dashboard = ({ dashboard, loadingTask, loadingAllTask, dispatch }) => {
       />
       <div className={styles.content}>
         <div className={styles.grid}>
-          {sysNotice.noticeContent && sysNotice.noticeContent !== '' ?
-           <div className={styles.systemNotice}>
-             <Notice content={sysNotice.noticeContent} handlerClick={() => moreMessage(sysNotice.noticeContent)} />
-           </div>
-                                                                     :
-           null
+          {JSON.stringify(sysNotice) !== '{}' && sysNotice.noticeContent && sysNotice.noticeContent !== '' ?
+            <div className={styles.systemNotice}>
+              <Notice
+                content={sysNotice.noticeContent}
+                handlerClose={() => handlerClose()}
+                handlerClick={() => moreMessage(sysNotice.noticeContent)}
+              />
+            </div>
+            :
+            null
           }
-          <Grid
-            data={menus}
-            hasLine={false}
-            columnNum={4}
-            renderItem={renderItem}
-            onClick={gridClick}
-          />
+          {
+            _cg(`menu_${_cg(userLoginId)}`)||menuStr ?
+              <Grid
+                data={[...getMenus(_cg(`menu_${_cg(userLoginId)}`) || menuStr), menus]}
+                hasLine={false}
+                columnNum={4}
+                renderItem={renderItem}
+                onClick={gridClick}
+              />
+              :
+              null
+          }
         </div>
         <WhiteSpace size="xs" />
         <List className="notice">
@@ -163,44 +195,44 @@ const Dashboard = ({ dashboard, loadingTask, loadingAllTask, dispatch }) => {
           <div>
             <div className={styles.tasklist}>
               {loadingTask && !refreshing ?
-               <ListSkeleton />
-                                          :
-               cnIsArray(taskList) && taskList.length > 0 ?
-               <Refresh
-                 refreshing={refreshing}
-                 onRefresh={() => onRefresh('query')}
-                 onScrollerTop={() => onScrollerTaskTop()}
-                 scrollerTop={taskTop}
-               >
-                 {taskList.map((item) => {
-                   return taskRow(item, () => handlerCourseClick(item, item.courseid, dispatch), (e) => handlerDivInnerHTMLClick(e, item.courseid, dispatch));
-                 })}
-                 <BaseLine />
-               </Refresh>
-                                                          :
-               <NoContent />
+                <ListSkeleton />
+                :
+                cnIsArray(taskList) && taskList.length > 0 ?
+                  <Refresh
+                    refreshing={refreshing}
+                    onRefresh={() => onRefresh('query')}
+                    onScrollerTop={() => onScrollerTaskTop()}
+                    scrollerTop={taskTop}
+                  >
+                    {taskList.map((item) => {
+                      return taskRow(item, () => handlerCourseClick(item, item.courseid, dispatch), (e) => handlerDivInnerHTMLClick(e, item.courseid, dispatch));
+                    })}
+                    <BaseLine />
+                  </Refresh>
+                  :
+                  <NoContent />
               }
             </div>
           </div>
           <div className={styles[`${PrefixCls}-tasklist`]}>
             <WhiteSpace />
             {loadingAllTask && !refreshing ?
-             <ListSkeleton />
-                                           :
-             cnIsArray(taskAllList) && taskAllList.length > 0 ?
-             <Refresh
-               refreshing={refreshing}
-               onRefresh={() => onRefresh('queryAllTask')}
-               onScrollerTop={() => onScrollerLessonTop()}
-               scrollerTop={lessonTop}
-             >
-               {taskAllList.map((item) => {
-                 return taskLessonRow(item, handlerLessonListClick, dispatch);
-               })}
-               <BaseLine />
-             </Refresh>
-                                                              :
-             <NoContent />
+              <ListSkeleton />
+              :
+              cnIsArray(taskAllList) && taskAllList.length > 0 ?
+                <Refresh
+                  refreshing={refreshing}
+                  onRefresh={() => onRefresh('queryAllTask')}
+                  onScrollerTop={() => onScrollerLessonTop()}
+                  scrollerTop={lessonTop}
+                >
+                  {taskAllList.map((item) => {
+                    return taskLessonRow(item, handlerLessonListClick, dispatch);
+                  })}
+                  <BaseLine />
+                </Refresh>
+                :
+                <NoContent />
             }
           </div>
         </Tabs>

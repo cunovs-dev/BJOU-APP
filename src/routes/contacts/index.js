@@ -17,7 +17,6 @@ const Contacts = ({ location, dispatch, contacts }) => {
       <Nav title={name} dispatch={dispatch} hasShadow />
       <WhiteSpace />
       <div className={styles[`${PrefixCls}-searchbox`]} >
-        {/* <SearchBar placeholder="搜索联系人" /> */}
       </div >
       <div className={styles[`${PrefixCls}-contactsbox`]} >
         <Accordion defaultActiveKey="0" className="my-accordion" >

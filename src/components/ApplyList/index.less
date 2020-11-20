@@ -2,7 +2,7 @@
 
 .container {
   width: 100%;
-  height: 140px;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -10,19 +10,23 @@
   border-radius: @radius-lg;
   box-sizing: border-box;
   margin-bottom: 20px;
+
   .content {
     display: flex;
     align-items: center;
+
     .type {
       font-size: @titleFontSize;
       font-weight: bold;
       color: @color-text-base;
       margin-left: 20px;
       flex: 1;
+
       .text {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
         .course {
           margin-top: 10px;
           font-size: @mediumFontSize;
@@ -38,15 +42,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 108px;
-  height:108px;
+  width: 120px;
+  height: 120px;
   background-color: transparent;
   border-radius: 50%;
   border: 6px solid;
+  transform: rotate(-30deg);
 
   .inner {
-    width: 86px;
-    height: 86px;
+    width: 100px;
+    height: 100px;
     text-align: center;
     line-height: 86px;
     background-color: transparent;

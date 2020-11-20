@@ -8,12 +8,12 @@
 }
 
 .logo {
-  width: 100%;
+  text-align: center;
   margin-bottom: 30px;
 }
 
 .loginBox {
-  padding: 8vh 80px 0;
+  padding: 4vh 80px 0;
 }
 
 .user, .pwd {
@@ -26,8 +26,13 @@
     background: #F5F5F5 no-repeat center center;
     background-size: 44px 44px;
   }
+  input::placeholder {
+    font-size: @mediumFontSize;
+    padding-top: 0.4em;
+  }
   input::-webkit-input-placeholder {
     font-size: @mediumFontSize;
+    padding-top: 0.4em;
   }
 }
 

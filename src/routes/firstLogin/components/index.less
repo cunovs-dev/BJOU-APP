@@ -1,0 +1,52 @@
+@import "../../../themes/default";
+
+
+
+.user, .pwd {
+  display: flex;
+  box-shadow: 0 0 2px 2px #ddd;
+  border-radius: @radius-lg;
+  background: #fff;
+  .icon {
+    height: 88px;
+    width: 88px;
+    background: #F5F5F5 no-repeat center center;
+  }
+  input::placeholder {
+    font-size: @mediumFontSize;
+    padding-top: 0.4em;
+  }
+  input::-webkit-input-placeholder {
+    font-size: @mediumFontSize;
+    padding-top: 0.4em;
+  }
+}
+
+.form {
+  :global {
+    .am-list-item.am-input-item {
+    }
+
+    .am-list-item .am-input-label.am-input-label-5 {
+      width: auto;
+      margin-right: 20px;
+    }
+
+    .am-list-line {
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .am-button-primary {
+      border-radius: @radius-lg;
+      background-color: #00AAF0;
+      border-color: #00AAF0;
+    }
+  }
+
+}
+
+.forget{
+  display: block;
+  text-align: right;
+}

@@ -13,8 +13,8 @@ export default modelExtend(model, {
   },
   subscriptions: {
     setup ({ dispatch, history }) {
-      history.listen(({ pathname }) => {
-        if (pathname === '/timetable') {
+      history.listen(({ pathname, action }) => {
+        if (pathname === '/timetable' && action === 'PUSH') {
           dispatch({
             type: 'updateState',
             payload: {

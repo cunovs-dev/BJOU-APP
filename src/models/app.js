@@ -1,7 +1,7 @@
 import { routerRedux } from 'dva/router';
 import { hashHistory } from 'react-router';
 import { Toast } from 'components';
-import { config, cookie, setLoginOut, setSession, bkIdentity, setLoginIn } from 'utils';
+import { config, cookie, setLoginOut, setSession, bkIdentity, setLoginIn, oldAPP } from 'utils';
 import { defaultTabBars } from 'utils/defaults';
 import {
   queryBaseInfo,
@@ -10,14 +10,17 @@ import {
   logApi,
   getVersion,
   queryPortalUser,
-  queryMoodleToken
+  queryMoodleToken,
+  checkFirstLogin
 } from 'services/app';
+
 import md5 from 'md5';
 
-const encrypt = (word) => {
+const encryptMd5 = (word) => {
   return md5(word, 'hex');
 };
-const { userTag: { username, usertoken, userid, useravatar, portalToken, portalUserName, portalUserId, userloginname } } = config,
+
+const { userTag: { username, usertoken, userid, useravatar, portalToken, portalUserName, portalUserId, userloginname, bkStudentNumber, userLoginId } } = config,
   { _cg } = cookie,
   getInfoUser = () => {
     const result = {};
@@ -28,6 +31,8 @@ const { userTag: { username, usertoken, userid, useravatar, portalToken, portalU
     result[portalToken] = _cg(portalToken);
     result[portalUserId] = _cg(portalUserId);
     result[portalUserName] = _cg(portalUserName);
+    result[userloginname] = _cg(userloginname);
+    result[userLoginId] = _cg(userLoginId);
     return result;
   },
   getUserLoginStatus = (users = '') => {
@@ -71,9 +76,14 @@ export default {
     updates: {},
     groups: [],
     contacts: [],
+    courseIdNumbers: {},
     showBackModal: false,
     downloadProgress: 0,
-    tabsIcon: {}
+    tabsIcon: {},
+    _useJavaScriptMessage: {
+      info: '该资源在PC端体验更好，如遇到问题请在PC端完成学习',
+      warn: '课程部分学习资源在PC端体验更好，如遇到问题请在PC端完成对应资源的学习。'
+    }
   },
   subscriptions: {
     setupHistory ({ dispatch, history }) {
@@ -84,20 +94,12 @@ export default {
           others[userid] = _cg(userid);
           others[usertoken] = _cg(usertoken);
           others[portalToken] = _cg(portalToken);
-          if (bkIdentity()) {
+          if (bkIdentity() || oldAPP()) {
             dispatch({
-              type: 'queryMoodleToken',
+              type: 'query',
               payload: {
-                username: _cg(userloginname),
-                usersn: encrypt(`${_cg(userloginname)}f3c28dd72e61f16e173a353405af1fbd`)
-              }
-            });
-          }
-          if (others.portalToken !== '') {
-            dispatch({
-              type: 'queryPortalUser',
-              payload: {
-                access_token: others.portalToken
+                userid: others[userid],
+                usertoken: others[usertoken]
               }
             });
           }
@@ -115,32 +117,43 @@ export default {
               }
             });
           }
+          if (!oldAPP()) {
+            dispatch({
+              type: 'queryPortalUser',
+              payload: {
+                access_token: others.portalToken
+              }
+            });
+          }
         }
       });
     }
   },
   effects: {
-    * queryMoodleToken ({ payload }, { call, put }) {
-      const data = yield call(queryMoodleToken, payload);
-      if (data.success) {
-        const { id: moodleUserId = '', token = '' } = data,
-          users = {
-            user_token: token,
-            user_id: moodleUserId
-          };
-        setLoginIn(users);
+
+    * checkFirstLogin ({ payload }, { call, put }) {
+      const { data = {}, code, message = '请稍后再试' } = yield call(checkFirstLogin, payload);
+      if (code === 0) {
+        const { firstLogin, userId } = data;
+        setSession({ portalUserId: userId });
+        if (firstLogin) {
+          yield put(routerRedux.replace({
+            pathname: 'firstLogin',
+            query: {
+              userId
+            }
+          }));
+        }
+      } else {
         yield put({
-          type: 'query',
+          type: 'updateState',
           payload: {
-            userid: moodleUserId,
-            usertoken: token
+            buttonState: true
           }
         });
-      } else {
-        Toast.fail(data.message || '查询信息失败');
+        Toast.fail(message);
       }
     },
-
     * query ({ payload }, { call, put }) {
       if (_cg(usertoken) === '') {
         yield put(routerRedux.push({
@@ -156,9 +169,14 @@ export default {
             payload: {
               courseid: getCourse(data.courses),
               courseData: data.courses,
+              courseIdNumbers: data.courseIdNumbers,
               groups: getGroups(data.groups, data.courses),
               contacts: getContats(data.contacts),
               tabsIcon: data.tabsIcon || {},
+              _useJavaScriptMessage: data._useJavaScriptMessage || {
+                info: '该门课程部分内容不支持app访问，如遇提示请换用电脑登录elearning.bjou.edu.cn',
+                warn: ':该内容暂不支持移动端显示，请在电脑端完成学习。'
+              },
               ...(data.appendConfig || {})
             }
           });
@@ -178,16 +196,23 @@ export default {
     },
 
     * queryPortalUser ({ payload }, { call, put }) {
-      const { data, code, message = '个人信息获取失败' } = yield call(queryPortalUser);
-      if (code === 0) {
-        const { userId = '', userName = '' } = data;
-        const infos = {
-          portalUserId: userId,
-          portalUserName: userName
-        };
-        setSession(infos);
+      if (_cg(portalToken) === '' || !_cg(portalToken)) {
+        yield put(routerRedux.push({
+          pathname: '/login'
+        }));
       } else {
-        Toast.fail(message);
+        const { data, code, message = '个人信息获取失败' } = yield call(queryPortalUser);
+        if (code === 0) {
+          const { userId = '', userName = '' } = data;
+          const infos = {
+            portalUserId: userId,
+            portalUserName: userName,
+            username: userName
+          };
+          setSession(infos);
+        } else {
+          Toast.fail(message);
+        }
       }
     },
 
@@ -198,7 +223,7 @@ export default {
         yield put({
           type: 'updateState',
           payload: {
-            updates: data,
+            updates: data || {},
             showModal: urls !== ''
           }
         });
@@ -257,6 +282,29 @@ export default {
       }
       cnSetAllLocalFiles(targetFiles);
       if (cb) cb();
+    },
+    * queryMoodleToken ({ payload }, { call, put }) {
+      const data = yield call(queryMoodleToken, {
+        username: _cg(bkStudentNumber) || _cg(userLoginId).length >= 11 ? _cg(userloginname) : _cg(userLoginId), // 由于测试账号没有学号，保证测试账号能登录
+        usersn: encryptMd5(`${_cg(bkStudentNumber) || _cg(userLoginId).length >= 11 ? _cg(userloginname) : _cg(userLoginId)}f3c28dd72e61f16e173a353405af1fbd`)
+      });
+      if (data.success) {
+        const { id: moodleUserId = '', token = '' } = data,
+          users = {
+            user_token: token,
+            user_id: moodleUserId
+          };
+        setLoginIn(users);
+        setSession({ orgCode: 'bjou_student' });
+        yield put(routerRedux.push({
+          pathname: '/',
+          query: {
+            orgCode: 'bjou_student'
+          }
+        }));
+      } else {
+        Toast.fail(data.message || '查询信息失败');
+      }
     }
   },
   reducers: {

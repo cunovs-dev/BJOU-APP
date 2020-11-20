@@ -82,6 +82,9 @@ class Comp extends React.Component {
     if (scrollTop >= 0 && this.props.onScrollerTop && this.props.useBodyScroll) {
       this.props.onScrollerTop(scrollTop);
     }
+    this.setState = (state, callback) => {
+      
+    };
   }
 
   onRefresh = () => {

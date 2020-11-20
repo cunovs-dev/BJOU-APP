@@ -14,6 +14,12 @@ export default modelExtend(model, {
       history.listen(({ pathname, query }) => {
         if (pathname === '/graduationInformation') {
           dispatch({
+            type: 'updateState',
+            payload: {
+              list: []
+            }
+          });
+          dispatch({
             type: 'queryGraduationInfo'
           });
         }

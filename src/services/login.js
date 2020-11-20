@@ -1,7 +1,7 @@
 import { request, config } from 'utils';
 
 const { api } = config;
-const { Login, Authentication, PortalLogin, GetPortalToken,SendPhoneLoginCode } = api;
+const { Login, Authentication, PortalLogin, GetPortalToken, SendPhoneLoginCode, GetLoginTips, GetCaptchaImg } = api;
 
 export async function login (data, serverError = false) {
   return request({
@@ -47,5 +47,22 @@ export async function sendPhoneLoginCode (payload) {
     url: SendPhoneLoginCode,
     data: payload,
     hasToken: false
+  });
+}
+
+export async function queryLoginTips (payload) {
+  return request({
+    url: GetLoginTips,
+    data: payload,
+    hasToken: false
+  });
+}
+
+export async function queryCaptchaImg (payload) {
+  return request({
+    url: GetCaptchaImg,
+    data: payload,
+    hasToken: false,
+    fetchType: 'blob'
   });
 }

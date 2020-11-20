@@ -80,9 +80,9 @@ class PhoneForm extends React.Component {
       <div>
         {
           hasNav ?
-          <Nav title="重置密码" dispatch={this.props.dispatch} />
-                 :
-          null
+            <Nav title="重置密码" dispatch={this.props.dispatch} />
+            :
+            null
         }
         <div>
           <div className={styles.phone}>
@@ -99,9 +99,9 @@ class PhoneForm extends React.Component {
                 initialValue: phoneNumber,
                 rules:
                   disabled
-                  ?
-                  null
-                  :
+                    ?
+                    null
+                    :
                     [
                       { required: true, message: '请输入手机号码' },
                       { pattern: pattern('phone'), message: '手机号码格式有误！' }
@@ -148,9 +148,9 @@ class PhoneForm extends React.Component {
             >
               {
                 this.state.isCodeSending ?
-                <span>{`${this.state.count}s重新获取`}</span>
-                                         :
-                <span>获取验证码</span>
+                  <span>{`${this.state.count}s重新获取`}</span>
+                  :
+                  <span>获取验证码</span>
               }
             </Button>
           </div>

@@ -14,13 +14,17 @@ module.exports = {
     orgCode: 'orgCode',
     portalUserName: 'portalUserName',
     doubleTake: 'doubleTake',
-    userpwd: 'userpwd',
-    portalHeadImg: 'portalHeadImg'
+    portalHeadImg: 'portalHeadImg',
+    portalHeadImgGK: 'portalHeadImgGK',
+    bkStudentNumber: 'bkStudentNumber',
+    userLoginId: 'userLoginId',
+    oldAPP: false
   },
   api: {
-    Login: '/login',
+    Login: '/login/cas',
     userLogout: '/logout',
     GetLessonDetails: '/course',
+    RefreshLessonDetails: '/course/refresh',
     GetOpeningLessons: '/courselist/open',
     GetClosedLessons: '/courselist/due',
     GetBaseInfo: '/config',
@@ -51,6 +55,7 @@ module.exports = {
     GetMedalList: '/badge/user',
     GetGroupList: '/assignment/getTeamMembers',
     GetGradeList: '/grade',
+    RefreshGrade: '/grade/refresh',
     getTeachersList: '/mentors',
     GetMember: '/group/users',
     GetContacts: '/personal/contacts',
@@ -79,7 +84,7 @@ module.exports = {
     MyOpinionList: '/feedback',
     ManualCompletion: '/cm/completion',
     GetVersion: '/config/appVersion',
-    HelpUrl: () => cnGetServiceUrl('help', '/cnvhelp/index.html'),
+    HelpUrl: (path) => cnGetServiceUrl('help', path),
     GetChoice: '/vote',
     SendChoice: '/vote/submit',
     GetFolder: '/folder/list',
@@ -92,43 +97,58 @@ module.exports = {
     GetMenusApi: '/config/module',
     sendMenusApi: '/config/saveModuleConfig',
     GetMoodleToken: '/config/getBkUser',
+    GetLoginTips: '/login/info',
+    GetPersonal: '/personal',
+    UpdateCompleteStatus: '/resource/view',
+    RefreshAttendance: '/attendance/refresh',
+    UpdateUrlStatus: '/url/view',
 
     // 门户登录
-
-    Authentication: `${portalServiceUrl}/info/sso`,
-    PortalLogin: `${portalServiceUrl}/info/login`,
-    GetPortalToken: `${portalServiceUrl}/info/oauth/userToken`,
+    Authentication: `${portalServiceUrl}/sso`,
+    PortalLogin: `${portalServiceUrl}/login`,
+    GetPortalToken: `${portalServiceUrl}/oauth/userToken`,
     SendPhoneLoginCode: `${portalSsoServiceUrl}/captcha/sms`,
+    CheckFirstLogin: `${portalSsoServiceUrl}/current`,
+    GetCaptchaImg: `${portalSsoServiceUrl}/captcha/img`,
 
     // 门户接口
-    GetPaymentState: `${portalServiceUrl}/info/mobile/bkuser/getpaymentState`, // 缴费情况
-    GetUserInfo: `${portalServiceUrl}/info/mobile/bkuser/get`, // 门户获取个人信息接口
-    GetProgressList: `${portalServiceUrl}/info/mobile/bkcourse/academicSchedule`, // 学业进度表
-    GetTimetable: `${portalServiceUrl}/info/mobile/bkcourse/list`, // 课程表
-    GetApplyList: `${portalServiceUrl}/info/mobile/bkApplyInfo/list`, // 申请信息
-    GetSchoolCalendar: `${portalServiceUrl}/info/mobile/information/schoolCalendar`, // 校历
-    GetGraduationInfo: `${portalServiceUrl}/info/mobile/graduationInfo/list`, // 毕业信息
-    GetCollectionList: `${portalServiceUrl}/info/mobile/informationCollection/list`, // 收藏
-    GetNoticeList: `${portalServiceUrl}/info/mobile/information/list`, // 通知制度
-    GetNoticeDetails: `${portalServiceUrl}/info/mobile/information/get`, // 通知制度详情
-    GetInformationGK: `${portalServiceUrl}/info/mobile/information/informations`, // 国开教学日历
-    GetStudentInfo: `${portalServiceUrl}/info/mobile/studentInfo/findStudentInfo`, // 国开学籍信息
-    GetExamGK: `${portalServiceUrl}/info/mobile/examscore/list`, // 国开考试成绩
-    GetCourseGK: `${portalServiceUrl}/info/mobile/courseInfo/list`, // 国开已选课程
-    downFiles: `${portalServiceUrl}/info/mobile/information/stream/zip`, // 文档下载
-    EnclosureDownload: `${portalServiceUrl}/info/file/downloadFile`, // 附件下载
-    GetPortalUser: `${portalServiceUrl}/info/user/getUser`,
-    Collection: `${portalServiceUrl}/info/mobile/informationCollection/update`,
+    GetPaymentState: `${portalServiceUrl}/mobile/bkuser/getpaymentState`, // 缴费情况
+    GetUserInfo: `${portalServiceUrl}/mobile/bkuser/get`, // 门户获取个人信息接口
+    GetProgressList: `${portalServiceUrl}/mobile/bkcourse/academicSchedule`, // 学业进度表
+    GetTimetable: `${portalServiceUrl}/mobile/bkcourse/list`, // 课程表
+    GetApplyList: `${portalServiceUrl}/mobile/bkApplyInfo/list`, // 申请信息
+    GetSchoolCalendar: `${portalServiceUrl}/mobile/information/schoolCalendar`, // 校历
+    GetGraduationInfo: `${portalServiceUrl}/mobile/graduationInfo/list`, // 毕业信息
+    GetCollectionList: `${portalServiceUrl}/mobile/informationCollection/list`, // 收藏
+    GetNoticeList: `${portalServiceUrl}/mobile/information/list`, // 通知制度
+    GetNoticeDetails: `${portalServiceUrl}/mobile/information/get`, // 通知制度详情
+    GetInformationGK: `${portalServiceUrl}/mobile/information/informations`, // 国开教学日历
+    GetStudentInfo: `${portalServiceUrl}/mobile/studentInfo/findStudentInfo`, // 国开学籍信息
+    GetExamGK: `${portalServiceUrl}/mobile/examscore/list`, // 国开考试成绩
+    GetCourseGK: `${portalServiceUrl}/mobile/courseInfo/list`, // 国开已选课程
+    downFiles: `${portalServiceUrl}/mobile/information/stream/zip`, // 文档下载
+    EnclosureDownload: `${portalServiceUrl}/file/downloadFile`, // 附件下载
+    GetPortalUser: `${portalServiceUrl}/user/getUser`,
+    GetCurrentUser: `${portalServiceUrl}/mobile/userInfo/getCurrentUser`,
+    ChangCode: `${portalServiceUrl}/mobile/userInfo/changeCode`,
+    Collection: `${portalServiceUrl}/mobile/informationCollection/update`,
     GetResetTypes: `${portalSsoServiceUrl}/cipherreset/getResetTypes`,
     SendCode: `${portalSsoServiceUrl}/cipherreset/sendCode`,
-    PortalFileUpload: `${portalServiceUrl}/info/file/upload`, // 附件上传
-    SetBKPortalAvatar: `${portalServiceUrl}/info/mobile/bkuser/updateImg`,
-    SetGKPortalAvatar: `${portalServiceUrl}/info/mobile/userInfo/updateImg`,
+    PortalFileUpload: `${portalServiceUrl}/file/upload`, // 附件上传
+    SetBKPortalAvatar: `${portalServiceUrl}/mobile/bkuser/updateImg`,
+    SetGKPortalAvatar: `${portalServiceUrl}/mobile/userInfo/updateImg`,
     VerifyCode: `${portalSsoServiceUrl}/cipherreset/verifyCode`,
     UpdatePhoneOrEmail: `${portalSsoServiceUrl}/wx/portal/updatePhoneOrEmail`,
     ResetPassword: `${portalSsoServiceUrl}/cipherreset/resetPassword`,
     GetPasswordRule: `${portalSsoServiceUrl}/cipherreset/getPasswordRule`,
+    ValidRule: `${portalSsoServiceUrl}/sso/validcharactersstrength`,
     SendCodeWithToken: `${portalSsoServiceUrl}/wx/portal/sendCode`,
-    GetAccount: `${portalSsoServiceUrl}/cipherreset/getUserByAccountName`
+    GetAccount: `${portalSsoServiceUrl}/cipherreset/getUserByAccountName`,
+    FirstUpdatePassword: `${portalSsoServiceUrl}/user/updatePassword`,
+    GetNoticeTabs: `${portalServiceUrl}/mobile/information/listCategory`,
+    //资源管理
+    GetPlayInfo: `${portalResourceUrl}/content/foreign/playInfo`,
+    AddPlayInfo: `${portalResourceUrl}/content/foreign/addLearnInfo`,
+    UpdatePlayInfo: `${portalResourceUrl}/content/foreign/updateUserLearningFlow`
   }
 };

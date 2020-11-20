@@ -7,52 +7,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
-import { classnames, config, getLocalIcon, cookie } from 'utils';
-import { defaultTabBarIcon, bkTabBars, gkTabBars } from 'utils/defaults';
+import { classnames, config, getLocalIcon, cookie, oldAPP } from 'utils';
+import { bkTabBars, gkTabBars, defaultTabBars } from 'utils/defaults';
 import { Loader, TabBar, Icon, Modal, ActivityIndicator, Checkbox } from 'components';
 import './app.less';
 
-let lastHref,
-  isFirst = true,
-  progessStart = false;
+let isFirst = true;
 const { _cg, _cs, _cr } = cookie;
 const AgreeItem = Checkbox.AgreeItem;
 
-const App = ({ children, dispatch, app, loading, location }) => {
-  let tabBars = _cg('orgCode') === 'bjou_student' ? bkTabBars : gkTabBars;
-  const appendIcon = (tar, i, tabsIcon) => {
-    let { iconName = 'default' } = tar;
-    tar.key = ++i;
-    if (JSON.stringify(tabsIcon) !== '{}' && tabsIcon[iconName] && tabsIcon[`${iconName}Active`]) {
-      tar = { ...tar, ...({ icon: tabsIcon[iconName], selectedIcon: tabsIcon[`${iconName}Active`] } || {}) };
-    }
-    return tar;
-  };
+const getBars = () => {
+  if (oldAPP()) {
+    return defaultTabBars;
+  } else {
+    return _cg('orgCode') === 'bjou_student' ? bkTabBars : gkTabBars;
+  }
+};
+
+const App = ({ children, dispatch, app, loading, lessondetails, location }) => {
+  let tabBars = getBars();
   let { pathname } = location;
-  const { updates = {}, showModal, downloadProgress, tabsIcon } = app,
+  const { updates = {}, showModal, downloadProgress } = app,
     { upgraded = false, urls = '', appVerSion, updateInfo = '' } = updates;
-  // tabBars = tabBars.map((bar, i) => appendIcon(bar, i, tabsIcon)); //获取ICON
   pathname = pathname.startsWith('/') ? pathname : `/${pathname}`;
   pathname = pathname.endsWith('/index.html') ? '/' : pathname; // Android配置首页自启动
-  const href = window.location.href,
-    menusArray = [];
+  const menusArray = [];
   tabBars.map((_) => {
     menusArray.push(_.route);
   });
   cnSetStatusBarStyle(pathname);
-  if (lastHref !== href || loading.global) {
-    if (pathname !== '/set') {
-      // NProgress.start();
-      progessStart = true;
-      if (!loading.global) {
-        lastHref = href;
-      }
-    }
-  }
-  if (!loading.global && progessStart) {
-    progessStart = false;
-    // NProgress.done();
-  }
 
   const handlerIgnoreClick = (e) => {
     if (e.target.checked) {
@@ -112,7 +95,7 @@ const App = ({ children, dispatch, app, loading, location }) => {
       isFirst = false;
     }
   };
-  if (pathname !== '/' && pathname !== '/dashboard' && pathname !== '/dashboardGK' && menusArray.length && !menusArray.includes(pathname)) {
+  if (pathname !== '/' && pathname !== '/dashboard' && pathname !== '/dashboardGK' && pathname !== '/oldDashboard' && menusArray.length && !menusArray.includes(pathname)) {
     return (<div>
       <Loader spinning={loading.effects[`${pathname.startsWith('/') ? pathname.substr(1) : pathname}/query`]} />
       {children}
@@ -180,4 +163,4 @@ App.propTypes = {
   icon: PropTypes.string
 };
 
-export default connect(({ app, loading }) => ({ app, loading }))(App);
+export default connect(({ app, lessondetails, loading }) => ({ app, lessondetails, loading }))(App);

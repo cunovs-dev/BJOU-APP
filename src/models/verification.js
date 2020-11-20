@@ -1,12 +1,13 @@
 import { parse } from 'qs';
 import modelExtend from 'dva-model-extend';
 import { queryResetTypes, sendCode, verifyCode } from 'services/setup';
+import { checkFirstLogin } from 'services/app';
 import { cookie, config } from 'utils';
 import { routerRedux } from 'dva/router';
 import { Toast } from 'components';
 import { model } from 'models/common';
 
-const { userTag: { portalUserId } } = config;
+const { userTag: { portalToken } } = config;
 const { _cg } = cookie;
 export default modelExtend(model, {
   namespace: 'verification',
@@ -28,9 +29,9 @@ export default modelExtend(model, {
               }
             });
             dispatch({
-              type: 'queryResetTypes',
+              type: 'checkFirstLogin',
               payload: {
-                userId: _cg(portalUserId)
+                access_token: _cg(portalToken)
               }
             });
           }
@@ -39,6 +40,21 @@ export default modelExtend(model, {
     }
   },
   effects: {
+    * checkFirstLogin ({ payload }, { call, put }) {
+      const { data = {}, code, message = '请稍后再试' } = yield call(checkFirstLogin, payload);
+      if (code === 0) {
+        const { userId } = data;
+        yield put({
+          type: 'queryResetTypes',
+          payload: {
+            userId
+          }
+        });
+      } else {
+        Toast.fail(message);
+      }
+    },
+
     * queryResetTypes ({ payload }, { call, put }) {
       const { data = [], code, message = '请稍后再试' } = yield call(queryResetTypes, payload);
       if (code === 0) {

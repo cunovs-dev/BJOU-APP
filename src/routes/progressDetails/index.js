@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'dva';
 import { WhiteSpace, List, Icon, Layout } from 'components';
 import { getLocalIcon } from 'utils';
-import Refresh from 'components/pulltorefresh';
 import Nav from 'components/nav';
 import { progressDetailsRow } from 'components/row';
 import { handlerLessonListClick } from 'utils/commonevents';

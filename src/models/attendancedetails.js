@@ -2,13 +2,14 @@ import { parse } from 'qs';
 import { model } from 'models/common';
 import { Toast } from 'components';
 import modelExtend from 'dva-model-extend';
-import { getAttendance } from '../services/app';
+import { getAttendance, refreshAttendance } from '../services/app';
 
 
 export default modelExtend(model, {
   namespace: 'attendancedetails',
   state: {
-    data: {}
+    data: {},
+    refreshing: false
   },
   subscriptions: {
     setup ({ dispatch, history }) {
@@ -31,7 +32,7 @@ export default modelExtend(model, {
           }
         }
       });
-    },
+    }
   },
 
   effects: {
@@ -49,5 +50,26 @@ export default modelExtend(model, {
         Toast.fail(data.message || '获取失败');
       }
     },
-  },
+    * refreshAttendance ({ payload }, { call, put, select }) {
+      const { users: { userid } } = yield select(_ => _.app),
+        data = yield call(refreshAttendance, { ...payload, userid });
+      if (data.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            data,
+            refreshing: false
+          }
+        });
+      } else {
+        yield put({
+          type: 'updateState',
+          payload: {
+            refreshing: false
+          }
+        });
+        Toast.fail(data.message || '获取失败');
+      }
+    }
+  }
 });

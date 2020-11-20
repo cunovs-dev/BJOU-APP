@@ -61,5 +61,21 @@ export default modelExtend(model, {
         });
       }
     },
+    * refreshGrade ({ payload }, { call, put, select }) {
+      const { users: { userid } } = yield select(_ => _.app),
+        response = yield call(queryList.refreshGrade, { userid, ...payload });
+      if (response.success) {
+        const { coursename, courseid, data, graderaw = '' } = response;
+        yield put({
+          type: 'updateState',
+          payload: {
+            coursename,
+            courseid,
+            gradeItems: getGradeItems(data),
+            graderaw
+          },
+        });
+      }
+    },
   },
 });

@@ -10,6 +10,7 @@ import { routerRedux } from 'dva/router';
 import { InputItem, WhiteSpace, WingBlank, Button, Toast, ActivityIndicator, Icon } from 'components';
 import MailForm from 'components/Form/mailForm';
 import Nav from 'components/nav';
+import { getValideError } from 'utils';
 import ResetType from '../components';
 import styles from './index.less';
 
@@ -27,7 +28,8 @@ class MailReset extends React.Component {
 
   onSubmit = () => {
     this.formRef.props.form.validateFields(['code'], {
-      force: true
+      force: true,
+      first: true
     }, (error) => {
       if (!error) {
         const { userId = '' } = this.props.location.query;
@@ -40,7 +42,7 @@ class MailReset extends React.Component {
           }
         });
       } else {
-        Toast.fail('请检查输入的信息');
+        Toast.fail(getValideError(error));
       }
     });
   };

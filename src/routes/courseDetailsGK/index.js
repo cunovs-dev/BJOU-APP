@@ -24,11 +24,11 @@ const courseDetailsGK = ({ courseGK, loading, location, dispatch }) => {
                 </div>
                 <div className={styles.info}>
                   <div>{`课程ID：${item.courseId}`}</div>
-                  <div>{`课程性质：${item.courseNature}`}</div>
-                  <div>{`得分：${item.totalScore}`}</div>
-                  <div>{`课程类型：${item.courseType}`}</div>
-                  <div>{`考试单位：${item.examOrg}`}</div>
-                  <div>{`成绩：${item.score}`}</div>
+                  <div>{`课程性质：${item.courseNature || '-'}`}</div>
+                  <div>{`得分：${item.totalScore || '-'}`}</div>
+                  <div>{`课程类型：${item.courseType || '-'}`}</div>
+                  <div>{`考试单位：${item.examOrg || '-'}`}</div>
+                  <div>{`成绩：${item.score || '-'}`}</div>
                 </div>
               </div>
             );

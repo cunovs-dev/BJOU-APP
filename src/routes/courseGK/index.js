@@ -48,19 +48,19 @@ function CourseGK ({ location, dispatch, courseGK, loading }) {
           <Flex>
             <Flex.Item>
               <div className={styles.gradeItem}>
-                <p>{graduationScore}</p>
+                <p>{graduationScore || '-'}</p>
                 <p>毕业学分</p>
               </div>
             </Flex.Item>
             <Flex.Item>
               <div className={styles.itemMiddle}>
-                <p>{examScore}</p>
+                <p>{examScore || '-'}</p>
                 <p>中央学分</p>
               </div>
             </Flex.Item>
             <Flex.Item>
               <div className={styles.gradeItem}>
-                <p>{creditsEarned}</p>
+                <p>{creditsEarned || '-'}</p>
                 <p>已得学分</p>
               </div>
             </Flex.Item>

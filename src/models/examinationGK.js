@@ -8,7 +8,9 @@ export default modelExtend(model, {
   namespace: 'examinationGK',
   state: {
     list: [],
-    allList: []
+    allList: [],
+    selectIndex: 0,
+    isShow: false
   },
   subscriptions: {
     setupHistory ({ dispatch, history }) {
@@ -29,7 +31,7 @@ export default modelExtend(model, {
 
       const { code, data, message = '请稍后再试' } = yield call(queryExamList, payload);
       if (code === 0) {
-        if (payload) {
+        if (payload && payload.examYear) {
           yield put({
             type: 'updateState',
             payload: {

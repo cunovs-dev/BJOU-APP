@@ -1,8 +1,21 @@
 @import "../../themes/default";
-@PrefixCls:attendancedetails;
 
-.@{PrefixCls}-outer{
+@PrefixCls: attendancedetails;
+
+.@{PrefixCls}-outer {
   padding: 0 20px;
 }
 
+.@{PrefixCls}-time {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  color: @color-text-paragraph;
+  font-size: @smallFontSize;
 
+  &-btn {
+    color: @primary-color;
+    display: flex;
+    align-items: center;
+  }
+}

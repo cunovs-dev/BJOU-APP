@@ -1,0 +1,61 @@
+@import "../../../themes/default";
+
+.title {
+  font-size: @titleFontSize;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+.phone, .mail {
+  display: flex;
+  box-shadow: 0 0 2px 2px #ddd;
+  border-radius: @radius-lg;
+  background: #fff;
+  align-items: center;
+  justify-content: space-between;
+  .icon {
+    width: 88px;
+    height: 88px;
+    background: #F5F5F5 no-repeat center center;
+  }
+  input::placeholder {
+    font-size: @mediumFontSize;
+    padding-top: 0.4em;
+  }
+  input::-webkit-input-placeholder {
+    font-size: @mediumFontSize;
+    padding-top: 0.4em;
+  }
+  .status {
+    font-size: @smallFontSize;
+    color: @primary-color;
+    margin-right: 16px;
+    flex: 1;
+    text-align: center;
+  }
+}
+
+.form {
+  :global {
+    .am-list-item .am-input-label.am-input-label-5 {
+      width: auto;
+      margin-right: 20px;
+    }
+    .am-list-item:not(:last-child) .am-list-line {
+      border-bottom: 0;
+    }
+    .am-list-line {
+      display: flex;
+      justify-content: flex-start;
+      padding-right: 0;
+    }
+
+    .am-button-primary {
+      border-radius: @radius-lg;
+      background-color: #00AAF0;
+      border-color: #00AAF0;
+    }
+  }
+
+}
+

@@ -4,7 +4,7 @@ import { createForm } from 'rc-form';
 import Nav from 'components/nav';
 import VerificationCode from 'components/VerificationCode';
 import { WhiteSpace, Button, List, InputItem, Toast } from 'components';
-import { config, cookie, pattern, getRule } from 'utils';
+import { config, cookie, pattern, getRule, getValideError } from 'utils';
 import styles from './index.less';
 
 
@@ -50,21 +50,33 @@ class SetPassword extends React.Component {
     }
   };
 
+  setPassword = () => {
+    this.props.dispatch({
+      type: 'setPassword/resetPassword',
+      payload: {
+        userId: _cg(portalUserId),
+        ...this.props.form.getFieldsValue(),
+        ...this.child.getItemsValue()
+      }
+    });
+  };
+
   handlerClick = () => {
     this.props.form.validateFields({
-      force: true
+      force: true,
+      first: true
     }, (error) => {
       if (!error) {
+        const { password = '' } = this.props.form.getFieldsValue();
         this.props.dispatch({
-          type: 'setPassword/resetPassword',
+          type: 'setPassword/validRule',
           payload: {
-            userId: _cg(portalUserId),
-            ...this.props.form.getFieldsValue(),
-            ...this.child.getItemsValue()
-          }
+            characters: password
+          },
+          callback: this.setPassword
         });
       } else {
-        Toast.fail('请输入正确的手机号', 2);
+        Toast.fail(getValideError(error));
       }
     });
   };
@@ -72,8 +84,8 @@ class SetPassword extends React.Component {
   render () {
     const { name = '' } = this.props.location.query,
       { getFieldProps, getFieldError } = this.props.form,
-      { data, rules = {} } = this.props.setPassword;
-    const { complexityRule = [], maxLength = 8, minLength = 6 } = rules;
+      { data } = this.props.setPassword;
+    // const { complexityRule = [], maxLength = 8, minLength = 6 } = rules;
     return (
       <div className={styles.container}>
         <Nav title={name} dispatch={this.props.dispatch} />
@@ -95,17 +107,17 @@ class SetPassword extends React.Component {
               {...getFieldProps('password', {
                 initialValue: '',
                 rules: [
-                  { required: true, message: '密码不能为空' },
-                  { min: minLength, message: `用户名不能小于${minLength}个字符` },
-                  { max: maxLength, message: `用户名不能大于${maxLength}个字符` },
-                  {
-                    validator: (rule, value) => {
-                      if (getRule(complexityRule, value).result) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject(`密码必须包含${getRule(complexityRule, value).message}`);
-                    }
-                  }
+                  { required: true, message: '密码不能为空' }
+                  // { min: minLength, message: `密码不能小于${minLength}个字符` }, 改为后台验证了。。。
+                  // { max: maxLength, message: `密码不能大于${maxLength}个字符` },
+                  // {
+                  //   validator: (rule, value) => {
+                  //     if (getRule(complexityRule, value).result) {
+                  //       return Promise.resolve();
+                  //     }
+                  //     return Promise.reject(`密码缺少${getRule(complexityRule, value).message}`);
+                  //   }
+                  // }
                 ]
               })}
               clear
@@ -123,7 +135,7 @@ class SetPassword extends React.Component {
             {...getFieldProps('confirm', {
               initialValue: '',
               rules: [
-                { required: true, message: '密码不能为空' },
+                { required: true, message: '请确认密码' },
                 {
                   validator: (rule, value) => {
                     const { password } = this.props.form.getFieldsValue(['password']);

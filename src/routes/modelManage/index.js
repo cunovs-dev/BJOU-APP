@@ -18,9 +18,21 @@ import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { handlerChangeRouteClick } from 'utils/commonevents';
 import { allModule } from 'utils/defaults';
 import { getLocalIcon } from 'utils';
-import arrayMove from 'array-move';
+// import arrayMove from 'array-move';
 import Nav from 'components/nav';
 import styles from './index.less';
+
+const arrayMoveMutate = (array, from, to) => {
+  const startIndex = to < 0 ? array.length + to : to;
+  const item = array.splice(from, 1)[0];
+  array.splice(startIndex, 0, item);
+};
+
+const arrayMove = (array, from, to) => {
+  array = array.slice();
+  arrayMoveMutate(array, from, to);
+  return array;
+};
 
 class ModelManage extends React.Component {
   constructor (props) {
@@ -46,6 +58,10 @@ class ModelManage extends React.Component {
   componentWillUnmount () {
     this.setState({});
   }
+
+  onSortStart = () => {
+    cnVibrate();
+  };
 
   onSortEnd = ({ oldIndex, newIndex }) => {
     this.setState(({ dragModules }) => ({
@@ -112,7 +128,7 @@ class ModelManage extends React.Component {
   };
 
   gridClick = (item) => {
-    const { path = '', text = '' } = item;
+    const { path = '', text = '', queryType } = item;
     if (this.state.isEdit) {
       if (this.state.dragModules.length >= 7) {
         Toast.fail('最多只能选择7各模块');
@@ -124,7 +140,8 @@ class ModelManage extends React.Component {
       }
     } else {
       handlerChangeRouteClick(path, {
-        name: text
+        name: text,
+        queryType
       }, this.props.dispatch);
     }
   };
@@ -191,7 +208,13 @@ class ModelManage extends React.Component {
         />
         {
           this.state.isEdit ?
-          <SortableGird pressDelay={1} axis="xy" items={this.state.dragModules} onSortEnd={this.onSortEnd} />
+          <SortableGird
+            pressDelay={200}
+            axis="xy"
+            items={this.state.dragModules}
+            onSortStart={this.onSortStart}
+            onSortEnd={this.onSortEnd}
+          />
                             :
           null
         }

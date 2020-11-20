@@ -8,7 +8,7 @@ import { Toast } from 'components';
 import { _cg } from 'utils/cookie';
 
 
-const { username, userid, userloginname } = userTag,
+const { username, userid, userloginname, bkStudentNumber } = userTag,
   findNameByCourses = (course = [], id) => {
     let name = '';
     if (id && course.length) {
@@ -65,18 +65,18 @@ export default modelExtend(model, {
                 data: {},
                 queryName: query.name || '',
                 scrollerTop: 0
-              },
+              }
             });
             dispatch({
               type: 'query',
               payload: {
-                ...query,
-              },
+                ...query
+              }
             });
           }
         }
       });
-    },
+    }
   },
   effects: {
     * query ({ payload }, { call, put, select }) {
@@ -89,7 +89,7 @@ export default modelExtend(model, {
           ...{
             userid: _cg(userid),
             userfullname: _cg(username),
-            username: _cg(userloginname)
+            username: _cg(bkStudentNumber) || _cg(userloginname)
           },
           devicetype: cnDeviceType(true)
         }),
@@ -100,13 +100,13 @@ export default modelExtend(model, {
           type: 'updateState',
           payload: {
             data,
-            viewImages,
-          },
+            viewImages
+          }
         });
       } else {
         Toast.fail(data.message || '请稍后再试');
         yield put({ type: 'goBack' });
       }
-    },
-  },
+    }
+  }
 });

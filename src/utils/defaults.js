@@ -1,3 +1,34 @@
+const defaultTabBars = [{
+  title: '首页',
+  key: 1,
+  icon: require('themes/images/ntabr/home.png'),
+  selectedIcon: require('themes/images/ntabr/home-o.png'),
+  route: '/',
+  iconName: 'homeIcon'
+}, {
+  title: '在开课程',
+  key: 2,
+  icon: require('themes/images/ntabr/openning.png'),
+  selectedIcon: require('themes/images/ntabr/openning-o.png'),
+  route: '/opening',
+  iconName: 'openningIcon'
+}, {
+  title: '已开课程',
+  key: 3,
+  icon: require('themes/images/ntabr/end.png'),
+  selectedIcon: require('themes/images/ntabr/end-o.png'),
+  route: '/closed',
+  iconName: 'endIcon'
+}, {
+  title: '我的',
+  key: 4,
+  icon: require('themes/images/ntabr/mine.png'),
+  selectedIcon: require('themes/images/ntabr/mine-o.png'),
+  route: '/oldMine',
+  iconName: 'mineIcon'
+}
+];
+
 const bkTabBars = [{
   title: '首页',
   key: 1,
@@ -153,16 +184,16 @@ const moduleGridsGK = [
   {
     id: '4',
     icon: require('themes/images/grids/schoolCalendarGK.png'),
-    text: '教学日历',
-    path: 'schoolCalendar',
-    queryType: 'gkjxrl'
+    text: '历年试题',
+    path: 'schoolCalendarList',
+    queryType: 'gklnst'
   },
   {
     id: '5',
     icon: require('themes/images/grids/archivesGK.png'),
-    text: '毕业生查档案',
-    path: 'schoolCalendar',
-    queryType: 'gkbyscd'
+    text: '常见问题',
+    path: 'schoolCalendarList',
+    queryType: 'gkcjwt'
   }
 ];
 
@@ -194,9 +225,9 @@ const allModule = [
   },
   {
     id: '5',
-    icon: require('themes/images/grids/apply.png'),
-    text: '我的申请',
-    path: 'apply'
+    icon: require('../themes/images/grids/achievement.png'),
+    text: '我的成绩',
+    path: 'achievement'
   },
   {
     id: '6',
@@ -204,11 +235,12 @@ const allModule = [
     text: '我的收藏',
     path: 'collection'
   },
+
   {
     id: '7',
-    icon: require('../themes/images/grids/teachers.png'),
-    text: '我的老师',
-    path: 'teachers'
+    icon: require('themes/images/grids/apply.png'),
+    text: '我的申请',
+    path: 'apply'
   },
   {
     id: '8',
@@ -218,10 +250,11 @@ const allModule = [
   },
   {
     id: '9',
-    icon: require('../themes/images/grids/achievement.png'),
-    text: '我的成绩',
-    path: 'achievement'
+    icon: require('../themes/images/grids/teachers.png'),
+    text: '我的老师',
+    path: 'teachers'
   },
+
   {
     id: '10',
     icon: require('../themes/images/grids/attendance.png'),
@@ -242,4 +275,4 @@ const allModule = [
   // }
 
 ];
-export default { bkTabBars, gkTabBars, resource, masterGrids, moduleGridsGK, allModule };
+export default { bkTabBars, gkTabBars, resource, masterGrids, moduleGridsGK, allModule, defaultTabBars };

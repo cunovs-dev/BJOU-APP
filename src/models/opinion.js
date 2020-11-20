@@ -3,6 +3,7 @@ import modelExtend from 'dva-model-extend';
 import { model } from 'models/common';
 import { sendOpinion, sendOpinionFiles } from 'services/app';
 import { routerRedux } from 'dva/router';
+import { bkIdentity, oldAPP } from 'utils';
 import { Toast } from 'components';
 
 export default modelExtend(model, {
@@ -12,16 +13,16 @@ export default modelExtend(model, {
   },
   effects: {
     * sendOpinion ({ payload }, { call, put, select }) {
-      const { users: { userid, username } } = yield select(_ => _.app),
+      const { users: { userid, username, userLoginId = '' } } = yield select(_ => _.app),
         { success, msg } = yield call(sendOpinion, {
           ...payload,
-          userid,
+          userid: bkIdentity() || oldAPP() ? userid : userLoginId,
           submitUserName: username,
           submitDeviceInfo: JSON.stringify(cnDeviceInfo())
         });
       if (success) {
         yield put(routerRedux.replace({
-          pathname: '/myopinion',
+          pathname: '/myopinion'
         }));
         Toast.success(msg || '感谢您的宝贵意见', 2);
       } else {
@@ -48,7 +49,7 @@ export default modelExtend(model, {
             }
           });
           yield put(routerRedux.replace({
-            pathname: '/myopinion',
+            pathname: '/myopinion'
           }));
           Toast.success(msg, 2);
         } else {
@@ -57,6 +58,6 @@ export default modelExtend(model, {
       } else {
         Toast.fail(msg || '文件上传失败');
       }
-    },
+    }
   }
 });

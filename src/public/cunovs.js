@@ -1,8 +1,8 @@
 /* global cordova requestFileSystem LocalFileSystem window */
 
 var cunovs = {
-  cnVersion: '1.0.5',
-  cnCodeVersion: '1.0.0',
+  cnVersion: '2.0.0',
+  cnCodeVersion: '1.0.9',
   cnVersionInfo: {
     title: '当前版本过低',
     content: '为保证正常使用，请先升级应用'
@@ -15,26 +15,39 @@ var cunovs = {
   //iOS获取屏幕可用高度 - iOS修改
   //cnhtmlHeight: screen.availHeight,
   cnhtmlHeight: document.documentElement.clientHeight,
-  cnApiServiceUrl: 'http://172.16.140.39:8080',   //app地址
-  // cnApiServiceUrl: 'http://elearningapp.bjou.edu.cn:8080',
+
+  //测试环境
+  //portalServiceUrl: 'https://bjou.preview.klxedu.com',
+  //portalSsoServiceUrl: 'https://bjousso.preview.klxedu.com',
+  //学校测试环境
+  // cnApiServiceUrl: 'https://etestapp.bjou.edu.cn:8443',
+  // // cnResmUrl: 'http://etestapp.bjou.edu.cn:9000/cnvresm',
+  // cnMoodleServeUrl: 'http://etest.bjou.edu.cn',
+  // cnManagerServeUrl: 'http://172.16.140.39:9200',
+  // portalServiceUrl: 'https://teststuportal.bjou.edu.cn',
+  // portalSsoServiceUrl: 'https://testsso.bjou.edu.cn',
+  // portalResourceUrl: 'http://testresm.bjou.edu.cn',
+  //正式环境
+  cnApiServiceUrl: 'http://elearningapp.bjou.edu.cn:8080',
+  // cnResmUrl: 'http://etestapp.bjou.edu.cn:9000/cnvresm',
   cnMoodleServeUrl: 'http://elearning.bjou.edu.cn',
   cnManagerServeUrl: 'http://elearningapp.bjou.edu.cn:9200',
-  cnDownloadFileTag: 'tag_cunovs_download_files',
-  // portalServiceUrl: 'http://bjou.preview.klxedu.com',  //门户服务测试地址
-  portalServiceUrl: 'http://stuportal.bjou.edu.cn',  // 门户服务正式环境
-  // portalSsoServiceUrl: 'https://bjousso.preview.klxedu.com',  // 门户验证
+  portalServiceUrl: 'https://stuportal.bjou.edu.cn',
   portalSsoServiceUrl: 'https://sso.bjou.edu.cn',
+  portalResourceUrl: 'http://resm.bjou.edu.cn',
+
+  cnDownloadFileTag: 'tag_cunovs_download_files',
   cnDeviceType: function (onlyPlayer) {
 
     /*android 设备时 - android修改*/
-    // return 'android';
+    return 'android';
 
     /*iOS 设备时 - iOS修改*/
     //onlyPlayer = onlyPlayer || '';
     //return onlyPlayer === true && cnLessiOS11() ? '' : 'iOS';
 
     /*页面 默认返回*/
-    return '';
+    // return '';
   },
   cnGetServiceUrl: function (type, suffixPath) {
     type = type || '' , suffixPath = suffixPath || '';
@@ -147,12 +160,8 @@ var cunovs = {
             StatusBar.backgroundColorByHexString('#22609c');
             break;
           }
-          case '/closed': {
-            StatusBar.backgroundColorByHexString('#22609c');
-            break;
-          }
           default: {
-            StatusBar.backgroundColorByHexString('#22609c');
+            StatusBar.backgroundColorByHexString('#2B83D7');
           }
         }
         StatusBar.styleLightContent();
@@ -161,11 +170,11 @@ var cunovs = {
         switch (router) {
           case '/':
           case '/dashboard': {
-            StatusBar.backgroundColorByHexString('#22609c');
+            StatusBar.backgroundColorByHexString('#2B83D7');
             break;
           }
           default: {
-            StatusBar.backgroundColorByHexString('#22609c');
+            StatusBar.backgroundColorByHexString('#2B83D7');
           }
         }
         StatusBar.styleLightContent();
@@ -600,6 +609,15 @@ var cunovs = {
       onError({ 'message': '获取本地文件，文件名不能为空。' });
       return;
     }
+    if (file.mimeType === 'application/xml') {
+      onError({
+        'message': '该文件(' + mimeType + ')不能在移动端解析，请使用PC端下载并查看。'
+      });
+      return;
+    }
+    if (file.callback) {
+      file.callback();
+    }
     if (!cnHasPlugin() || cnOnlinePreviewFileType.indexOf(cnGetTypeByFilename(fileName)) != -1) {
       setTimeout(function () {
         cnOpen(fileUrl);
@@ -693,7 +711,8 @@ var cunovs = {
       onProgress = onProgress || '';
       cnDownloadFile(fileUrl, localFilename, null, fileExistAndUpload, onError, onProgress);
     });
-  },
+  }
+  ,
   cnRemoveLocalFile: function (fileLocalPath, onSuccess, onFailure, onError) {
     onError = onError || cnPrints;
     onFailure = onFailure || onError;
@@ -707,15 +726,18 @@ var cunovs = {
     } else {
       onFailure({ 'message': '本地文件路径为空，不能获取到本地文件。' });
     }
-  },
+  }
+  ,
   cnGetAllLocalFiles: function () {
     var files = '';
     return localStorage && (files = localStorage.getItem(cnDownloadFileTag)) ? JSON.parse(files) || [] : [];
-  },
+  }
+  ,
   cnSetAllLocalFiles: function (files) {
     files = files || '';
     return localStorage ? localStorage.setItem(cnDownloadFileTag, JSON.stringify(files)) : '';
-  },
+  }
+  ,
   cnGetLocalFileSize: function () {
     var totalSize = 0,
       files = cnGetAllLocalFiles();
@@ -726,7 +748,8 @@ var cunovs = {
       }
     }
     return totalSize;
-  },
+  }
+  ,
   cnExecFunction: function (func) {
     if (func) {
       try {
@@ -735,7 +758,8 @@ var cunovs = {
         cnPrn(e);
       }
     }
-  },
+  }
+  ,
   cnDoScan: function (onSuccess, onError) {
     onError = onError || cnPrints;
     var tag = 'barcodeScanner';
@@ -767,12 +791,14 @@ var cunovs = {
     } else {
       onError({ 'message': '没有找到插件[' + tag + ']' });
     }
-  },
+  }
+  ,
   cnExitApp: function () {
     if (cnIsDevice() && typeof (navigator) != 'undefined' && typeof (navigator.app) != 'undefined') {
       navigator.app.exitApp();
     }
-  },
+  }
+  ,
   cnInsertZeroByLength: function (v, len) {
     len = len || 0;
     if (len > 0) {
@@ -784,7 +810,8 @@ var cunovs = {
       return result.join('');
     }
     return v;
-  },
+  }
+  ,
   cnCheckCodeVersion: function (cv, lens) {
     var cvs = [];
     if (cv && (cvs = cv.split('.')).length > 1 && lens && lens.length) {
@@ -803,7 +830,8 @@ var cunovs = {
       return result.join('');
     }
     return '0';
-  },
+  }
+  ,
   cnCodePush: function () {
     if (window.codePush) {
 
@@ -817,9 +845,13 @@ var cunovs = {
 
       var onPackageDownloaded = function (localPackage) {
         localPackage.install(onInstallSuccess, onError, {
-          installMode: InstallMode.ON_NEXT_RESTART,
+          //ON_NEXT_RESUME 下次恢复到前台时
+          //ON_NEXT_RESTART 下一次重启时
+          //IMMEDIATE 马上更新
+          //mandatoryInstallMode 强制热更新时
+          installMode: InstallMode.ON_NEXT_RESUME,
           minimumBackgroundDuration: 120,
-          mandatoryInstallMode: InstallMode.ON_NEXT_RESTART
+          mandatoryInstallMode: InstallMode.IMMEDIATE
         });
       };
 
@@ -852,6 +884,12 @@ var cunovs = {
         }
       };
       window.codePush.checkForUpdate(onUpdateCheck, onError);
+    }
+  }
+  ,
+  cnVibrate: function () {
+    if (cnIsDevice() && typeof (navigator) != 'undefined' && typeof (navigator.app) != 'undefined') {
+      navigator.vibrate(100);
     }
   }
 };
@@ -997,7 +1035,7 @@ if (typeof Array.prototype.remove != 'function') {
       var curHref = window.location.href;
       if (curHref.indexOf('/login') != -1) {
         navigator.app.exitApp();
-      } else if (curHref.indexOf('/?_k') != -1) {
+      } else if (curHref.indexOf('/?_k') != -1 || curHref.indexOf('/?orgCode') != -1) {
         cnShowToast('再按一次离开APP');
         document.removeEventListener('backbutton', onExitApp, false);
         document.addEventListener('backbutton', exitApp, false);

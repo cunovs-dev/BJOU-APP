@@ -8,7 +8,7 @@ import cookie from './cookie';
 import formsubmit from './formsubmit';
 
 
-const { userTag: { username, usertoken, userpower, userid, useravatar, userloginname, portalToken, portalUserId, orgCode, portalUserName, doubleTake, userpwd, portalHeadImg } } = config,
+const { userTag: { username, usertoken, userpower, userid, useravatar, userloginname, portalToken, portalUserId, orgCode, portalUserName, doubleTake, portalHeadImg, portalHeadImgGK, bkStudentNumber, userLoginId } } = config,
   // eslint-disable-next-line import/no-named-as-default-member
   { _cs, _cr, _cg } = cookie;
 
@@ -21,7 +21,7 @@ const DateChange = function () {
   return newDate;
 };
 /**
- * 其实完全可以用moment.js 当天网不行下不了依赖
+ * 建议用moment.js 当天网不行下不了依赖
  * @param date
  * @param details 是否显示时间默认显示
  * @constructor
@@ -45,6 +45,9 @@ const getCommonDate = (date, details = true) => {
  * @constructor
  */
 const changeLessonDate = (date) => {
+  if (date === '0') {
+    return '-';
+  }
   if (date) {
     let currentDate = new Date();
     const currentYear = currentDate.getFullYear(),
@@ -178,6 +181,26 @@ const getDurationDay = (num) => {
   return daysRound >= 7 ? '一周' : `${daysRound}天`;
 };
 
+const formateSeconds = (endTime) => {
+  let secondTime = parseInt(endTime);
+  let min = 0;
+  let h = 0;
+  let result = '';
+  if (secondTime > 60) {
+    min = parseInt(secondTime / 60);
+    secondTime = parseInt(secondTime % 60);
+    if (min > 60) {
+      h = parseInt(min / 60);
+      min = parseInt(min % 60);
+    }
+  }
+  result = `${h.toString()
+    .padStart(2, '0')}小时${min.toString()
+    .padStart(2, '0')}分钟${secondTime.toString()
+    .padStart(2, '0')}秒`;
+  return result;
+};
+
 const getDurationTime = (start, end) => {
   const time = (end - start) * 1000;
   let days = time / 1000 / 60 / 60 / 24;
@@ -190,7 +213,86 @@ const getDurationTime = (start, end) => {
   return `${daysRound > 0 ? `${daysRound}天` : ''}${hoursRound > 0 ? `${hoursRound}小时` : ''}${minutesRound > 0 ? `${minutesRound}分钟` : ''}${seconds}秒`;
 };
 
+const getAttendanceTime = (timeValue) => {
+  let time = timeValue * 1000;
 
+  function formatDateTime (time) {
+    let date = new Date(time);
+    let y = date.getFullYear();
+    let m = date.getMonth() + 1;
+    m = m < 10 ? (`0${m}`) : m;
+    let d = date.getDate();
+    d = d < 10 ? (`0${d}`) : d;
+    let h = date.getHours();
+    h = h < 10 ? (`0${h}`) : h;
+    let minute = date.getMinutes();
+    let second = date.getSeconds();
+    minute = minute < 10 ? (`0${minute}`) : minute;
+    second = second < 10 ? (`0${second}`) : second;
+    return `${y}-${m}-${d} ${h}:${minute}:${second}`;
+  }
+
+  // 判断传入日期是否为昨天
+  function isYestday (time) {
+    let date = (new Date()); // 当前时间
+    let today = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime(); // 今天凌晨
+    let yestday = new Date(today - 24 * 3600 * 1000).getTime();
+    return time < today && yestday <= time;
+  }
+
+  // 60000 1分钟
+  // 3600000 1小时
+  // 86400000 24小时
+  // 对传入时间进行时间转换
+  function timeChange (time) {
+    let timeNew = Date.parse(new Date()); // 当前时间
+    let timeDiffer = timeNew - time; // 与当前时间误差
+    let returnTime = {};
+
+    if (timeDiffer <= 120000) { // 一分钟内
+      returnTime = {
+        time: '刚刚',
+        color: '#00bd06'
+      };
+    } else if (timeDiffer > 120000 && timeDiffer < 300000) { // 1-5分钟
+      returnTime = {
+        time: `${Math.floor(timeDiffer / 60000)}分钟前`,
+        color: '#ffa22f'
+      };
+    } else if (timeDiffer > 300000 && timeDiffer < 600000) { // 5-10
+      returnTime = {
+        time: `${Math.floor(timeDiffer / 60000)}分钟前`,
+        color: '#ffa22f'
+      };
+    } else if (timeDiffer > 600000 && timeDiffer < 3600000) { // 1小时内
+      returnTime = {
+        time: `${Math.floor(timeDiffer / 60000)}分钟前`,
+        color: '#ff2222'
+      };
+    } else if (timeDiffer >= 3600000 && timeDiffer < 86400000 && isYestday(time) === false) { // 今日
+      returnTime = {
+        time: formatDateTime(time)
+          .substr(11, 5),
+        color: '#ff2222'
+      };
+    } else if (timeDiffer > 3600000 && isYestday(time) === true) { // 昨天
+      returnTime = {
+        time: `昨天${formatDateTime(time)
+          .substr(11, 5)}`,
+        color: '#ff2222'
+      };
+    } else if (timeDiffer > 86400000 && isYestday(time) === false) {
+      returnTime = {
+        time: formatDateTime(time),
+        color: '#ff2222'
+      };
+    }
+    return returnTime;
+
+  }
+
+  return timeChange(time);
+};
 /**
  * @param   {String}
  * @return  {String}
@@ -231,6 +333,10 @@ const isUsefulPic = (src) => {
 
 const bkIdentity = () => {
   return _cg('orgCode') === 'bjou_student';
+};
+
+const oldAPP = () => {
+  return _cg('oldAPP');
 };
 /**
  *
@@ -304,16 +410,19 @@ const getErrorImg = (el, type = 'default') => {
   }
 };
 
-
-const setLoginIn = ({ user_id, user_token }) => {
-  // _cs(username, user_name);
-  // _cs(userpower, user_pwd);
+const setOldLoginIn = ({ user_token, user_name, user_pwd, user_id, user_avatar, user_login_name }) => {
+  _cs(username, user_name);
+  _cs(userpower, user_pwd);
   _cs(usertoken, user_token);
   _cs(userid, user_id);
-  // _cs(useravatar, user_avatar);
-  // _cs(userloginname, user_login_name);
-  // _cs(portalToken, portal_token);
-  // cnSetAlias(user_login_name, user_token);
+  _cs(useravatar, user_avatar);
+  _cs(userloginname, user_login_name);
+  cnSetAlias(user_login_name, user_token);
+};
+
+const setLoginIn = ({ user_id, user_token }) => {
+  _cs(usertoken, user_token);
+  _cs(userid, user_id);
 };
 
 const setSession = (obj) => {
@@ -326,7 +435,7 @@ const setSession = (obj) => {
 };
 const setLoginOut = () => {
   _cr(username);
-  _cr(`menu_${userid}`);
+  _cr(`menu_${_cg(userLoginId)}`);
   _cr(userpower);
   _cr(usertoken);
   _cr(userid);
@@ -335,9 +444,11 @@ const setLoginOut = () => {
   _cr(orgCode);
   _cr(portalUserName);
   _cr(doubleTake);
-  _cr(userpwd);
   _cr(portalHeadImg);
   _cr(portalToken);
+  _cr('oldAPP');
+  _cr(bkStudentNumber);
+  _cr(userLoginId);
   cnDeleteAlias(_cg(userloginname), _cg(usertoken));
 };
 const getLocalIcon = (icon = '') => {
@@ -415,7 +526,7 @@ const pattern = (type) => {
   const obj = {};
   obj.href = /[a-zA-z]+:\/\/[^\\">]*/g;
   obj.svg = /mymobile/ig;
-  obj.phone = /^1[34578]\d{9}$/;
+  obj.phone = /^1\d{10}$/;
   obj.email = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
   return obj[type];
 };
@@ -468,32 +579,64 @@ const getRule = (arr, val) => {
   let res = true;
   let message = [];
   arr.map(item => {
-    switch (item) {
-      case 1:
+    if (item === 1) {
+      res = res && /[0-9]/g.test(val);
+      if (!/[0-9]/g.test(val)) {
         message.push('数字');
-        res = res && /[0-9]/g.test(val);
-        break;
-      case 2:
+      }
+    } else if (item === 2) {
+      res = res && /[a-z]/g.test(val);
+      if (!/[a-z]/g.test(val)) {
         message.push('小写字母');
-        res = res && /[a-z]/g.test(val);
-        break;
-      case 3:
+      }
+    } else if (item === 3) {
+      res = res && /[A-Z]/g.test(val);
+      if (!/[A-Z]/g.test(val)) {
         message.push('大写字母');
-        res = res && /[A-Z]/g.test(val);
-        break;
-      case 4:
-        message.push(',~#^$@%&!*等特殊字符');
-        res = res && /[~#^$@%&!*]/g.test(val);
-        break;
-      default :
-        return res;
+      }
+    } else if (item === 4) {
+      res = res && /[~#^$@%&!*]/g.test(val);
+      if (!/[~#^$@%&!*]/g.test(val)) {
+        message.push('~#^$@%&!*等特殊字符');
+      }
     }
+
+
+    // switch (item) {
+    //   case 1:
+    //     message.push('数字');
+    //     res = res && /[0-9]/g.test(val);
+    //     break;
+    //   case 2:
+    //     message.push('小写字母');
+    //     res = res && /[a-z]/g.test(val);
+    //     break;
+    //   case 3:
+    //     message.push('大写字母');
+    //     res = res && /[A-Z]/g.test(val);
+    //     break;
+    //   case 4:
+    //     message.push('~#^$@%&!*等特殊字符');
+    //     res = res && /[~#^$@%&!*]/g.test(val);
+    //     break;
+    //   default :
+    //     return res;
+    // }
   });
   // res.map(every => every.message = `密码必须包含${message.join()}`);
   return {
     result: res,
     message
   };
+};
+
+const getValideError = (obj = {}) => {
+  for (let val in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, val) && obj[val] && obj[val].errors && cnIsArray(obj[val].errors)) {
+      return obj[val].errors[0].message || '你输入的信息有误，请点击表单后的感叹号图标查看具体信息';
+    }
+    return '你输入的信息有误，请点击表单后的感叹号图标查看具体信息';
+  }
 };
 
 module.exports = {
@@ -537,5 +680,10 @@ module.exports = {
   bkIdentity,
   setSession,
   getPortalAvatar,
-  getRule
+  getRule,
+  formateSeconds,
+  setOldLoginIn,
+  oldAPP,
+  getValideError,
+  getAttendanceTime
 };

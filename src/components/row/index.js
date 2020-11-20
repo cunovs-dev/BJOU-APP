@@ -127,12 +127,12 @@ module.exports = {
       </div>
     );
   },
-  closeLessonRow: (item) => {
+  closeLessonRow: (item,onClick,dispatch) => {
     // 已开课程列表
-    const { fullname, master, id, graderaw = 0, attendance = {}, courseImage = '' } = item,
+    const { fullname, master, id, graderaw = 0, attendance = {}, courseImage = '', isAttendance = false } = item,
       { stat = 0 } = attendance;
     return (
-      <div key={id} className={styles[`${PrefixCls}-closelesson`]}>
+      <div key={id} className={styles[`${PrefixCls}-closelesson`]} >
         <div className={styles[`${PrefixCls}-closelesson-title`]}>{fullname}</div>
         <div className={styles[`${PrefixCls}-closelesson-container`]}>
           <div className={styles[`${PrefixCls}-closelesson-img`]}
@@ -142,10 +142,14 @@ module.exports = {
               {`责任教师：${master.fullname}`}
             </div>
             <div className={styles[`${PrefixCls}-closelesson-content-info`]}>
-              {stat ?
-               <div style={{ color: '#1eb259' }}>考勤：达标</div>
-                    :
-               <div style={{ color: '#f34e14' }}>考勤：未达标</div>
+              {
+                isAttendance ?
+                stat ?
+                <div style={{ color: '#1eb259' }}>考勤：达标</div>
+                     :
+                <div style={{ color: '#f34e14' }}>考勤：未达标</div>
+                             :
+                null
               }
               {
                 <div style={{ color: isPass(graderaw) ? '#1eb259' : '#f34e14' }}>{`成绩：${graderaw}`}</div>
@@ -157,7 +161,7 @@ module.exports = {
     );
   },
   openingLessonRow: (item, onClick, onProgressClick, dispatch) => {
-    // 已开课程列表
+    // 在开课程列表
     const { fullname = '', graderaw = 0, id, master, enddate, isAttendance = false, hasFinalExam = false, courseImage } = item;
     return (
       <div key={id} className={styles[`${PrefixCls}-openinglessonout`]} onClick={onClick.bind(null, item, dispatch)}>
@@ -299,7 +303,7 @@ module.exports = {
                   <div key={items.id} className={styles[`${PrefixCls}-teachers`]}
                        onClick={onClick.bind(null, 'userpage', { userid: items.id }, dispatch)}>
                     <div className={styles[`${PrefixCls}-teachers-img`]}>
-                      <img src={getImages(items.userData.avatar, 'user')} alt="" />
+                      <img src={getImages(items.userData && items.userData.avatar, 'user')} alt="" />
                     </div>
                     <div className={styles[`${PrefixCls}-teachers-content`]}>
                       <div className={styles[`${PrefixCls}-teachers-content-top`]}>
@@ -314,7 +318,7 @@ module.exports = {
                         <Button
                           onClick={onClick.bind(null, 'conversation', {
                             fromuserid: items.id,
-                            name: items.userData.fullname,
+                            name: items.userData && items.userData.fullname,
                             avatar: items.userData && items.userData.avatar
                           }, dispatch)}
                           type="primary"
@@ -892,12 +896,12 @@ module.exports = {
       <div className={styles[`${PrefixCls}-system`]} key={informationId}>
         <List.Item
           wrap
-          extra={
-            <Tag
-              text={state === '1' ? '已读' : '未读'}
-              color={state === '1' ? 'green' : 'blue'}
-              size="xs" />
-          }
+          // extra={
+          //   <Tag
+          //     text={state === '1' ? '已读' : '未读'}
+          //     color={state === '1' ? 'green' : 'blue'}
+          //     size="xs" />
+          // }
           onClick={(e) => onClick(rowData, dispatch, e)}
         >
           <div className={styles[`${PrefixCls}-system-content`]}>
@@ -930,18 +934,18 @@ module.exports = {
     // 移动端和pc端共用一个接口，但展示方式不一样 ，数据要做处理
     const year = parseInt(semesterYear, 10);
     const season = semesterYear.replace(/[ \d]/g, '');
-    const passed = courses.filter(ev => ev.isPass === 2).length || 0;
+    const passed = courses.filter(ev => ev.isPass === 1).length || 0;
     let totalScore;
-    totalScore = courses.reduce((totalPrice, _) => totalPrice + _.course.courseScore, 0);
+    totalScore = courses.reduce((totalPrice, _) => totalPrice + parseInt(_.course.courseScore, 10), 0);
 
     return (
-      <div className={styles[`${PrefixCls}-progress`]}>
+      <div className={styles[`${PrefixCls}-progress`]} key={index}>
         <List.Item
           wrap
           className={styles[`${PrefixCls}-progress-list`]}
           arrow="horizontal"
           key={index}
-          extra={<span>{`${passed}门以通过`}</span>}
+          extra={<span>{`${passed}门已通过`}</span>}
           onClick={() => onClick('progressDetails', { index }, dispatch)}
         >
           <div className={styles[`${PrefixCls}-progress-content`]}>
@@ -953,7 +957,7 @@ module.exports = {
               {`${courses.length}门课程`}
             </div>
             <div className={styles[`${PrefixCls}-progress-content-grade`]}>
-              {`总学分：${totalScore}`}
+              {`总得分：${totalScore}`}
             </div>
           </div>
         </List.Item>
@@ -961,19 +965,19 @@ module.exports = {
     );
   },
 
-  timetableRow: (item, onClick, dispatch) => {
-    const { courseName = '', courseId = '', courseNumber = '', responsibleTeacher = '', courseTeacher = '', startDate = '', endDate = '', courseState, examScore } = item;
+  timetableRow: (item, index, onClick, courseIdNumbers, dispatch) => {
+    const { courseName = '', courseNumber = '', responsibleTeacher = '', courseTeacher = '', startDate = '', endDate = '', courseState, examScore, courseNumberStudy = '' } = item;
     const getCourseState = () => {
       let res = '';
       switch (courseState) {
         case 1:
-          res = '在开';
+          res = <span style={{ color: '#189c00' }}>[在开]</span>;
           break;
         case 2:
-          res = '已开';
+          res = <span style={{ color: '#ff6900' }}>[将开]</span>;
           break;
         case 3:
-          res = '将开';
+          res = <span style={{ color: '#000000' }}>[已开]</span>;
           break;
         default:
           res = '';
@@ -981,22 +985,23 @@ module.exports = {
       return res;
     };
     return (
-      <div key={courseId} className={styles[`${PrefixCls}-timetable`]} onClick={() => onClick(item, dispatch)}>
+      <div
+        key={index}
+        className={styles[`${PrefixCls}-timetable`]}>
         <div className={styles[`${PrefixCls}-timetable-title`]}>{courseName}</div>
         <div>
-          {`课程编号：${courseNumber}`}
-          <span
-            style={{ color: courseState === 1 ? 'green' : 'red' }}
-          >
-            {getCourseState()}
-          </span>
+          {`课程编号：${courseNumber}`}{getCourseState()}
         </div>
-        <div>{`责任教师: ${courseTeacher}`}</div>
-        <div>{`辅导教师: ${responsibleTeacher}`}</div>
-        <div>{`开课时间: ${changeLessonDate(startDate / 1000)}至${changeLessonDate(endDate / 1000)}`}</div>
+        <div>{`责任教师: ${courseTeacher || '-'}`}</div>
+        <div>{`辅导教师: ${responsibleTeacher || '-'}`}</div>
+        <div>{`开课时间: ${changeLessonDate(startDate / 1000) || '-'}至${changeLessonDate(endDate / 1000) || '-'}`}</div>
         <div className={styles[`${PrefixCls}-timetable-last`]}>
-          <div>{`形考成绩: ${examScore}`}</div>
-          <Button className={styles[`${PrefixCls}-timetable-btn`]} type="ghost" size="small">进入学习</Button>
+          <div>{`形考成绩: ${examScore || '-'}`}</div>
+          <Button disabled={courseState !== 1 || !courseIdNumbers.hasOwnProperty(courseNumberStudy)}
+                  className={styles[`${PrefixCls}-timetable-btn`]}
+                  onClick={courseState === 1 ? () => onClick({ id: courseIdNumbers[courseNumberStudy] }, dispatch) : null}
+                  type="ghost"
+                  size="small">进入学习</Button>
         </div>
       </div>
     );
@@ -1064,17 +1069,17 @@ module.exports = {
     );
   },
   progressDetailsRow: (item) => {
-    const { course: { courseName = '', courseScore, examType = '', courseNumber = '', courseNature = '' }, isPass = '', examScore = '' } = item;
+    const { course: { courseName = '', courseScore, examType = '', courseNumber = '', courseNature = '', progressId }, isPass = '', examScore = '' } = item;
     return (
-      <div className={styles[`${PrefixCls}-progressDetails`]}>
+      <div className={styles[`${PrefixCls}-progressDetails`]} key={progressId}>
         <div className={styles[`${PrefixCls}-progressDetails-title`]}>{courseName}</div>
         <div>{`课程性质: ${courseNature}`}</div>
         <div>{`课程编号：${courseNumber}`}</div>
         <div>{`学分: ${courseScore}`}</div>
-        <div>{`考试形式: ${examType}`}</div>
+        <div>{`考试形式: ${examType || '-'}`}</div>
         <div>{`成绩: ${examScore}`}</div>
         <div>
-          <span>是否通过:</span>
+          <span>是否通过: </span>
           <span style={{ color: `${isPass === 1 ? 'green' : 'red'}` }}>{isPass === 1 ? '通过' : '未通过'}</span>
         </div>
       </div>
@@ -1093,15 +1098,15 @@ module.exports = {
         </div>
         <div className={styles[`${PrefixCls}-courseGK-content`]}>
           <div className={styles[`${PrefixCls}-courseGK-content-item`]}>
-            <p>{minimumCredit}</p>
+            <p>{minimumCredit || '-'}</p>
             <p>最低学分</p>
           </div>
           <div className={styles[`${PrefixCls}-courseGK-content-item`]}>
-            <p>{centralMinimumCredit}</p>
+            <p>{centralMinimumCredit || '-'}</p>
             <p>中央最低学分</p>
           </div>
           <div className={styles[`${PrefixCls}-courseGK-content-item`]}>
-            <p>{modulePassCredits}</p>
+            <p>{modulePassCredits || '-'}</p>
             <p>模块通过学分</p>
           </div>
         </div>

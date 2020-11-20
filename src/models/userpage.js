@@ -45,7 +45,6 @@ export default modelExtend(model, {
     * query ({ payload }, { call, put, select }) {
       const { contacts } = yield select(_ => _.app);
       const data = yield call(queryMoodleUserInfo, payload);
-      console.log(data)
       if (data) {
         yield put({
           type: 'updateState',

@@ -21,8 +21,13 @@
     background: #F5F5F5 no-repeat center center;
     background-size: 44px 44px;
   }
+  input::placeholder {
+    font-size: @mediumFontSize;
+    padding-top: 0.4em;
+  }
   input::-webkit-input-placeholder {
     font-size: @mediumFontSize;
+    padding-top: 0.4em;
   }
 }
 
@@ -50,8 +55,15 @@
 
 }
 
-.forget{
-  display: block;
-  text-align: right;
+.tips{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: #fff;
 }
+
+.forget{
+  color: #fff;
+}
+
+

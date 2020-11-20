@@ -8,12 +8,19 @@ import modelExtend from 'dva-model-extend';
 import { model } from 'models/common';
 import { Toast } from 'components';
 import { handlerCourseClick } from 'utils/commonevents';
-import { queryLessonDetails, manualCompletion, queryAppealCount} from 'services/lesson';
+import {
+  queryLessonDetails,
+  manualCompletion,
+  queryAppealCount,
+  updateCompleteStatus,
+  updateUrlStatus,
+  refreshLessonDetails
+} from 'services/lesson';
 import { url, queryResource } from 'services/resource';
 import { userTag } from 'utils/config';
 import { _cg } from 'utils/cookie';
 
-const { username, userid, userloginname } = userTag,
+const { username, userid, userloginname, bkStudentNumber } = userTag,
   findNameByCourses = (course = [], id) => {
     let name = '';
     if (id && course.length) {
@@ -42,6 +49,10 @@ const adapter = (data) => {
   return data;
 };
 
+const delay = (ms) => new Promise((resolve) => {
+  setTimeout(resolve, ms);
+});
+
 export default modelExtend(model, {
   namespace: 'lessondetails',
   state: {
@@ -52,7 +63,7 @@ export default modelExtend(model, {
     accordionIndex: ['0'],
     courseid: '',
     scrollerTop: 0,
-    appealCount: 0
+    appealCount: 0,
   },
   subscriptions: {
     setup ({ history, dispatch }) {
@@ -69,28 +80,29 @@ export default modelExtend(model, {
                 refreshing: false,
                 activityIndex: 0,
                 accordionIndex: ['0'],
-                courseid
-              },
+                courseid,
+                hasScripts: false
+              }
             });
             dispatch({
               type: 'queryDetails',
               payload: {
                 userid,
-                courseid,
-              },
+                courseid
+              }
             });
           } else {
             dispatch({
               type: 'updateDetails',
               payload: {
                 userid,
-                courseid,
-              },
+                courseid
+              }
             });
           }
         }
       });
-    },
+    }
   },
   effects: {
     * queryDetails ({ payload }, { call, put, select }) {
@@ -103,7 +115,7 @@ export default modelExtend(model, {
         ...{
           userid: _cg(userid),
           userfullname: _cg(username),
-          username: _cg(userloginname)
+          username: _cg(bkStudentNumber) || _cg(userloginname)
         },
         devicetype: cnDeviceType(true)
       });
@@ -112,15 +124,49 @@ export default modelExtend(model, {
           type: 'updateState',
           payload: {
             data: adapter(data),
-            refreshing: false,
-          },
+            refreshing: false
+          }
         });
         yield put({
           type: 'updateState',
           payload: {
             activityIndex: data.activityIndex,
             accordionIndex: data.activityIndex > 0 ? [(data.activityIndex - 1).toString()] : ['0']
-          },
+          }
+        });
+      } else {
+        Toast.fail(data.message || '获取失败');
+      }
+    },
+
+    * refreshLessonDetails ({ payload }, { call, put, select }) {
+      const { courseData = [] } = yield select(_ => _.app),
+        { courseid = '' } = payload,
+        coursename = findNameByCourses(courseData, courseid);
+      const data = yield call(refreshLessonDetails, {
+        ...payload,
+        coursename,
+        ...{
+          userid: _cg(userid),
+          userfullname: _cg(username),
+          username: _cg(bkStudentNumber) || _cg(userloginname)
+        },
+        devicetype: cnDeviceType(true)
+      });
+      if (data.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            data: adapter(data),
+            refreshing: false
+          }
+        });
+        yield put({
+          type: 'updateState',
+          payload: {
+            activityIndex: data.activityIndex,
+            accordionIndex: data.activityIndex > 0 ? [(data.activityIndex - 1).toString()] : ['0']
+          }
         });
       } else {
         Toast.fail(data.message || '获取失败');
@@ -128,14 +174,14 @@ export default modelExtend(model, {
     },
 
     * updateDetails ({ payload }, { call, put }) {
-      const data = yield call(queryLessonDetails, payload);
+      const data = yield call(refreshLessonDetails, payload);
       if (data.success) {
         yield put({
           type: 'updateState',
           payload: {
             data: adapter(data),
-            refreshing: false,
-          },
+            refreshing: false
+          }
         });
       } else {
         Toast.fail(data.message || '获取失败');
@@ -143,14 +189,13 @@ export default modelExtend(model, {
     },
 
     * queryUrl ({ payload, cb }, { call, put, select }) {
-      const { dispatch = '', cmid = '', courseid = '', name = '', ...param } = payload,
+      const { dispatch = '', cmid = '', courseid = '', instance = '', name = '', ...param } = payload,
         { success, message = '获取文件信息失败。', data = [] } = yield call(url, {
           cmid,
           courseid,
           name,
           ...param
-        }),
-        targets = {};
+        });
       if (success && data.length) {
         const { id: urlId = '', content = [], cmid: ccmId = '', ...otherDatas } = data[0];
         if (dispatch) {
@@ -161,7 +206,7 @@ export default modelExtend(model, {
         Toast.fail(message);
       }
     },
-    * queryResource ({ payload, cb }, { call }) {
+    * queryResource ({ payload, cb }, { call, put }) {
       const { dispatch = '', cmid = '', courseid = '', instance = '', ...otherDatas } = payload,
         { success, message = '获取文件内容失败。', data = [{}] } = yield call(queryResource, {
           cmid,
@@ -180,11 +225,11 @@ export default modelExtend(model, {
       const { courseid } = yield select(_ => _.lessondetails);
       const { success, message } = yield call(manualCompletion, payload);
       if (success) {
+        yield call(delay, 2000);
         yield put({
           type: 'updateDetails',
           payload: { userid, courseid }
         });
-
         if (callback) yield callback(-1);
       } else {
         Toast.fail(message || '未知错误');
@@ -202,5 +247,33 @@ export default modelExtend(model, {
         Toast.fail(message || '未知错误');
       }
     },
-  },
+    * updateCompleteStatus ({ payload, callback }, { call, put, select }) {
+      const { users: { userid } } = yield select(_ => _.app);
+      const { courseid } = yield select(_ => _.lessondetails);
+      const { status } = yield call(updateCompleteStatus, payload);
+      if (status) {
+        yield call(delay, 3000);
+        yield put({
+          type: 'updateDetails',
+          payload: { userid, courseid }
+        });
+      } else {
+
+      }
+    },
+    * updateUrlStatus ({ payload, callback }, { call, put, select }) {
+      const { users: { userid } } = yield select(_ => _.app);
+      const { courseid } = yield select(_ => _.lessondetails);
+      const { status } = yield call(updateUrlStatus, payload);
+      if (status) {
+        yield call(delay, 3000);
+        yield put({
+          type: 'updateDetails',
+          payload: { userid, courseid }
+        });
+      } else {
+
+      }
+    }
+  }
 });

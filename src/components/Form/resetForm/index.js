@@ -15,7 +15,7 @@ import styles from './index.less';
 
 @connect(({ resetPassword }) => ({
   resetPassword
-}))
+  }))
 @createForm()
 class ResetForm extends React.Component {
   constructor (props) {
@@ -27,9 +27,9 @@ class ResetForm extends React.Component {
 
   render () {
     const { getFieldProps, getFieldError } = this.props.form,
-      { firstIcon, secondIcon, firstKey, secondKey, moveInput } = this.props,
-      { rules = {} } = this.props.resetPassword;
-    const { complexityRule = [], maxLength = 8, minLength = 6 } = rules;
+      { firstIcon, secondIcon, firstKey, secondKey, moveInput } = this.props;
+      // { rules = {} } = this.props.resetPassword;
+    // const { complexityRule = [], maxLength = 8, minLength = 6 } = rules;
     return (
       <div>
         <div className={styles.user}>
@@ -46,16 +46,16 @@ class ResetForm extends React.Component {
             {...getFieldProps(firstKey, {
               rules: [
                 { required: true, message: '密码不能为空' },
-                { min: minLength, message: `用户名不能小于${minLength}个字符` },
-                { max: maxLength, message: `用户名不能大于${maxLength}个字符` },
-                {
-                  validator: (rule, value) => {
-                    if (getRule(complexityRule, value).result) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(`密码必须包含${getRule(complexityRule, value).message}`);
-                  }
-                }
+                // { min: minLength, message: `密码不能小于${minLength}个字符` },
+                // { max: maxLength, message: `密码不能大于${maxLength}个字符` },
+                // {
+                //   validator: (rule, value) => {
+                //     if (getRule(complexityRule, value).result) {
+                //       return Promise.resolve();
+                //     }
+                //     return Promise.reject(`密码缺少${getRule(complexityRule, value).message}`);
+                //   }
+                // }
               ]
             })}
             clear
@@ -79,8 +79,7 @@ class ResetForm extends React.Component {
             onFocus={moveInput.bind(this)}
             {...getFieldProps(secondKey, {
               rules: [
-                { required: true, message: '密码不能为空' },
-                { min: 1, message: '密码小于1个字符' },
+                { required: true, message: '请确认密码' },
                 {
                   validator: (rule, value) => {
                     const { password } = this.props.form.getFieldsValue([firstKey]);

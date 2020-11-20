@@ -17,7 +17,7 @@ import {
   WingBlank
 } from 'components';
 import { handlerChangeRouteClick } from 'utils/commonevents';
-import { replaceSystemEmoji, bkIdentity } from 'utils';
+import { replaceSystemEmoji, bkIdentity, oldAPP } from 'utils';
 import TitleBox from 'components/titlecontainer';
 import styles from './index.less';
 
@@ -244,7 +244,7 @@ class Opinion extends Component {
           <form>
             <List>
               <Picker
-                data={bkIdentity() ? type : gkType}
+                data={bkIdentity() || oldAPP() ? type : gkType}
                 cols={1}
                 disabled={courseId !== ''}
                 {...getFieldProps('submitType', {

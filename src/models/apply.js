@@ -5,7 +5,24 @@ import { Toast } from 'components';
 import { model } from 'models/common';
 import { queryApplyList } from 'services/list';
 
-
+const sortArray = (arr) => {
+  const res = [],
+    res1 = [],
+    res2 = [],
+    res3 = [];
+  arr.map(item => {
+    if (item.applyState === '审批中') {
+      res1.push(item);
+    } else if (item.applyState === '已完成') {
+      res2.push(item);
+    } else if (item.applyState === '未通过') {
+      res3.push(item);
+    } else {
+      res.push(item);
+    }
+  });
+  return res.concat(res1, res2, res3);
+};
 export default modelExtend(model, {
   namespace: 'apply',
   state: {
@@ -15,6 +32,12 @@ export default modelExtend(model, {
     setupHistory ({ dispatch, history }) {
       history.listen(({ pathname }) => {
         if (pathname === '/apply') {
+          dispatch({
+            type: 'updateState',
+            payload: {
+              list: []
+            }
+          });
           dispatch({
             type: 'queryList'
           });
@@ -29,7 +52,7 @@ export default modelExtend(model, {
         yield put({
           type: 'updateState',
           payload: {
-            list: data
+            list: sortArray(data)
           }
         });
       } else {

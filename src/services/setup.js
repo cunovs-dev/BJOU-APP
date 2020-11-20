@@ -1,7 +1,7 @@
 import { request, config, formsubmit } from 'utils';
 
 const { api } = config;
-const { SetAvatar, SetBKPortalAvatar, SetGKPortalAvatar, UpdateInfo, GetResetTypes, SendCode, SendCodeWithToken, VerifyCode, UpdatePhoneOrEmail, ResetPassword, GetPasswordRule, GetAccount } = api;
+const { SetAvatar, SetBKPortalAvatar, SetGKPortalAvatar, UpdateInfo, GetResetTypes, SendCode, SendCodeWithToken, VerifyCode, UpdatePhoneOrEmail, ResetPassword, FirstUpdatePassword, GetPasswordRule, GetAccount, ValidRule } = api;
 
 export async function setAvatar (payload) {
   return request({
@@ -16,7 +16,8 @@ export async function setBKPortalAvatar (payload) {
     url: SetBKPortalAvatar,
     data: payload,
     hasToken: false,
-    method: 'put'
+    method: 'put',
+    fetchType: 'portal'
   });
 }
 
@@ -42,7 +43,8 @@ export async function queryResetTypes (payload) {
   return request({
     url: GetResetTypes,
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -50,7 +52,8 @@ export async function sendCode (payload) {
   return request({
     url: SendCode,
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
   });
 }
 
@@ -99,6 +102,25 @@ export async function queryAccount (payload) {
   return request({
     url: GetAccount,
     data: payload,
-    hasToken: false
+    hasToken: false,
+    fetchType: 'portal'
+  });
+}
+
+export async function firstUpdatePassword (payload) {
+  return request({
+    url: FirstUpdatePassword,
+    data: payload,
+    hasToken: false,
+    fetchType: 'portal'
+  });
+}
+
+export async function validRule (payload) {
+  return request({
+    url: ValidRule,
+    method: 'post',
+    data: payload,
+    hasToken: false,
   });
 }

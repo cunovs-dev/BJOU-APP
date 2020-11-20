@@ -9,7 +9,7 @@ import { createForm } from 'rc-form';
 import { connect } from 'dva';
 import { WhiteSpace, Button, Toast } from 'components';
 import { Link } from 'dva/router';
-import PhoneForm from 'components/Form/phoneForm';
+import LoginPhoneForm from 'components/Form/loginPhoneForm';
 import LoginWay from '../components/LoginWay';
 import styles from './index.less';
 
@@ -27,15 +27,8 @@ class PhoneLogin extends React.Component {
 
   onSubmit = () => {
     this.props.dispatch({
-      type: 'login/phoneLogin',
+      type: 'login/authentication',
       payload: this.formRef.getItemsValue()
-    });
-  };
-
-  onValidateCodeClick = (data) => {
-    this.props.dispatch({
-      type: 'login/sendPhoneLoginCode',
-      payload: data
     });
   };
 
@@ -47,10 +40,10 @@ class PhoneLogin extends React.Component {
   render () {
     return (
       <form className={styles.form}>
-        <PhoneForm
+        <LoginPhoneForm
+          loadPwd={this.props.login.loadPwd}
           moveInput={this.moveInput}
           wrappedComponentRef={(form) => this.formRef = form}
-          codeClick={this.onValidateCodeClick}
         />
         <WhiteSpace size="lg" />
         <Link

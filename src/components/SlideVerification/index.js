@@ -1,7 +1,8 @@
 /**
  * @author Lowkey
  * @date 2020/03/10 13:31:44
- * @Description: 滑块验证简单版（纯前端）
+ * @Description: 滑块验证简单版（纯前端） 居然不用了。。。。
+ *
  */
 import React from 'react';
 import { Icon } from 'antd-mobile';

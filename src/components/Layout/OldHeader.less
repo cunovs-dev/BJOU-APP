@@ -1,0 +1,23 @@
+@import '../../themes/default.less';
+
+@PrefixCls: oldHeader;
+.@{PrefixCls}-logo-outer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: @primary-header-height;
+  padding: 0 40px;
+  background: -webkit-linear-gradient(@primary-color, #3574b0);
+
+  & .logo-box {
+    display: flex;
+    align-items: center;
+    height: @primary-header-height;
+    & img {
+      height:@primary-header-height;
+    }
+  }
+
+}
+
+

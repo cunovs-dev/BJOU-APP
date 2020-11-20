@@ -7,22 +7,43 @@ import { Toast } from 'antd-mobile';
 import { _cg, _cr } from './cookie';
 import { baseURL, userTag } from './config';
 
-const { username, usertoken, userpower, userid, useravatar, userloginname, portalUserId, orgCode, portalUserName, doubleTake, portalHeadImg, portalToken } = userTag,
+const { username, usertoken, userpower, userid, useravatar, userloginname, portalUserId, orgCode, portalUserName, doubleTake, portalHeadImg, portalHeadImgGK, portalToken, userLoginId, bkStudentNumber } = userTag,
   logoutWith401 = () => {
+    _cr(`menu_${_cg(userLoginId)}`);
     _cr(username);
     _cr(userpower);
     _cr(usertoken);
     _cr(userid);
     _cr(useravatar);
-    cnDeleteAlias(_cg(userloginname), _cg(usertoken));
-  },
-  logoutWith302 = () => {
     _cr(portalUserId);
     _cr(orgCode);
     _cr(portalUserName);
     _cr(doubleTake);
     _cr(portalHeadImg);
+    _cr(portalHeadImgGK);
     _cr(portalToken);
+    _cr(portalUserId);
+    _cr(bkStudentNumber);
+    _cr(userLoginId);
+    _cr('oldAPP');
+    cnDeleteAlias(_cg(userloginname), _cg(usertoken));
+  },
+  logoutWith302 = () => {
+    _cr(`menu_${_cg(userLoginId)}`);
+    _cr(portalUserId);
+    _cr(orgCode);
+    _cr(portalUserName);
+    _cr(doubleTake);
+    _cr(portalHeadImg);
+    _cr(portalHeadImgGK);
+    _cr(portalToken);
+    _cr(userid);
+    _cr(useravatar);
+    _cr(usertoken);
+    _cr(bkStudentNumber);
+    _cr(userLoginId);
+    _cr('oldAPP');
+    cnDeleteAlias(_cg(userloginname), _cg(usertoken));
   };
 axios.defaults.baseURL = baseURL;
 axios.defaults.withCredentials = true; // 设置不带cookie 不然存在跨域问题
@@ -35,7 +56,8 @@ const fetch = (options) => {
     data,
     fetchType = '',
     url,
-    hasToken = true
+    hasToken = true,
+    hasCredentials = true
   } = options;
 
   const appendParams = {
@@ -65,7 +87,7 @@ const fetch = (options) => {
     Toast.offline(e.message);
   }
   if (data instanceof FormData) {
-    // axios.defaults.withCredentials = false; // 设置不带cookie 不然存在跨域问题
+    axios.defaults.withCredentials = hasCredentials;
     return axios.post(url, data, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -74,19 +96,47 @@ const fetch = (options) => {
   }
   switch (method.toLowerCase()) {
     case 'get':
-      return axios.get(url, {
-        params: cloneData
-      });
+      if (fetchType === 'portal') {
+        return axios.get(url, { params: cloneData },
+          {
+            headers: {
+              'x-requested-with': 'XMLHttpRequest'
+            }
+          }
+        );
+      }
+      if (fetchType === 'blob') {
+        return axios({
+          method: 'get',
+          url,
+          params: cloneData,
+          responseType: 'blob'
+        });
+      }
+      return axios.get(url, { params: cloneData }
+      );
     case 'delete':
       return axios.delete(url, {
         data: cloneData
       });
     case 'post':
+      if (fetchType === 'portal') {
+        return axios.post(url, qs.stringify(cloneData, {
+            indices: false
+          }),
+          {
+            headers: {
+              'x-requested-with': 'XMLHttpRequest'
+            }
+          }
+        );
+      }
       if (fetchType === 'json') {
         return axios.post(url, JSON.stringify(cloneData),
           {
             headers: {
-              'Content-Type': 'application/json;charset=UTF-8'
+              'Content-Type': 'application/json;charset=UTF-8',
+              'x-requested-with': 'XMLHttpRequest'
             }
           }
         );
@@ -119,6 +169,7 @@ const getResponeseErrMsg = (status) => {
     return '';
   }
   switch (status) {
+
     case 500:
       msg = '服务器发生未知错误.';
       break;
@@ -157,6 +208,14 @@ export default function request (options) {
     .then((response) => {
       const { statusText, status } = response;
       let data = response.data;
+      if (options.fetchType === 'blob') {
+        return Promise.resolve({
+          success: true,
+          message: statusText,
+          statusCode: status,
+          data: window.URL.createObjectURL(data)
+        });
+      }
       typeof (data) === 'string' && (data = doDecode(data));
       return Promise.resolve({
         success: true,
@@ -181,11 +240,16 @@ export default function request (options) {
           hashHistory.replace('/login');
           msg = data.message || getResponeseErrMsg(statusCode);
         } else if (statusCode === 555) {
+          msg = data.message || getResponeseErrMsg(statusCode);
           window.cnUpholdMsg = data.message || getResponeseErrMsg(statusCode);
           hashHistory.push({
             pathname: '/building'
           });
-          return;
+          return Promise.reject({ success: false, statusCode, message: msg });
+        } else if (!statusCode) {
+          logoutWith401();
+          hashHistory.replace('/login');
+          msg = data.message || getResponeseErrMsg(statusCode) || statusText;
         } else {
           msg = data.message || getResponeseErrMsg(statusCode) || statusText;
         }

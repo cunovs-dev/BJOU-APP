@@ -16,17 +16,17 @@ const Header = (props) => {
       {
         !props.isPure ?
         <div className={styles.info} onClick={props.handlerClick}>
-          {
-            props.payState !== null
-            ?
-            <Tag
-              text={props.payState === 1 ? '已缴费' : '未缴费'}
-              color={props.payState ? '#1eb259' : '#f34e14'}
-              size="xs"
-            />
-            :
-            null
-          }
+          {/*{*/}
+            {/*props.payState !== null*/}
+            {/*?*/}
+            {/*<Tag*/}
+              {/*text={props.payState === 1 ? '已缴费' : '未缴费'}*/}
+              {/*color={props.payState===1 ? '#1eb259' : '#f34e14'}*/}
+              {/*size="xs"*/}
+            {/*/>*/}
+            {/*:*/}
+            {/*null*/}
+          {/*}*/}
           <img
             className={styles.avatar}
             src={getPortalAvatar(EnclosureDownload, props.headImg)}

@@ -11,7 +11,7 @@ import ApplyList from '../ApplyList';
 const MobileTable = (props) => {
   const { data, thead, type } = props,
     renderHead = () => (
-      thead.map((item, i) => (<div key={i}>{item}</div>))
+      thead.map((item, i) => (<div style={{ width: item.width }} key={i}>{item.label}</div>))
     );
   return (
     <div className={styles.container}>
@@ -27,10 +27,10 @@ const MobileTable = (props) => {
             <div className={styles.tr} key={i}>
               <div>{item.courseName}</div>
               <div>{`${new Date(item.examDate).getFullYear()}-${new Date(item.examDate).getMonth() + 1}`}</div>
-              <div>{item.normalScore}</div>
-              <div>{item.rollScore}</div>
-              <div>{item.totalScore}</div>
-              <div style={{ color: item.isPass ? 'green' : 'red' }}>{item.state}</div>
+              <div>{item.normalScore || '-'}</div>
+              <div>{item.rollScore || '-'}</div>
+              <div>{item.totalScore || '-'}</div>
+              <div style={{ color: item.state === '及格' ? 'green' : 'red' }}>{item.state}</div>
             </div>
           ))
                            :
@@ -48,7 +48,10 @@ const MobileTable = (props) => {
   );
 };
 MobileTable.defaultProps = {
-  thead: ['课程名称', '考试时间', '平时成绩', '卷面成绩', '综合成绩', '状态'],
+  thead: [{ label: '课程名称', width: '30%' }, { label: '考试时间', width: '20%' }, {
+    label: '平时成绩',
+    width: '10%'
+  }, { label: '卷面成绩', width: '10%' }, { label: '综合成绩', width: '10%' }, { label: '状态', width: '20%' }],
   type: 'grade'
 };
 export default MobileTable;

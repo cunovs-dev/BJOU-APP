@@ -1,0 +1,38 @@
+@import "../../themes/default";
+
+.content {
+  padding: 20px 30px 40px 30px;
+  background: #fff;
+
+  .title {
+    margin-bottom: 20px;
+    font-size: @mediumFontSize;
+  }
+  img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    height: auto !important;
+  }
+  video, audio {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.videoBox {
+  position: relative;
+
+  .btnBox {
+    position: absolute;
+    top: 80%;
+    right: 10%;
+    padding: 20px;
+    font-size: @smallFontSize;
+    color: #fff;
+    background: @opacity;
+    .btn {
+      color: @primary-color;
+      margin-left: 10px;
+    }
+  }
+}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Router } from 'dva/router';
 import App from 'routes/app';
 import Login from 'routes/login/Login';
-import { bkIdentity } from 'utils';
+import { bkIdentity, oldAPP } from 'utils';
 
 const registerModel = (app, model) => {
   if (!(app._models.filter(m => m.namespace === model.namespace).length === 1)) {
@@ -17,9 +17,16 @@ const Routers = function ({ history, app }) {
       path: '/',
       component: App,
       getIndexRoute (nextState, cb) {
-        if (bkIdentity()) {
+        if (oldAPP()) {
+          require.ensure([], (require) => {
+            registerModel(app, require('models/oldDashboard'));
+            registerModel(app, require('models/lessondetails'));
+            cb(null, { component: require('routes/oldDashboard/') });
+          }, 'oldDashboard');
+        } else if (bkIdentity()) {
           require.ensure([], (require) => {
             registerModel(app, require('models/dashboard'));
+            registerModel(app, require('models/lessondetails'));
             cb(null, { component: require('routes/dashboard/') });
           }, 'dashboard');
         } else {
@@ -35,6 +42,7 @@ const Routers = function ({ history, app }) {
           getComponent (nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('models/dashboard'));
+              registerModel(app, require('models/lessondetails'));
               cb(null, require('routes/dashboard/'));
             }, 'dashboard');
           }
@@ -46,6 +54,16 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('models/dashboardGK'));
               cb(null, require('routes/dashboardGK/'));
             }, 'dashboardGK');
+          }
+        },
+        {
+          path: 'oldDashboard',
+          getComponent (nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('models/oldDashboard'));
+              registerModel(app, require('models/lessondetails'));
+              cb(null, require('routes/oldDashboard/'));
+            }, 'oldDashboard');
           }
         },
         {
@@ -76,13 +94,22 @@ const Routers = function ({ history, app }) {
                 }, 'login');
               }
             },
+            // {
+            //   path: '/login/phoneLogin',
+            //   getComponent (nextState, cb) {
+            //     require.ensure([], (require) => {
+            //       registerModel(app, require('models/login'));
+            //       cb(null, require('routes/login/phoneLogin'));
+            //     }, 'login');
+            //   }
+            // }
             {
-              path: '/login/phoneLogin',
+              path: '/login/oldLogin',
               getComponent (nextState, cb) {
                 require.ensure([], (require) => {
-                  registerModel(app, require('models/login'));
-                  cb(null, require('routes/login/phoneLogin'));
-                }, 'login');
+                  registerModel(app, require('models/oldLogin'));
+                  cb(null, require('routes/login/oldLogin'));
+                }, 'oldLogin');
               }
             }
           ]
@@ -94,16 +121,16 @@ const Routers = function ({ history, app }) {
             require.ensure([], (require) => {
               registerModel(app, require('models/resetPassword'));
               cb(null, { component: require('routes/resetPassword/queryUser') });
-            }, 'queryUser');
+            }, 'resetPassword');
           },
           childRoutes: [
             {
-              path: '/resetPassword/queryUser',
+              path: '/resetPassword/checkInfo',
               getComponent (nextState, cb) {
                 require.ensure([], (require) => {
                   registerModel(app, require('models/resetPassword'));
                   cb(null, require('routes/resetPassword/queryUser'));
-                }, 'queryUser');
+                }, 'resetPassword');
               }
             },
             {
@@ -145,12 +172,69 @@ const Routers = function ({ history, app }) {
           ]
         },
         {
+          path: 'firstLogin',
+          component: Login,
+          getIndexRoute (nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('models/firstLogin'));
+              cb(null, { component: require('routes/firstLogin/checkInfo') });
+            }, 'firstLogin');
+          },
+          childRoutes: [
+            {
+              path: '/firstLogin/checkInfo',
+              getComponent (nextState, cb) {
+                require.ensure([], (require) => {
+                  registerModel(app, require('models/firstLogin'));
+                  cb(null, require('routes/firstLogin/checkInfo'));
+                }, 'firstLogin');
+              }
+            },
+            {
+              path: '/firstLogin/phoneReset',
+              getComponent (nextState, cb) {
+                require.ensure([], (require) => {
+                  registerModel(app, require('models/firstLogin'));
+                  cb(null, require('routes/firstLogin/phoneReset'));
+                }, 'firstLogin');
+              }
+            },
+            {
+              path: '/firstLogin/mailReset',
+              getComponent (nextState, cb) {
+                require.ensure([], (require) => {
+                  registerModel(app, require('models/firstLogin'));
+                  cb(null, require('routes/firstLogin/mailReset'));
+                }, 'firstLogin');
+              }
+            },
+            {
+              path: '/firstLogin/setPassword',
+              getComponent (nextState, cb) {
+                require.ensure([], (require) => {
+                  registerModel(app, require('models/firstLogin'));
+                  cb(null, require('routes/firstLogin/setPassword'));
+                }, 'firstLogin');
+              }
+            }
+          ]
+        },
+        {
           path: 'mine',
           getComponent (nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('models/mine'));
               cb(null, require('routes/mine/'));
             }, 'mine');
+          }
+        },
+        {
+          path: 'oldMine',
+          getComponent (nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('models/oldMine'));
+              cb(null, require('routes/oldMine/'));
+            }, 'oldMine');
           }
         },
         {
@@ -168,6 +252,15 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('models/setup'));
               cb(null, require('routes/setup/'));
             }, 'setup');
+          }
+        },
+        {
+          path: 'oldSetup',
+          getComponent (nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('models/oldSetup'));
+              cb(null, require('routes/oldSetup/'));
+            }, 'oldSetup');
           }
         },
         {
@@ -249,6 +342,15 @@ const Routers = function ({ history, app }) {
               registerModel(app, require('models/homepage'));
               cb(null, require('routes/homepage/'));
             }, 'homepage');
+          }
+        },
+        {
+          path: 'oldHomePage',
+          getComponent (nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('models/oldHomePage'));
+              cb(null, require('routes/oldHomePage/'));
+            }, 'oldHomePage');
           }
         },
         {
@@ -521,6 +623,15 @@ const Routers = function ({ history, app }) {
           }
         },
         {
+          path: 'oldSet',
+          getComponent (nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('models/mine'));
+              cb(null, require('routes/oldSet/'));
+            }, 'oldSet');
+          }
+        },
+        {
           path: 'choice',
           getComponent (nextState, cb) {
             require.ensure([], (require) => {
@@ -718,6 +829,15 @@ const Routers = function ({ history, app }) {
           }
         },
         {
+          path: 'schoolCalendarList',
+          getComponent (nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('models/schoolCalendarList'));
+              cb(null, require('routes/schoolCalendarList/'));
+            }, 'schoolCalendarList');
+          }
+        },
+        {
           path: 'schoolCalendar',
           getComponent (nextState, cb) {
             require.ensure([], (require) => {
@@ -806,6 +926,33 @@ const Routers = function ({ history, app }) {
               cb(null, require('routes/studentStatusGK/'));
             }, 'studentStatusGK');
           }
+        },
+        {
+          path: 'courseware',
+          getComponent (nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('models/courseware'));
+              cb(null, require('routes/courseware/'));
+            }, 'courseware');
+          }
+        },
+        {
+          path: 'closed',
+          getComponent (nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('models/closed'));
+              cb(null, require('routes/closed/'));
+            }, 'closed');
+          },
+        },
+        {
+          path: 'opening',
+          getComponent (nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('models/opening'));
+              cb(null, require('routes/opening/'));
+            }, 'opening');
+          },
         },
         {
           path: '*',

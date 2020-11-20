@@ -336,6 +336,7 @@ class Examination extends React.Component {
         {endtime > 0 && timelimit > 0 ? <CountDown endTime={endtime} handler={this.onSubmit} /> : null}
         {
           answer && answer.map((item, i) => {
+            console.log(item)
             const { info: { title, state, grade, qtext, prompt } } = item;
             return (
               <form key={i} >
