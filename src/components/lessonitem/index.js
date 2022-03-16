@@ -4,20 +4,17 @@
  * @Description:
  */
 import React from 'react';
-//import injectTapEventPlugin from 'react-tap-event-plugin';
 import { handlerCourseClick, handlerDivInnerHTMLClick, handlerChangeRouteClick } from 'utils/commonevents';
 import { getOffsetTopByBody, getLocalIcon, getImages, pattern } from 'utils';
 import InnerHtml from 'components/innerhtml';
+import classNames from 'classnames';
 import Checkbox from 'components/checkbox';
 import styles from './index.less';
 
 const PrefixCls = 'lessonitem';
-/*injectTapEventPlugin({
-  shouldRejectClick: function (lastTouchEventTimestamp, clickEventTimestamp) {
-    return true;
-  }
-});*/
+
 const LessonItem = (props) => {
+  //  tracking 0 未设置跟踪 1 手动 2自动
   const { id, modname, name, modicon, description, availabilityinfo = '', stats = {}, tracking } = props.data,
     { courseid, loadingCheck } = props,
     { state = 0 } = stats,
@@ -29,7 +26,7 @@ const LessonItem = (props) => {
         type: 'lessondetails/manualCompletion',
         payload: {
           cmid: id,
-          completed: parseInt(state, 10) === 0 ? '1' : '0',
+          completed: parseInt(state, 10) === 0 ? '1' : '0'
         },
         callback
       });
@@ -53,42 +50,48 @@ const LessonItem = (props) => {
         className={styles[`${PrefixCls}-outer`]}
         onClick={availabilityinfo === '' ? handlerCourseClick.bind(null, props.data, courseid, dispatch) : null}
       >
-        <div className={styles[`${PrefixCls}-outer-top`]} >
-          <div className={styles[`${PrefixCls}-outer-top-icon`]} >
-            <img src={getImages(modicon.replace(pattern('svg'), 'fordson'))} alt="" />
-          </div >
-          <div className={styles[`${PrefixCls}-outer-top-content`]} >
-            <div className={styles[`${PrefixCls}-outer-top-content-title`]} >
+        <div className={styles[`${PrefixCls}-outer-top`]}>
+          <div className={styles[`${PrefixCls}-outer-top-icon`]}>
+            <img
+              src={getImages(modicon.replace(pattern('svg'), 'fordson'))}
+              alt=""
+              className={classNames({ [styles.disabled]: availabilityinfo !== '' })}
+            />
+          </div>
+          <div
+            className={classNames(styles[`${PrefixCls}-outer-top-content`], { [styles.disabled]: availabilityinfo !== '' })}
+          >
+            <div className={styles[`${PrefixCls}-outer-top-content-title`]}>
               {name}
-            </div >
+            </div>
             {
               tracking !== 0
                 ?
                 (
-                  <div className={styles[`${PrefixCls}-outer-top-content-check`]} >
+                  <div className={styles[`${PrefixCls}-outer-top-content-check`]}>
                     <Checkbox
                       state={state}
                       tracking={tracking}
                       id={id}
                       handlerClick={(callback, e) => handlerCheckboxClick(callback, e)}
                     />
-                  </div >
+                  </div>
                 )
                 : ''
             }
-          </div >
-        </div >
+          </div>
+        </div>
         {
           description ?
-            <div className={styles[`${PrefixCls}-outer-describe`]} >
+            <div className={styles[`${PrefixCls}-outer-describe`]}>
               <div
                 dangerouslySetInnerHTML={{ __html: description }}
                 onClick={(e) => handlerDiscriptionClick(e)}
               />
-              <div className={styles[`${PrefixCls}-outer-describe-mask`]} onClick={(e) => handlerDiscriptionClick(e)} >
-                更多
-              </div >
-            </div >
+              <div className={styles[`${PrefixCls}-outer-describe-mask`]} onClick={(e) => handlerDiscriptionClick(e)}>
+              更多
+              </div>
+            </div>
             :
             ''
         }
@@ -98,17 +101,17 @@ const LessonItem = (props) => {
             dangerouslySetInnerHTML={{ __html: availabilityinfo }}
             onClick={handDivClick}
           /> : ''}
-      </div >
+      </div>
     );
   } else if (modname === 'label') {
     return (
-      <div className={styles[`${PrefixCls}-label`]} >
+      <div className={styles[`${PrefixCls}-label`]}>
         <InnerHtml data={description} handleClick={handDivClick} />
         {
           tracking !== 0
             ?
             (
-              <div className={styles[`${PrefixCls}-outer-top-content-check`]} >
+              <div className={styles[`${PrefixCls}-outer-top-content-check`]}>
                 <Checkbox
                   state={state}
                   loadingCheck={loadingCheck}
@@ -116,18 +119,18 @@ const LessonItem = (props) => {
                   id={id}
                   handlerClick={handlerCheckboxClick}
                 />
-              </div >
+              </div>
             )
             : ''
         }
-      </div >
+      </div>
     );
   }
 };
 LessonItem.defaultProps = {
   icon: '',
   title: '课件',
-  type: 'pdf',
+  type: 'pdf'
 
 };
 LessonItem.propTypes = {};

@@ -1,3 +1,8 @@
+/**
+ * @author Lowkey
+ * @date 2022/02/09 11:19:05
+ * @Description: 教师端路由
+ */
 import { parse } from 'qs';
 import { model } from 'models/common';
 import { Toast } from 'components';
@@ -7,7 +12,7 @@ import { getAttendance } from '../services/app';
 const defaultData = [
   {
     id: 1,
-    name: '作业：总结概括维护幼儿教师权益的法律建议(10分，考勤）',
+    name: '作业：总结概括维护幼儿教师权益的法律建议(10分，考勤）。',
     grade: '78',
     react: '再接再厉',
   }

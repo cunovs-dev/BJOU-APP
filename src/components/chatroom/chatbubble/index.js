@@ -1,5 +1,5 @@
 import React from 'react';
-import { getImages, getErrorImg } from 'utils';
+import { getImages, getErrorImg, cookie, getPortalAvatar, config, bkIdentity } from 'utils';
 import { Css3Loading, LoadingFail } from 'components/loading';
 import styles from './index.less';
 
@@ -7,18 +7,20 @@ const PrefixCls = 'bubble',
   showStatus = (status = 0) => {
     return status === 0 ? '' : status === 1 ? <Css3Loading /> : <LoadingFail />;
   };
+const { _cg } = cookie;
+const { api: { EnclosureDownload } } = config;
 module.exports = {
   ReceiveBubble: (props) => {
     const { details, avatar } = props;
     return (
-      <div className={styles[`${PrefixCls}-left`]} >
-        <span className={styles[`${PrefixCls}-left-iconbox`]} >
+      <div className={styles[`${PrefixCls}-left`]}>
+        <span className={styles[`${PrefixCls}-left-iconbox`]}>
           <img src={getImages(avatar, 'user')} onError={(el => getErrorImg(el, 'user'))} />
-        </span >
-        <div className={styles[`${PrefixCls}-left-contentbox`]} >
+        </span>
+        <div className={styles[`${PrefixCls}-left-contentbox`]}>
           {details}
-        </div >
-      </div >
+        </div>
+      </div>
     );
   },
 
@@ -26,16 +28,19 @@ module.exports = {
     // status : 0 发送成功 , 1 发送中 , 2 发送失败
     const { details, selfavatar, state = 0 } = props;
     return (
-      <div className={styles[`${PrefixCls}-right`]} >
-        <span className={styles[`${PrefixCls}-right-iconbox`]} >
-          <img src={getImages(selfavatar, 'user')} onError={(el => getErrorImg(el, 'user'))}  />
-        </span >
-        <div className={styles[`${PrefixCls}-right-contentbox`]} >
+      <div className={styles[`${PrefixCls}-right`]}>
+        <span className={styles[`${PrefixCls}-right-iconbox`]}>
+          <img
+            src={bkIdentity() ? getPortalAvatar(EnclosureDownload, _cg('portalHeadImg')) : getImages(selfavatar, 'user')}
+            onError={(el => getErrorImg(el, 'user'))}
+          />
+        </span>
+        <div className={styles[`${PrefixCls}-right-contentbox`]}>
           {details}
-        </div >
-        <div className={styles[`${PrefixCls}-right-loading`]} >{showStatus(state)}</div >
-      </div >
+        </div>
+        <div className={styles[`${PrefixCls}-right-loading`]}>{showStatus(state)}</div>
+      </div>
     );
-  },
+  }
 
 };

@@ -39,7 +39,7 @@ class SendForum extends React.Component {
   render () {
     const { maxattachments = 0, maxbytes = 0, id, course, type = 'add', subject = '', discussionid } = this.props.location.query,
       { itemid } = this.props.sendForum,
-      { sending } = this.props,
+      { sending,adding } = this.props,
       { groups } = this.props.app;
     const props = {
       maxattachments,
@@ -49,7 +49,7 @@ class SendForum extends React.Component {
       groups: getGroups(groups, course),
       onSubmit: this.onSubmit,
       itemid,
-      loading: sending,
+      loading: sending || adding,
       type,
       subject,
       discussionid
@@ -63,11 +63,9 @@ class SendForum extends React.Component {
   }
 }
 
-SendForum.defaultProps = {};
-SendForum.propTypes = {};
-
 export default connect(({ loading, sendForum, forum, app }) => ({
   sending: loading.effects['sendForum/uploadFile'],
+  adding:loading.effects['sendForum/AddNewForum'],
   sendForum,
   forum,
   loading,

@@ -23,7 +23,7 @@ function FeedBackResult ({ location, dispatch, feedbackresult }) {
   return (
     <div >
       <Nav title={name} hasShadow dispatch={dispatch} />
-      <NoticeBar mode="closable" icon={null} marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }} >只显示10条最新的回答，查看完整的回答请去PC端下载</NoticeBar >
+      <NoticeBar mode="closable" icon={null} marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }} >只显示10条最新的回答，查看完整的回答请去电脑端下载</NoticeBar >
       <WhiteSpace />
       <div className={styles[`${PrefixCls}-outer`]} >
         {getAnswer() && getAnswer()

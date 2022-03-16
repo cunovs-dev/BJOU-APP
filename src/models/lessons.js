@@ -6,7 +6,7 @@ import { queryOpeningLessons, queryClosedLessons } from 'services/lesson';
 
 const namespace = 'lessons',
   adapter = (list) => {
-    cnIsArray(list) && list.map((item, i) => {
+    cnIsArray(list) && list.map((item) => {
       item.master = cnIsArray(item.master) && item.master[0] || { fullname: '未知', id: '' };
       item.lessonImage = cnIsArray(item.overviewfiles) && item.overviewfiles.length > 0 ? item.overviewfiles[0].fileurl : '';
     });
@@ -30,7 +30,8 @@ export default modelExtend(model, {
               payload: {
                 list: [],
                 refreshing: false,
-                selectedIndex: 0
+                selectedIndex: 0,
+                scrollerTop: 0
               }
             });
             dispatch({
@@ -55,7 +56,7 @@ export default modelExtend(model, {
       yield put({
         type: 'updateState',
         payload: {
-          list:[],
+          list: []
         }
       });
       if (success) {
@@ -63,7 +64,8 @@ export default modelExtend(model, {
           type: 'updateState',
           payload: {
             list: adapter(data),
-            refreshing: false
+            refreshing: false,
+            scrollerTop: 0,
           }
         });
       } else {

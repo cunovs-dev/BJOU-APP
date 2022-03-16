@@ -20,7 +20,7 @@ class ForumDetails extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      height: 0,
+      height: 0
     };
   }
 
@@ -37,8 +37,8 @@ class ForumDetails extends React.Component {
     this.props.dispatch(routerRedux.push({
       pathname: '/replyAll',
       query: {
-        name: { name },
-      },
+        name: { name }
+      }
     }));
   };
 
@@ -51,8 +51,8 @@ class ForumDetails extends React.Component {
     this.props.dispatch({
       type: `${PrefixCls}/updateState`,
       payload: {
-        refreshing: true,
-      },
+        refreshing: true
+      }
     });
     this.props.dispatch({
       type: `${PrefixCls}/${type}`,
@@ -68,14 +68,14 @@ class ForumDetails extends React.Component {
       dispatch({
         type: `${PrefixCls}/updateState`,
         payload: {
-          scrollerTop: top,
-        },
+          scrollerTop: top
+        }
       });
     }
   };
 
   render () {
-    const { names = '', discussionid = '' } = this.props.location.query;
+    const { names = '', discussionid = '', isAssessed = true } = this.props.location.query;
     const { parent, replyList, refreshing, scrollerTop } = this.props.forumDetails;
     const { id = '', message = '', attachments = '', subject = '', canreply = true, userfullname = '', created = '', userpictureurl = '', aggregatelabel, aggregatestr = '', count = '' } = parent;
     const { data: { maxattachments, maxbytes } } = this.props.forum;
@@ -83,10 +83,11 @@ class ForumDetails extends React.Component {
       dispatch: this.props.dispatch,
       handlerMoreClick: handlerChangeRouteClick,
       maxattachments,
-      maxbytes
+      maxbytes,
+      isAssessed
     };
     return (
-      <div >
+      <div>
         <Nav title={names} dispatch={this.props.dispatch} />
         {/*{canreply ? '' :*/}
         {/*<NoticeBar*/}
@@ -103,66 +104,66 @@ class ForumDetails extends React.Component {
           onScrollerTop={this.onScrollerTop.bind(null)}
           scrollerTop={scrollerTop}
         >
-          <div className={styles[`${PrefixCls}-master`]} >
-            <div className={styles[`${PrefixCls}-master-man`]} >
+          <div className={styles[`${PrefixCls}-master`]}>
+            <div className={styles[`${PrefixCls}-master-man`]}>
               <img src={getImages(userpictureurl, '')} onError={(el => getErrorImg(el, 'user'))} />
-              <span >
-                <span className={styles[`${PrefixCls}-master-man-username`]} >{userfullname}</span >
-                <span className={styles[`${PrefixCls}-master-man-time`]} >{getCommonDate(created)}</span >
-              </span >
-            </div >
-            <div className={styles[`${PrefixCls}-master-subject`]} >{subject}</div >
-            <div >
+              <span>
+                <span className={styles[`${PrefixCls}-master-man-username`]}>{userfullname}</span>
+                <span className={styles[`${PrefixCls}-master-man-time`]}>{getCommonDate(created)}</span>
+              </span>
+            </div>
+            <div className={styles[`${PrefixCls}-master-subject`]}>{subject}</div>
+            <div>
               <InnerHtml data={message} handleClick={this.handleDivClick} />
               {
                 parent.attachments !== '' ?
-                  <Enclosure data={attachments} />
-                  :
-                  null
+                <Enclosure data={attachments} />
+                                          :
+                null
               }
               {
                 aggregatelabel ?
-                  <div className={styles[`${PrefixCls}-master-grade`]} >
-                    {`${aggregatelabel}${aggregatestr === '' ? '-' : aggregatestr}${count ? `(${count})` : ''}`}
-                  </div >
-                  :
-                  null
+                <div className={styles[`${PrefixCls}-master-grade`]}>
+                  {`${aggregatelabel}${aggregatestr === '' ? '-' : aggregatestr}${count ? `(${count})` : ''}`}
+                </div>
+                               :
+                null
               }
-            </div >
+            </div>
             {
-              canreply ?
-                <div className={styles[`${PrefixCls}-master-reply`]} >
-                  <div
-                    className={styles[`${PrefixCls}-master-reply-btn`]}
-                    onClick={handlerChangeRouteClick.bind(null, 'sendForum', {
-                      maxattachments,
-                      maxbytes,
-                      id,
-                      subject,
-                      type: 'reply',
-                      discussionid
-                    }, this.props.dispatch)}
-                  >
-                    <Icon type={getLocalIcon('/components/xiaoxi.svg')} />
-                    <span style={{ marginLeft: '3px' }} >回复</span >
-                  </div >
-                </div > : null}
-          </div >
+              canreply && isAssessed === 'true' ?
+              <div className={styles[`${PrefixCls}-master-reply`]}>
+                <div
+                  className={styles[`${PrefixCls}-master-reply-btn`]}
+                  onClick={handlerChangeRouteClick.bind(null, 'sendForum', {
+                    maxattachments,
+                    maxbytes,
+                    id,
+                    subject,
+                    type: 'reply',
+                    discussionid
+                  }, this.props.dispatch)}
+                >
+                  <Icon type={getLocalIcon('/components/xiaoxi.svg')} />
+                  <span style={{ marginLeft: '3px' }}>回复</span>
+                </div>
+              </div> : null}
+          </div>
           <WhiteSpace />
           <TitleBox title="回复" sup="" />
-          <div className={styles[`${PrefixCls}-replyList`]} >
-            <List >
+          <div className={styles[`${PrefixCls}-replyList`]}>
+            <List>
               {
                 cnIsArray(replyList) && replyList.length > 0 ?
-                  replyList.map((item) => <RenderChild {...props} item={item} />)
-                  :
-                  null
+                replyList.map((item) => <RenderChild {...props} item={item} />)
+                                                             :
+                null
               }
-            </List >
-          </div >
+            </List>
+          </div>
           <BaseLine />
-        </Refresh >
-      </div >
+        </Refresh>
+      </div>
     );
   }
 }

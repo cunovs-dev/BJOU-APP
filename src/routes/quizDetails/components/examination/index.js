@@ -74,7 +74,6 @@ class Examination extends React.Component {
         let data = this.getSubmitVal({
           ...this.checkSubmitData(values), ...this.getPageItemsResponses(answer)
         });
-        //console.log('Examination:75', data, answer);
         this.props.hanlerSubmit(data, type);
       } else {
         Toast.fail('请检查表单');
@@ -336,7 +335,6 @@ class Examination extends React.Component {
         {endtime > 0 && timelimit > 0 ? <CountDown endTime={endtime} handler={this.onSubmit} /> : null}
         {
           answer && answer.map((item, i) => {
-            console.log(item)
             const { info: { title, state, grade, qtext, prompt } } = item;
             return (
               <form key={i} >

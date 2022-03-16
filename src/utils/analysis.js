@@ -50,15 +50,28 @@ module.exports = {
   },
 
   choiceQuestion: (html) => {
+
     const $ = cheerio.load(html);
     let items = [];
 
     if ($('.answer input[type="radio"]').length > 0) {
+
       $('.answer> div')
         .each((index, element) => {
-          let answer = $('.answer label')
-            .eq(index)
-            .text();
+          let answer;
+          if ($('.answer label').length > 0) {
+            answer = $('.answer label')
+              .eq(index)
+              .text();
+          } else {
+            answer = $('.answer .d-flex')
+                .eq(index)
+                .text()// 题号
+              +
+              $('.answer .flex-fill')
+                .eq(index)
+                .text();// 题目
+          }
 
           items.push({
             id: $('.answer input[type="radio"]')
@@ -81,15 +94,26 @@ module.exports = {
             currect: $('.answer input[type="radio"]')
               .eq(index)
               .siblings('i')
-              .prop('title') || '',
+              .prop('title') || ''
           });
         });
     } else if ($('.answer input[type="checkbox"]').length > 0) {
       $('.answer> div')
         .each((index, element) => {
-          let answer = $('.answer label')
-            .eq(index)
-            .text();
+          let answer;
+          if ($('.answer label').length > 0) {
+            answer = $('.answer label')
+              .eq(index)
+              .text();
+          } else {
+            answer = $('.answer .d-flex')
+                .eq(index)
+                .text()// 题号
+              +
+              $('.answer .flex-fill')
+                .eq(index)
+                .text();// 题目
+          }
           items.push({
             id: $('.answer input[type="checkbox"]')
               .eq(index)
@@ -111,7 +135,7 @@ module.exports = {
             currect: $('.answer input[type="checkbox"]')
               .eq(index)
               .siblings('i')
-              .prop('title') || '',
+              .prop('title') || ''
           });
         });
     }
@@ -168,7 +192,7 @@ module.exports = {
           currect: $('.answer select')
             .eq(index)
             .siblings('i')
-            .prop('title') || '',
+            .prop('title') || ''
         });
       });
     return items;

@@ -1,11 +1,12 @@
 /* global cordova requestFileSystem LocalFileSystem window */
 
 var cunovs = {
-  cnVersion: '2.0.0',
-  cnCodeVersion: '1.0.9',
+  cnVersion: '3.0.0',
+  cnCodeVersion: '1.0.1',
+  cnRemoteCodeVersion: '1.0.0',
   cnVersionInfo: {
     title: '当前版本过低',
-    content: '为保证正常使用，请先升级应用'
+    content: '为保证正常使用，请先升级应用。'
   },
   cnUpholdMsg: '',
   cn_use_debug_mode: false,
@@ -13,15 +14,16 @@ var cunovs = {
   cnDownLoadProgress: 0,
   cnhtmlSize: 0,
   //iOS获取屏幕可用高度 - iOS修改
-  //cnhtmlHeight: screen.availHeight,
+  // cnhtmlHeight: screen.availHeight,
   cnhtmlHeight: document.documentElement.clientHeight,
-
-  //测试环境
+  // cnApiServiceUrl: 'http://edudemo.cunovs.com:9000', //公司测试环境
+  //金正测试环境
   //portalServiceUrl: 'https://bjou.preview.klxedu.com',
   //portalSsoServiceUrl: 'https://bjousso.preview.klxedu.com',
   //学校测试环境
-  // cnApiServiceUrl: 'https://etestapp.bjou.edu.cn:8443',
-  // // cnResmUrl: 'http://etestapp.bjou.edu.cn:9000/cnvresm',
+  // cnApiServiceUrl: 'http://etestapp.bjou.edu.cn:8080',
+  // cnApiServiceUrl: 'http://moodle.cunovs.com:8080/',
+  // cnResmUrl: 'http://etestapp.bjou.edu.cn:9000/cnvresm',
   // cnMoodleServeUrl: 'http://etest.bjou.edu.cn',
   // cnManagerServeUrl: 'http://172.16.140.39:9200',
   // portalServiceUrl: 'https://teststuportal.bjou.edu.cn',
@@ -29,14 +31,16 @@ var cunovs = {
   // portalResourceUrl: 'http://testresm.bjou.edu.cn',
   //正式环境
   cnApiServiceUrl: 'http://elearningapp.bjou.edu.cn:8080',
-  // cnResmUrl: 'http://etestapp.bjou.edu.cn:9000/cnvresm',
+  // cnApiServiceUrl: 'http://192.168.0.204:8080',
+  cnResmUrl: '',
   cnMoodleServeUrl: 'http://elearning.bjou.edu.cn',
   cnManagerServeUrl: 'http://elearningapp.bjou.edu.cn:9200',
   portalServiceUrl: 'https://stuportal.bjou.edu.cn',
   portalSsoServiceUrl: 'https://sso.bjou.edu.cn',
   portalResourceUrl: 'http://resm.bjou.edu.cn',
 
-  cnDownloadFileTag: 'tag_cunovs_download_files',
+  cnDownloadFileTag: 'tag_cun' +
+    'ovs_download_files',
   cnDeviceType: function (onlyPlayer) {
 
     /*android 设备时 - android修改*/
@@ -67,7 +71,7 @@ var cunovs = {
     if (property && (value = window.getComputedStyle(document.body, null)
       .getPropertyValue(property))) {
       if (willNumber === true) {
-        var numberGroup = /(\d+)(?:px)*$/.exec(value);
+        var numberGroup = /(\d+)(?:px)*$/.exec(parseInt(value) + 'px');
         return numberGroup && numberGroup.length ? numberGroup[1] : 0;
       }
       return value;
@@ -611,7 +615,7 @@ var cunovs = {
     }
     if (file.mimeType === 'application/xml') {
       onError({
-        'message': '该文件(' + mimeType + ')不能在移动端解析，请使用PC端下载并查看。'
+        'message': '该文件(' + mimeType + ')不能在移动端解析，请使用电脑端下载并查看。'
       });
       return;
     }
@@ -830,8 +834,17 @@ var cunovs = {
       return result.join('');
     }
     return '0';
-  }
-  ,
+  },
+
+  cnManualCodePush: function (syncCallback, downloadProgress, syncErrback) {
+    if (window.codePush) {
+      var onError = syncErrback || function (err) {
+        console.log(err);
+      };
+      window.codePush.sync(syncCallback, { installMode: InstallMode.ON_NEXT_RESUME }, downloadProgress, onError);
+    }
+  },
+
   cnCodePush: function () {
     if (window.codePush) {
 
@@ -851,7 +864,7 @@ var cunovs = {
           //mandatoryInstallMode 强制热更新时
           installMode: InstallMode.ON_NEXT_RESUME,
           minimumBackgroundDuration: 120,
-          mandatoryInstallMode: InstallMode.IMMEDIATE
+          mandatoryInstallMode: InstallMode.ON_NEXT_RESUME
         });
       };
 
@@ -868,6 +881,7 @@ var cunovs = {
               for (var i = 0; i < codeVersion.length; i++) {
                 formatLens.push(codeVersion[i].length);
               }
+              cnRemoteCodeVersion = cnCheckCodeVersion(codeVersions[1], formatLens);
               codeVersion = cnCheckCodeVersion(codeVersions[1], formatLens);
               var curCodeVersion = cnCheckCodeVersion(cnCodeVersion, formatLens);
               if (codeVersion > curCodeVersion) {
@@ -885,8 +899,7 @@ var cunovs = {
       };
       window.codePush.checkForUpdate(onUpdateCheck, onError);
     }
-  }
-  ,
+  },
   cnVibrate: function () {
     if (cnIsDevice() && typeof (navigator) != 'undefined' && typeof (navigator.app) != 'undefined') {
       navigator.vibrate(100);
@@ -1029,26 +1042,28 @@ if (typeof Array.prototype.remove != 'function') {
         window.location.href = '#/' + path + '?' + urlEncode(obj)
           .slice(1);
       }
-    };
-  onExitApp = function () {
-    if (typeof (navigator) != 'undefined' && typeof (navigator.app) != 'undefined') {
-      var curHref = window.location.href;
-      if (curHref.indexOf('/login') != -1) {
-        navigator.app.exitApp();
-      } else if (curHref.indexOf('/?_k') != -1 || curHref.indexOf('/?orgCode') != -1) {
-        cnShowToast('再按一次离开APP');
-        document.removeEventListener('backbutton', onExitApp, false);
-        document.addEventListener('backbutton', exitApp, false);
-        var intervalID = window.setTimeout(function () {
-          window.clearTimeout(intervalID);
-          document.removeEventListener('backbutton', exitApp, false);
-          document.addEventListener('backbutton', onExitApp, false);
-        }, 2000);
-      } else {
-        navigator.app.backHistory();
+    },
+    onExitApp = function () {
+      if (typeof (navigator) != 'undefined' && typeof (navigator.app) != 'undefined') {
+        var curHref = window.location.href;
+        if (curHref.indexOf('/login') != -1) {
+          navigator.app.exitApp();
+        } else if (curHref.indexOf('/?_k') != -1 || curHref.indexOf('/?orgCode') != -1) {
+          cnShowToast('再按一次离开APP');
+          document.removeEventListener('backbutton', onExitApp, false);
+          document.addEventListener('backbutton', exitApp, false);
+          var intervalID = window.setTimeout(function () {
+            window.clearTimeout(intervalID);
+            document.removeEventListener('backbutton', exitApp, false);
+            document.addEventListener('backbutton', onExitApp, false);
+          }, 2000);
+        } else if (curHref.indexOf('/courseware') != -1) {
+          return false;
+        } else {
+          navigator.app.backHistory();
+        }
       }
-    }
-  },
+    },
     screenChangeEvents = ['webkitfullscreenchange', 'mozfullscreenchange', 'fullscreenchange', 'MSFullscreenChange'];
   for (var i = 0; i < screenChangeEvents.length; i++) {
     document.addEventListener(screenChangeEvents[i], function (e) {

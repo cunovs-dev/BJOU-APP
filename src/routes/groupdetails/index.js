@@ -46,8 +46,7 @@ function GroupDetails ({ location, dispatch, groupdetails, loading }) {
       }
     },
     getContents = (lists) => {
-      const result = [];
-      result.push(
+      return (
         <ListView
           layoutHeader={''}
           dataSource={lists}
@@ -62,10 +61,7 @@ function GroupDetails ({ location, dispatch, groupdetails, loading }) {
           scrollerTop={scrollerTop}
         />
       );
-
-      return result;
     };
-
   return (
     <div className={styles.whiteBox} >
       <Nav title={name} hasShadow dispatch={dispatch} />

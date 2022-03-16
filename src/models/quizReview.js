@@ -16,7 +16,7 @@ import { model } from 'models/common';
 
 const getAnswer = (data = []) => {
   data.map(item => {
-    if (item.type === 'multichoice' || item.type === 'truefalse') {
+    if (item.type === 'multichoice' || item.type === 'truefalse' || item.type === 'multichoiceset') {
       item.choose = choiceQuestion(item.html);
     } else if (item.type === 'essay') {
       item.choose = essayQusetion(item.html);

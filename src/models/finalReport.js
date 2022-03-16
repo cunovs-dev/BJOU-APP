@@ -1,3 +1,9 @@
+/**
+ * @author Lowkey
+ * @date 2022/02/09 11:19:05
+ * @Description: 教师端路由
+ */
+
 import { parse } from 'qs';
 import { model } from 'models/common';
 import { Toast } from 'components';

@@ -48,11 +48,6 @@ class AddHomework extends React.Component {
     };
   }
 
-  componentWillMount () {
-
-  }
-
-
   componentDidMount () {
     const { submitDataType = [] } = this.props;
     this.setState({
@@ -79,7 +74,7 @@ class AddHomework extends React.Component {
           value: {
             ...this.props.form.getFieldsValue(),
             assignmentid: assignId
-            //filemanager: '426570226'
+            // filemanager: '426570226'
           }
         };
         this.props.onSubmit(data);
@@ -121,9 +116,18 @@ class AddHomework extends React.Component {
 
   getDefaultText = (arr) => {
     if (arr.find(item => item.type === 'onlinetext')) {
-      return arr.find(item => item.type === 'onlinetext').editorfields[0].text;
+      const res = arr.find(item => item.type === 'onlinetext').editorfields[0].text;
+      const result = res.replace(/<br \/>/g, '\n');
+      return result.replace(/<(?!\/?br\/?.+?>)[^<>]*>/gi, '');
     }
     return '';
+  };
+
+  isUploaded = (arr, obj) => {
+    if (cnIsArray(arr) && arr.length > 0) {
+      return arr.find((item => (item.name && !item.fileName ? item.name : item.fileName === obj.name)));
+    }
+    return false;
   };
 
   renderFileList = (files) => (
@@ -150,19 +154,12 @@ class AddHomework extends React.Component {
     })
   );
 
-  isUploaded = (arr, obj) => {
-    if (cnIsArray(arr) && arr.length > 0) {
-      return arr.find((item => item.name && !item.fileName ? item.name : item.fileName === obj.name));
-    }
-    return false;
-  };
-
   render () {
-    const { getFieldProps, getFieldError } = this.props.form,
+    const { getFieldProps } = this.props.form,
       { fileList } = this.state,
-      { submitDataType = [], configs: { fileConfigs, textConfigs } } = this.props,
+      { submitDataType = [], configs: { fileConfigs, textConfigs },loadingAdd } = this.props,
       { maxsubmissionsizebytes, maxfilesubmissions } = fileConfigs,
-      { wordlimit, wordlimitenabled } = textConfigs,
+      { wordlimit } = textConfigs,
       props = {
         beforeUpload: (file) => {
           if (file.size < maxsubmissionsizebytes && fileList.length < maxfilesubmissions && !this.isUploaded(fileList, file)) {
@@ -175,7 +172,7 @@ class AddHomework extends React.Component {
           } else if (this.isUploaded(fileList, file)) {
             Toast.fail('同名附件已上传，请确认是否重复或改名后再上传。');
           } else {
-            Toast.fail('文件过大，不能上传');
+            Toast.fail('文件过大，不能上传。');
           }
           return false;
         },
@@ -206,7 +203,7 @@ class AddHomework extends React.Component {
           }
           <WhiteSpace size="lg" />
           {
-            fileConfigs.enabled ?
+            fileConfigs.enabled && maxfilesubmissions && maxsubmissionsizebytes ?
             <div>
               <TitleBox title="文件提交" sup="" />
               <WingBlank>
@@ -230,20 +227,21 @@ class AddHomework extends React.Component {
                 </div>
               </WingBlank>
             </div>
-                                :
+                                                                                :
             ''
           }
           <WhiteSpace size="lg" />
           <WingBlank>
             <Button
+              loading={loadingAdd}
               type="primary"
               onClick={
-                () => alert('提交作业', '确定提交本次修改?', [
+                () => alert('保存更改', '确定保存本次更改?', [
                   { text: '取消', onPress: () => console.log('cancel') },
                   { text: '确定', onPress: () => this.onSubmit() }
                 ])
               }
-            >提交</Button>
+            >保存更改</Button>
           </WingBlank>
           <WhiteSpace size="lg" />
         </form>
@@ -251,8 +249,5 @@ class AddHomework extends React.Component {
     );
   }
 }
-
-AddHomework.defaultProps = {};
-AddHomework.propTypes = {};
 
 export default AddHomework;

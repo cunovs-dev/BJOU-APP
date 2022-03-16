@@ -1,7 +1,7 @@
 import { request, config } from 'utils';
 
 const { api } = config;
-const { Login, Authentication, PortalLogin, GetPortalToken, SendPhoneLoginCode, GetLoginTips, GetCaptchaImg } = api;
+const { Login, Authentication, PortalLogin, GetPortalToken, SendPhoneLoginCode, GetLoginTips, GetCaptchaImg, GetLastIdentity, SetLastIdentity } = api;
 
 export async function login (data, serverError = false) {
   return request({
@@ -64,5 +64,22 @@ export async function queryCaptchaImg (payload) {
     data: payload,
     hasToken: false,
     fetchType: 'blob'
+  });
+}
+
+export async function queryLastIdentity (payload) {
+  return request({
+    url: GetLastIdentity,
+    data: payload,
+    hasToken: false
+  });
+}
+
+export async function setLastIdentity (payload) {
+  return request({
+    url: SetLastIdentity,
+    method: 'post',
+    payload,
+    hasToken: false
   });
 }

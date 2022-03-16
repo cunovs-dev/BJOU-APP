@@ -18,20 +18,28 @@ function Attendance ({ location, dispatch, attendance, loading }) {
   const { name = '我的考勤' } = location.query,
     { listData, refreshing, scrollerTop } = attendance;
   const onRefresh = () => {
-
+      dispatch({
+        type: `${PrefixCls}/updateState`,
+        payload: {
+          refreshing: true
+        }
+      });
+      dispatch({
+        type: `${PrefixCls}/queryList`
+      });
     },
     onScrollerTop = (top) => {
       if (typeof top !== 'undefined' && !isNaN(top * 1)) {
         dispatch({
           type: `${PrefixCls}/updateState`,
           payload: {
-            scrollerTop: top,
-          },
+            scrollerTop: top
+          }
         });
       }
     };
   return (
-    <div className={styles.whiteBox} >
+    <div className={styles.whiteBox}>
       <Nav title={name} hasShadow dispatch={dispatch} />
       <WhiteSpace />
       <Refresh
@@ -41,30 +49,30 @@ function Attendance ({ location, dispatch, attendance, loading }) {
         scrollerTop={scrollerTop}
       >
         {
-          loading ?
-            <ListSkeleton />
-            :
-            cnIsArray(listData) && listData.length > 0 ?
-              listData.map((item) => {
-                return attendanceRow(item, handlerChangeRouteClick.bind(null, 'attendancedetails',
-                  {
-                    name: '考勤详情',
-                    courseid: item.id,
-                    enddate: item.enddate,
-                    startdate: item.startdate,
-                    fullname: item.fullname
-                  }
-                  , dispatch));
-              })
-              :
-              <NoContent />
+          loading && !refreshing ?
+          <ListSkeleton />
+                                 :
+          cnIsArray(listData) && listData.length > 0 ?
+          listData.map((item) => {
+            return attendanceRow(item, handlerChangeRouteClick.bind(null, 'attendancedetails',
+              {
+                name: '考勤详情',
+                courseid: item.id,
+                enddate: item.enddate,
+                startdate: item.startdate,
+                fullname: item.fullname
+              }
+              , dispatch));
+          })
+                                                     :
+          <NoContent />
         }
-      </Refresh >
-    </div >
+      </Refresh>
+    </div>
   );
 }
 
 export default connect(({ loading, attendance }) => ({
   loading: loading.effects['attendance/queryList'],
-  attendance,
+  attendance
 }))(Attendance);

@@ -194,6 +194,7 @@ const Dashboard = ({ dashboard, loadingTask, loadingAllTask, dispatch }) => {
         >
           <div>
             <div className={styles.tasklist}>
+              <WhiteSpace />
               {loadingTask && !refreshing ?
                 <ListSkeleton />
                 :

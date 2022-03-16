@@ -287,8 +287,8 @@
 
     &-info {
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
-      align-items: center;
     }
   }
 }
@@ -315,8 +315,7 @@
     align-items: center;
 
     &-left {
-      flex-basis: 88%;
-
+      flex: 1;
       :global {
         .am-progress-outer {
           height: 28px;
@@ -332,10 +331,10 @@
     }
 
     &-right {
+
       margin-left: 20px;
       text-align: right;
       font-size: @titleFontSize;
-      flex-basis: 24%;
       color: #f34e14;
       font-weight: bold;
     }

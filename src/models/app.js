@@ -81,8 +81,8 @@ export default {
     downloadProgress: 0,
     tabsIcon: {},
     _useJavaScriptMessage: {
-      info: '该资源在PC端体验更好，如遇到问题请在PC端完成学习',
-      warn: '课程部分学习资源在PC端体验更好，如遇到问题请在PC端完成对应资源的学习。'
+      info: '该资源在电脑端体验更好，如遇到问题请在电脑端完成学习。',
+      warn: '课程部分学习资源在电脑端体验更好，如遇到问题请在电脑端完成对应资源的学习。'
     }
   },
   subscriptions: {
@@ -174,7 +174,7 @@ export default {
               contacts: getContats(data.contacts),
               tabsIcon: data.tabsIcon || {},
               _useJavaScriptMessage: data._useJavaScriptMessage || {
-                info: '该门课程部分内容不支持app访问，如遇提示请换用电脑登录elearning.bjou.edu.cn',
+                info: '该门课程部分内容不支持app访问，如遇提示请换用电脑登录elearning.bjou.edu.cn。',
                 warn: ':该内容暂不支持移动端显示，请在电脑端完成学习。'
               },
               ...(data.appendConfig || {})
@@ -201,7 +201,7 @@ export default {
           pathname: '/login'
         }));
       } else {
-        const { data, code, message = '个人信息获取失败' } = yield call(queryPortalUser);
+        const { data, code, message = '个人信息获取失败' } = yield call(queryPortalUser, payload);
         if (code === 0) {
           const { userId = '', userName = '' } = data;
           const infos = {
@@ -285,8 +285,8 @@ export default {
     },
     * queryMoodleToken ({ payload }, { call, put }) {
       const data = yield call(queryMoodleToken, {
-        username: _cg(bkStudentNumber) || _cg(userLoginId).length >= 11 ? _cg(userloginname) : _cg(userLoginId), // 由于测试账号没有学号，保证测试账号能登录
-        usersn: encryptMd5(`${_cg(bkStudentNumber) || _cg(userLoginId).length >= 11 ? _cg(userloginname) : _cg(userLoginId)}f3c28dd72e61f16e173a353405af1fbd`)
+        username: _cg(bkStudentNumber) || (_cg(userLoginId).length >= 11 ? _cg(userloginname) : _cg(userLoginId)), // 由于测试账号没有学号，保证测试账号能登录
+        usersn: encryptMd5(`${_cg(bkStudentNumber) || (_cg(userLoginId).length >= 11 ? _cg(userloginname) : _cg(userLoginId))}f3c28dd72e61f16e173a353405af1fbd`)
       });
       if (data.success) {
         const { id: moodleUserId = '', token = '' } = data,

@@ -154,7 +154,6 @@ class FeedBackDetails extends Component {
           {
             text: '提交',
             onPress: () => {
-              // console.log(this.checkFieldValues(values));
               this.complete(this.checkFieldValues(values));
             }
           },
@@ -253,7 +252,7 @@ class FeedBackDetails extends Component {
   };
 
   showBackMoadl = () => {
-    alert('结束本次答题？', '退出后不保存当前答案！', [
+    alert('结束本次答题？', '离开后不保存当前答案！', [
       {
         text: '取消',
         onPress: () => this.props.dispatch({

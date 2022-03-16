@@ -29,7 +29,6 @@ export default modelExtend(model, {
     * query ({ payload }, { call, put, select }) {
       const { success, message = '获取失败', data } = yield call(url, payload);
       if (success) {
-        console.log(data);
       } else {
         Toast.fail(message);
       }

@@ -7,6 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { List, Accordion, Icon } from 'components';
 import LessonItem from 'components/lessonitem';
+import Tag from 'components/tag';
 import { getLocalIcon } from 'utils';
 import { chapterRow } from 'components/row';
 import styles from './index.less';
@@ -14,62 +15,69 @@ import styles from './index.less';
 const PrefixCls = 'courselist';
 
 const CourseList = (props) => {
+  const { format } = props;
   const GetPanel = (data) => (
     cnIsArray(data) && data.map((d, i) => {
       return (
         <Accordion.Panel
           header={
-            <div className={styles[`${PrefixCls}-header`]} >
+            <div className={styles[`${PrefixCls}-header`]}>
               {
                 props.activityIndex > 0 && props.activityIndex - 1 === i ?
-                  <Icon type={getLocalIcon('/components/nike.svg')} color="#f0da24" />
-                  : null
+                <Icon type={getLocalIcon('/components/nike.svg')} color="#f0da24" />
+                                                                         : null
               }
-              <span >{d.name}</span >
-            </div >
+              <span>{format === 'buttons' ? i + 1 : d.name}</span>
+            </div>
 
           }
           key={i}
         >
           {d.summary !== '' ?
-            <div className={styles[`${PrefixCls}-html`]} dangerouslySetInnerHTML={{ __html: d.summary }} /> : null}
+           <div className={styles[`${PrefixCls}-html`]} dangerouslySetInnerHTML={{ __html: d.summary }} /> : null}
           {
+            d.availabilityinfo ?
+            <div className={styles.availabilityinfo}>
+              <Tag text="受限的" color="red" size="xs" inline />
+              <span className={styles[`${PrefixCls}-html`]} dangerouslySetInnerHTML={{ __html: d.availabilityinfo }} />
+            </div>
+                               :
             d.modules && d.modules.map((p) => {
-              return (
-                <LessonItem
-                  key={p.id}
-                  data={p}
-                  loadingCheck={props.loadingCheck}
-                  dispatch={props.dispatch}
-                  courseid={props.courseid}
-                />
-              );
-            })
+                return (
+                  <LessonItem
+                    key={p.id}
+                    data={p}
+                    loadingCheck={props.loadingCheck}
+                    dispatch={props.dispatch}
+                    courseid={props.courseid}
+                  />
+                );
+              })
           }
-        </Accordion.Panel >
+        </Accordion.Panel>
       );
     })
   );
 
   return (
-    <div className={styles[`${PrefixCls}-outer`]} >
+    <div className={styles[`${PrefixCls}-outer`]}>
       <Accordion
         defaultActiveKey={props.accordionIndex}
         className={styles[`${PrefixCls}-accordion`]}
         onChange={props.handlerChange}
       >
         {GetPanel(props.data)}
-      </Accordion >
-    </div >
+      </Accordion>
+    </div>
   );
 };
 
 CourseList.propTypes = {
   data: PropTypes.array.isRequired,
-  handlerChange: PropTypes.func.isRequired,
+  handlerChange: PropTypes.func.isRequired
 };
 
 CourseList.defaultProps = {
-  data: [],
+  data: []
 };
 export default CourseList;

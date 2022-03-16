@@ -46,7 +46,7 @@ class FileBox extends React.Component {
     const { fileName, mimeType = '', fileId = '', groupId = '' } = item;
     cnGetOrDownAndOpenFile({
       fileName: `${fileIdPrefix !== '' ? fileIdPrefix : fileId}_${fileName}`,
-      fileUrl: this.props.informationType === 1 ?`${EnclosureDownload}?fileId=${fileId}`: `${downFiles}/${groupId}`,
+      fileUrl: this.props.informationType === 1 ? `${EnclosureDownload}?fileId=${fileId}` : `${downFiles}/${groupId}`,
       mimeType,
       callback: () => this.downLoaded(i),
     }, (e) => {

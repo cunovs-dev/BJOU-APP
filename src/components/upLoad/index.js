@@ -43,46 +43,44 @@ class UpLoad extends React.Component {
     };
   }
 
-  componentWillMount () {
-
-  }
-
-  componentDidMount () {
-
-  }
-
   onAddSubmit = () => {
-    const { course = '', id, type, groups = [], discussionid='' } = this.props;
-    this.props.form.validateFields({
+    const { course = '', id, type, groups = [], discussionid='',form } = this.props;
+    const {validateFields,getFieldsValue,getFieldError} = form
+    validateFields({
       force: true
     }, (error) => {
       if (!error) {
         const { fileList } = this.state;
+
         let data = {};
         if (type === 'add') {
           data = {
             fileList,
             value: {
-              ...this.props.form.getFieldsValue(),
+              ...getFieldsValue(),
               courseid: course,
               forumid: id,
-              groupid: groups[0].value,
+              groupid: groups.length>0?groups[0].value:undefined,
               discussion: discussionid
             }
           };
+          console.log(data)
         } else {
           data = {
             fileList,
             value: {
-              ...this.props.form.getFieldsValue(),
+              ...getFieldsValue(),
               postid: id,
               discussion: discussionid
             }
           };
+
         }
+
         this.props.onSubmit(data);
       } else {
-        Toast.fail('请检查提交数据是否正确');
+        !!getFieldError('subject') && Toast.fail(getFieldError('subject'));
+        !!getFieldError('message') && Toast.fail(getFieldError('message'));
       }
     });
   };
@@ -146,7 +144,7 @@ class UpLoad extends React.Component {
 
 
   render () {
-    const { getFieldProps, getFieldError } = this.props.form,
+    const { getFieldProps } = this.props.form,
       { fileList } = this.state,
       { maxattachments, maxbytes, groups, loading = false, type, subject } = this.props,
       props = {
@@ -180,7 +178,6 @@ class UpLoad extends React.Component {
                 ]
               })}
               clear
-              error={!!getFieldError('subject') && Toast.fail(getFieldError('subject'))}
               placeholder="请输入"
             >
               主题
@@ -188,11 +185,10 @@ class UpLoad extends React.Component {
             <TextareaItem
               {...getFieldProps('message', {
                 initialValue: '',
-                rules: [{ required: true, message: '请输入内容' }]
+                rules: [{ required: true, message: '请输入主题内容' }]
               })}
-              error={!!getFieldError('message') && Toast.fail(getFieldError('message'))}
               rows={10}
-              placeholder={'请输入内容'}
+              placeholder={'请输入主题内容'}
             />
           </List.Item>
           {

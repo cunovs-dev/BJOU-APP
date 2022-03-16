@@ -48,14 +48,14 @@ const label = {
 const getData = (data, key) => {
   const res = [];
   data.length > 0 && data.map(items => {
-      if (items.text) {
-        res.push({
-          text: items.text,
-          [key]: parseInt(items.numberofuser),
-          numberofuser: parseInt(items.numberofuser)
-        });
-      }
+    if (items.text) {
+      res.push({
+        text: items.text,
+        [key]: parseInt(items.numberofuser),
+        numberofuser: parseInt(items.numberofuser)
+      });
     }
+  }
   );
   return res;
 };
@@ -90,6 +90,12 @@ class Choice extends Component {
   };
 
   onBackSubmit = () => {
+    this.props.dispatch({
+      type: 'app/updateBackModal',
+      payload: {
+        showBackModal: false
+      }
+    });
     this.props.dispatch(routerRedux.goBack());
   };
 

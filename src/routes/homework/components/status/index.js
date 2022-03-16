@@ -17,7 +17,7 @@ const alert = Modal.alert;
 const PrefixCls = 'status',
   tabs = [
     { title: '提交的作业' },
-    { title: '成绩' },
+    { title: '成绩' }
   ],
   getSubmitStatus = (status) => {
     switch (status) {
@@ -71,7 +71,7 @@ const PrefixCls = 'status',
     }
   };
 const Status = (props) => {
-  const { submitStatus, gradingstatus, duedate = 0, cutoffdate = 0, allowsubmissionsfromdate = 0, extensionduedate = 0, timemodified = 0, submitDataType, grade = {}, fileIdPrefix, canedit, cansubmit, coursesId, cmid } = props,
+  const { submitStatus, gradingstatus, duedate = 0, cutoffdate = 0, allowsubmissionsfromdate = 0, extensionduedate = 0, timemodified = 0, submitDataType, grade = {}, fileIdPrefix, canedit, cansubmit, coursesId, cmid,sending } = props,
     handlerSubmit = (id) => {
       props.dispatch({
         type: 'homework/sendAssing',
@@ -83,225 +83,227 @@ const Status = (props) => {
       });
     },
     showModal = (id) => {
-      alert('提交', '本作业一旦提交，您将不能再作任何修改', [
-        { text: '取消', onPress: () => console.log() },
-        { text: '提交', onPress: () => handlerSubmit(id) },
+      alert('提交', '本作业一旦提交，您将不能再作任何修改。', [
+        { text: '取消', onPress: () => console.log('cancel') },
+        { text: '提交', onPress: () => handlerSubmit(id) }
       ]);
     };
   return (
-    <div className={styles[`${PrefixCls}-status`]} >
-      <div className={styles[`${PrefixCls}-status-head`]} >
-        <div className={styles[`${PrefixCls}-status-head-left`]} >
+    <div className={styles[`${PrefixCls}-status`]}>
+      <div className={styles[`${PrefixCls}-status-head`]}>
+        <div className={styles[`${PrefixCls}-status-head-left`]}>
           <Icon type={getLocalIcon('/sprite/statusbar.svg')} color="#22609c" />
-          <span style={{ marginLeft: '8px' }} >提交状态</span >
-        </div >
-        <div className={styles[`${PrefixCls}-status-head-right`]} >
-          <span >{getSubmitStatus(submitStatus)}</span >
-          <span >{getGradeStatus(gradingstatus)}</span >
-        </div >
-      </div >
+          <span style={{ marginLeft: '8px' }}>提交状态</span>
+        </div>
+        <div className={styles[`${PrefixCls}-status-head-right`]}>
+          <span>{getSubmitStatus(submitStatus)}</span>
+          <span>{getGradeStatus(gradingstatus)}</span>
+        </div>
+      </div>
       {
         gradingstatus === 'graded'
-          ? <Tabs
-            tabs={tabs}
-            initialPage={0}
-            tabBarInactiveTextColor="#b7b7b7"
-            tabBarUnderlineStyle={{ border: '1px solid #22609c' }}
-          >
-            <div className={styles.common} >
-              {submitStatus !== 'new'
-                ? <SelfFiles data={submitDataType} fileIdPrefix={fileIdPrefix} dispatch={props.dispatch} />
-                :
-                ''
-              }
-              <WhiteSpace />
-              {
-                duedate > 0 ?
-                  <div className={styles[`${PrefixCls}-status-time`]} >
-                    <span >
-                      <Icon type={getLocalIcon('/components/enddate.svg')} size="xs" />
-                      <span >截止时间</span >
-                    </span >
-                    <span >{getCommonDate(duedate)}</span >
-                  </div >
-                  :
-                  null
-              }
-              {
-                extensionduedate > 0 ?
-                  <div className={styles[`${PrefixCls}-status-time`]} >
-                    <span >
-                      <Icon type={getLocalIcon('/components/enddate.svg')} size="xs" />
-                      <span >宽限时间</span >
-                    </span >
-                    <span >{getCommonDate(extensionduedate)}</span >
-                  </div >
-                  :
-                  null
-              }
-              {
-                duedate > 0 ?
-                  <div className={styles[`${PrefixCls}-status-time`]} >
-                    <span >
-                      <Icon type={getLocalIcon('/components/surplus.svg')} size="xs" />
-                      <span >剩余时间</span >
-                    </span >
-                    {getSurplusDay(extensionduedate > duedate ? extensionduedate : duedate, submitStatus, timemodified)}
-                  </div >
-                  :
-                  null
-              }
-              <div className={styles[`${PrefixCls}-status-time`]} >
-                <span ><Icon type={getLocalIcon('/components/modify.svg')} size="xs" /><span >最后修改</span ></span >
-                <span >{submitStatus !== 'new' ? getCommonDate(timemodified) : '-'}</span >
-              </div >
-              <WhiteSpace size="lg" />
-              <WingBlank >
-                {
-                  canedit ?
-                    <Button
-                      type="primary"
-                      onClick={(e) => (handlerChangeRouteClick(
-                        'homeworkadd',
-                        { assignId: props.assignId, coursesId },
-                        props.dispatch, e))}
-                    >
-                      {submitStatus === 'new' ? '添加提交' : '编辑提交的作业'}
-                    </Button >
-                    :
-                    null
-                }
-                <WhiteSpace size="lg" />
-                {
-                  cansubmit ?
-                    <div >
-                      <Button
-                        type="warning"
-                        onClick={(e) => showModal(props.assignId)}
-                      >
-                        添加提交
-                      </Button >
-                      <div className={styles.send} >*本作业一旦提交，您将不能再作任何修改</div >
-                    </div >
-                    :
-                    null
-
-                }
-              </WingBlank >
-            </div >
-            <div className={styles.feedback} >
-              <div >
-                <TitleBox title="最终成绩" sup={<div className={styles.grade} >{grade.gradefordisplay}</div >} />
-              </div >
-              <FeedBack data={grade.feedbackplugins} fileIdPrefix={fileIdPrefix} />
-              <TitleBox title="评分人" sup="" />
-              <List className={styles[`${PrefixCls}-list`]} >
-                <List.Item
-                  arrow="horizontal"
-                  thumb={
-                    isUsefulPic(grade.gradeUser.avatar) ?
-                      getImages(grade.gradeUser.avatar, 'user')
-                      :
-                      ''
-                  }
-                  multipleLine
-                  onClick={(e) => {
-                    if (grade.gradeUserId) {
-                      handlerChangeRouteClick('userpage', { userid: grade.gradeUserId }, props.dispatch, e);
-                    }
-                  }}
-                >
-                  {grade.gradeUser.fullname}
-                  <List.Item.Brief >{getCommonDate(grade.timemodified)}</List.Item.Brief >
-                </List.Item >
-              </List >
-            </div >
-          </Tabs >
-          :
-          <div >
+        ? <Tabs
+          tabs={tabs}
+          initialPage={0}
+          tabBarInactiveTextColor="#b7b7b7"
+          tabBarUnderlineStyle={{ border: '1px solid #22609c' }}
+        >
+          <div className={styles.common}>
             {submitStatus !== 'new'
-              ?
-              <SelfFiles data={submitDataType} fileIdPrefix={fileIdPrefix} dispatch={props.dispatch} />
-              :
-              ''
+             ? <SelfFiles data={submitDataType} fileIdPrefix={fileIdPrefix} dispatch={props.dispatch} />
+             :
+             ''
             }
             <WhiteSpace />
             {
               duedate > 0 ?
-                <div className={styles[`${PrefixCls}-status-time`]} >
-                  <span >
-                    <Icon type={getLocalIcon('/components/enddate.svg')} size="xs" />
-                    <span >截止时间</span >
-                  </span >
-                  <span >{getCommonDate(duedate)}</span >
-                </div >
-                :
-                null
+              <div className={styles[`${PrefixCls}-status-time`]}>
+                    <span>
+                      <Icon type={getLocalIcon('/components/enddate.svg')} size="xs" />
+                      <span>截止时间</span>
+                    </span>
+                <span>{getCommonDate(duedate)}</span>
+              </div>
+                          :
+              null
             }
             {
               extensionduedate > 0 ?
-                <div className={styles[`${PrefixCls}-status-time`]} >
-                  <span >
-                    <Icon type={getLocalIcon('/components/enddate.svg')} size="xs" />
-                    <span >宽限时间</span >
-                  </span >
-                  <span >{getCommonDate(extensionduedate)}</span >
-                </div >
-                :
-                null
+              <div className={styles[`${PrefixCls}-status-time`]}>
+                    <span>
+                      <Icon type={getLocalIcon('/components/enddate.svg')} size="xs" />
+                      <span>宽限时间</span>
+                    </span>
+                <span>{getCommonDate(extensionduedate)}</span>
+              </div>
+                                   :
+              null
             }
             {
               duedate > 0 ?
-                <div className={styles[`${PrefixCls}-status-time`]} >
-                  <span ><Icon type={getLocalIcon('/components/surplus.svg')} size="xs" /><span >剩余时间</span ></span >
-                  <span
-                    style={getStyle(submitStatus, duedate, timemodified)}
-                  > {getSurplusDay(extensionduedate > duedate ? extensionduedate : duedate, submitStatus, timemodified)}
-                  </span >
-                </div >
-                :
-                null
+              <div className={styles[`${PrefixCls}-status-time`]}>
+                    <span>
+                      <Icon type={getLocalIcon('/components/surplus.svg')} size="xs" />
+                      <span>剩余时间</span>
+                    </span>
+                {getSurplusDay(extensionduedate > duedate ? extensionduedate : duedate, submitStatus, timemodified)}
+              </div>
+                          :
+              null
             }
-            <div className={styles[`${PrefixCls}-status-time`]} >
-              <span ><Icon type={getLocalIcon('/components/modify.svg')} size="xs" /><span >最后修改</span ></span >
-              <span >{submitStatus !== 'new' ? getCommonDate(timemodified) : '-'}</span >
-            </div >
+            <div className={styles[`${PrefixCls}-status-time`]}>
+              <span><Icon type={getLocalIcon('/components/modify.svg')} size="xs" /><span>最后修改</span></span>
+              <span>{submitStatus !== 'new' ? getCommonDate(timemodified) : '-'}</span>
+            </div>
             <WhiteSpace size="lg" />
-            <WingBlank >
+            <WingBlank>
               {
                 canedit ?
-                  <Button
-                    type="primary"
-                    onClick={(e) => (handlerChangeRouteClick(
-                      'homeworkadd',
-                      { assignId: props.assignId, coursesId },
-                      props.dispatch, e))}
-                  >
-                    {submitStatus === 'new' ? '添加提交' : '编辑提交的作业'}
-                  </Button >
-                  :
-                  null
+                <Button
+                  type="primary"
+                  onClick={(e) => (handlerChangeRouteClick(
+                    'homeworkadd',
+                    { assignId: props.assignId, coursesId, submitStatus },
+                    props.dispatch, e))}
+                >
+                  {submitStatus === 'new' ? '提交作业' : '编辑提交的作业'}
+                </Button>
+                        :
+                null
               }
               <WhiteSpace size="lg" />
               {
                 cansubmit ?
-                  <div >
-                    <Button
-                      type="warning"
-                      onClick={(e) => showModal(props.assignId)}
-                    >
-                      添加提交
-                    </Button >
-                    <div className={styles.send} >*本作业一旦提交，您将不能再作任何修改</div >
-                  </div >
-                  :
-                  null
+                <div>
+                  <Button
+                    loading={sending}
+                    type="warning"
+                    onClick={(e) => showModal(props.assignId)}
+                  >
+                    提交作业
+                  </Button>
+                  <div className={styles.send}>*本作业一旦提交，您将不能再作任何修改。</div>
+                </div>
+                          :
+                null
 
               }
-            </WingBlank >
-          </div >
+            </WingBlank>
+          </div>
+          <div className={styles.feedback}>
+            <div>
+              <TitleBox title="最终成绩" sup={<div className={styles.grade}>{grade.gradefordisplay}</div>} />
+            </div>
+            <FeedBack data={grade.feedbackplugins} fileIdPrefix={fileIdPrefix} />
+            <TitleBox title="评分人" sup="" />
+            <List className={styles[`${PrefixCls}-list`]}>
+              <List.Item
+                arrow="horizontal"
+                thumb={
+                  isUsefulPic(grade.gradeUser.avatar) ?
+                  getImages(grade.gradeUser.avatar, 'user')
+                                                      :
+                  ''
+                }
+                multipleLine
+                onClick={(e) => {
+                  if (grade.gradeUserId) {
+                    handlerChangeRouteClick('userpage', { userid: grade.gradeUserId }, props.dispatch, e);
+                  }
+                }}
+              >
+                {grade.gradeUser.fullname}
+                <List.Item.Brief>{getCommonDate(grade.timemodified)}</List.Item.Brief>
+              </List.Item>
+            </List>
+          </div>
+        </Tabs>
+        :
+        <div>
+          {submitStatus !== 'new'
+           ?
+           <SelfFiles data={submitDataType} fileIdPrefix={fileIdPrefix} dispatch={props.dispatch} />
+           :
+           ''
+          }
+          <WhiteSpace />
+          {
+            duedate > 0 ?
+            <div className={styles[`${PrefixCls}-status-time`]}>
+                  <span>
+                    <Icon type={getLocalIcon('/components/enddate.svg')} size="xs" />
+                    <span>截止时间</span>
+                  </span>
+              <span>{getCommonDate(duedate)}</span>
+            </div>
+                        :
+            null
+          }
+          {
+            extensionduedate > 0 ?
+            <div className={styles[`${PrefixCls}-status-time`]}>
+                  <span>
+                    <Icon type={getLocalIcon('/components/enddate.svg')} size="xs" />
+                    <span>宽限时间</span>
+                  </span>
+              <span>{getCommonDate(extensionduedate)}</span>
+            </div>
+                                 :
+            null
+          }
+          {
+            duedate > 0 ?
+            <div className={styles[`${PrefixCls}-status-time`]}>
+              <span><Icon type={getLocalIcon('/components/surplus.svg')} size="xs" /><span>剩余时间</span></span>
+              <span
+                style={getStyle(submitStatus, duedate, timemodified)}
+              > {getSurplusDay(extensionduedate > duedate ? extensionduedate : duedate, submitStatus, timemodified)}
+                  </span>
+            </div>
+                        :
+            null
+          }
+          <div className={styles[`${PrefixCls}-status-time`]}>
+            <span><Icon type={getLocalIcon('/components/modify.svg')} size="xs" /><span>最后修改</span></span>
+            <span>{submitStatus !== 'new' ? getCommonDate(timemodified) : '-'}</span>
+          </div>
+          <WhiteSpace size="lg" />
+          <WingBlank>
+            {
+              canedit ?
+              <Button
+                type="primary"
+                onClick={(e) => (handlerChangeRouteClick(
+                  'homeworkadd',
+                  { assignId: props.assignId, coursesId, submitStatus },
+                  props.dispatch, e))}
+              >
+                {submitStatus === 'new' ? '提交作业' : '编辑提交的作业'}
+              </Button>
+                      :
+              null
+            }
+            <WhiteSpace size="lg" />
+            {
+              cansubmit ?
+              <div>
+                <Button
+                  loading={sending}
+                  type="warning"
+                  onClick={(e) => showModal(props.assignId)}
+                >
+                  提交作业
+                </Button>
+                <div className={styles.send}>*本作业一旦提交，您将不能再作任何修改。</div>
+              </div>
+                        :
+              null
+
+            }
+          </WingBlank>
+        </div>
       }
-    </div >
+    </div>
   );
 };
 export default Status;

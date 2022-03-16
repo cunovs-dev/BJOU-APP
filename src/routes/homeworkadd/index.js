@@ -33,7 +33,7 @@ class HomeWorkAdd extends React.Component {
     let { fileList = [], value = {}, hasFilesChange = false } = data;
     if (!hasFilesChange && fileList.length === 0 && Object.keys(value).length <= 1) {
       this.props.dispatch(routerRedux.goBack());
-      Toast.success('提交成功');
+      Toast.success('保存成功');
       return;
     }
     if (fileList.length > 0) {
@@ -54,15 +54,19 @@ class HomeWorkAdd extends React.Component {
         type: 'homeworkadd/uploadFile',
         payload: {
           ...data,
-          fileList,
-        },
+          fileList
+        }
       });
     } else {
       const clearAllFile = hasFilesChange === true ? { itemid: 0, filemanager: 1 } : {};
+      const { onlinetext } = value;
+      const str = onlinetext.replace(/\n/g, '<br/>').replace(/( )/g, '\u3000');
+
       this.props.dispatch({
-        type: 'homeworkadd/AddHomework',
+        type: 'homeworkadd/addHomework',
         payload: {
           ...value,
+          onlinetext: str,
           ...clearAllFile
         },
         cb: () => {
@@ -101,7 +105,7 @@ class HomeWorkAdd extends React.Component {
   };
 
   showBackMoadl = () => {
-    alert('退出？', '退出后不会保存当前操作！', [
+    alert('离开？', '离开后不会保存当前操作！', [
       {
         text: '取消',
         onPress: () => this.props.dispatch({
@@ -111,12 +115,12 @@ class HomeWorkAdd extends React.Component {
           }
         })
       },
-      { text: '确定', onPress: () => this.onBackSubmit() },
+      { text: '确定', onPress: () => this.onBackSubmit() }
     ]);
   };
 
   render () {
-    const { assignId } = this.props.location.query,
+    const { assignId, submitStatus } = this.props.location.query,
       { itemid, animating } = this.props.homeworkadd,
       { data = {} } = this.props.homework,
       { configs = [], submitDataType } = data;
@@ -127,11 +131,14 @@ class HomeWorkAdd extends React.Component {
       onSubmit: this.onSubmit,
       itemid,
       submitDataType,
-      fileIdPrefix: currentUser.hasOwnProperty('userid') ? `_${currentUser.userid}_` : ''
+      fileIdPrefix: currentUser.hasOwnProperty('userid') ? `_${currentUser.userid}_` : '',
+      loadingAdd: this.props.loadingAdd
     };
+
+    const title = submitStatus === 'new' ? '添加提交' : '编辑提交';
     return (
-      <div className={styles.whiteBg} >
-        <Nav title="提交" dispatch={this.props.dispatch} isAlert />
+      <div className={styles.whiteBg}>
+        <Nav title={title} dispatch={this.props.dispatch} isAlert />
         <AddHomework {...props} />
         <ActivityIndicator
           toast
@@ -139,15 +146,14 @@ class HomeWorkAdd extends React.Component {
           animating={animating}
         />
         {showBackModal && this.showBackMoadl()}
-      </div >
+      </div>
     );
   }
 }
 
-HomeWorkAdd.defaultProps = {};
-HomeWorkAdd.propTypes = {};
-
-export default connect(({ homeworkadd, homework, app }) => ({
+export default connect(({ loading,homeworkadd, homework, app}) => ({
+  loading,
+  loadingAdd:loading.effects['homeworkadd/addHomework'],
   homeworkadd,
   homework,
   app

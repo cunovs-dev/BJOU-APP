@@ -74,12 +74,14 @@ const handlerCourseClick = (params, courseid, dispatch) => {
     }
     if (fileUrl !== '') {
       if (/\.rar/.test(fileUrl)) {
-        alert('压缩包文件', '当前文件在移动端可能无法解压，建议使用PC端下载并解压', [
-          { text: '仍要下载',
+        alert('压缩包文件', '下载后需要解压缩查看，需要使用手机中安装额外的解压缩软件（如不方便可以转到电脑端访问）。', [
+          {
+            text: '仍要下载',
             onPress: () => {
               downloadProgress('加载中...');
               downLoading();
-            } },
+            }
+          },
           {
             text: '取消',
             onPress: () => console.log('cancel')
@@ -88,12 +90,14 @@ const handlerCourseClick = (params, courseid, dispatch) => {
         return;
       }
       if (fileSize > 5242880) {
-        alert('大文件', `当前文件共${renderSize(fileSize)},下载需消耗大量流量和时间，建议使用PC端下载`, [
-          { text: '仍要下载',
+        alert('大文件', `当前文件共${renderSize(fileSize)},下载需消耗大量流量和时间，建议使用电脑端下载。`, [
+          {
+            text: '仍要下载',
             onPress: () => {
               downloadProgress('加载中...');
               downLoading();
-            } },
+            }
+          },
           {
             text: '取消',
             onPress: () => console.log('cancel')
@@ -221,10 +225,14 @@ const handlerCourseClick = (params, courseid, dispatch) => {
       };
       break;
     case 'mdlres':
-      const { coursewareID } = params;
+      const { coursewareID, tracking = '2', stats = {} } = params;
+      const { state = 0 } = stats;
       targets.pathname = '/courseware';
       targets.param = {
-        coursewareID
+        coursewareID,
+        tracking,
+        state,
+        modname: modname || modulename
       };
       break;
     case 'ouwiki':

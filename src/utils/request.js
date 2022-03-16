@@ -47,6 +47,7 @@ const { username, usertoken, userpower, userid, useravatar, userloginname, porta
   };
 axios.defaults.baseURL = baseURL;
 axios.defaults.withCredentials = true; // 设置不带cookie 不然存在跨域问题
+// axios.defaults.timeout = 15000; // 请求超时
 const doDecode = (json) => {
   return eval(`(${json})`);
 };
@@ -195,7 +196,7 @@ const getResponeseErrMsg = (status) => {
     case 504:
     case 0:
     case undefined:
-      msg = '网络已断开,不能连接到服务器';
+      msg = '连接超时，不能连接到服务器。';
       break;
     default:
       msg = `系统错误,错误代码:${status}`;

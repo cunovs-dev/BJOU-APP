@@ -49,7 +49,7 @@ const NotesModal = (props) => {
         }]}
         wrapProps={{ onTouchStart: onWrapTouchStart }}
       >
-        <div style={{ height: 400, overflow: 'scroll' }}>
+        <div style={{ maxHeight: 400, overflow: 'scroll' }}>
           <div dangerouslySetInnerHTML={getContents()}/>
         </div>
       </Modal>

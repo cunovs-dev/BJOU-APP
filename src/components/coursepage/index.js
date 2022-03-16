@@ -131,7 +131,7 @@ class CoursePage extends React.Component {
           <WxImageViewer onClose={onClose} urls={viewImages} index={viewImageIndex} /> : ''
         }
         {
-          alertInfo && _useScriptFunc && this.showAlert(alertInfo.info)
+          alertInfo && _useScriptFunc && this.showAlert(alertInfo.warn)
         }
       </div>
     );

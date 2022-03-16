@@ -69,19 +69,19 @@ export default modelExtend(model, {
       const { type } = yield select(_ => _.sendForum);
 
       if (type === 'add') {
-        const { success, message = '发送失败', modalAlert = false } = yield call(addNewForum, payload);
+        const { success, message = '发布失败', modalAlert = false } = yield call(addNewForum, payload);
         if (success) {
           yield setRouterNeedRefresh('forum');
           yield put({ type: 'goBack', query: { needRefresh: true } });
-          Toast.success('提交成功');
+          Toast.success('帖子已成功添加');
         } else {
           modalAlert ? commonMoadl(message) : Toast.fail(message);
         }
       } else {
-        const { success, message = '发送失败', modalAlert = false } = yield call(replyForum, payload);
+        const { success, message = '发布失败', modalAlert = false } = yield call(replyForum, payload);
         if (success) {
           yield put({ type: 'goBack' });
-          Toast.success('提交成功');
+          Toast.success('发布成功');
         } else {
           modalAlert ? commonMoadl(message) : Toast.fail(message);
         }

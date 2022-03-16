@@ -23,7 +23,7 @@ export default modelExtend(model, {
     taskAllList: [],
     refreshing: false,
     selectIndex: 0,
-    sysNotice: '',
+    sysNotice: {},
     taskTop: 0,
     lessonTop: 0,
   },
@@ -108,7 +108,7 @@ export default modelExtend(model, {
         yield put({
           type: 'updateState',
           payload: {
-            sysNotice: data.data[0]
+            sysNotice: data.data[0] || {}
           }
         });
       } else {

@@ -60,22 +60,22 @@ export default modelExtend(model, {
               navigator: [],
               info: {},
               answer: [],
-              page: 0,
+              page: 0
             }
           });
           if (state !== 'inprogress') {
             dispatch({
               type: 'queryExamination',
               payload: {
-                quizid,
-              },
+                quizid
+              }
             });
           } else {
             dispatch({
               type: 'updateState',
               payload: {
                 attemptid,
-                page: page * 1,
+                page: page * 1
               }
             });
             dispatch({
@@ -83,8 +83,8 @@ export default modelExtend(model, {
               payload: {
                 quizid,
                 attemptid,
-                page: page * 1,
-              },
+                page: page * 1
+              }
             });
             dispatch({
               type: 'querySummary',
@@ -95,7 +95,7 @@ export default modelExtend(model, {
           }
         }
       });
-    },
+    }
   },
   effects: {
     * queryExamination ({ payload }, { call, put }) {
@@ -108,7 +108,7 @@ export default modelExtend(model, {
             // info: getQuizInfo(data.questions[0].html, data.questions[0].type),
             answer: getAnswer(data.questions),
             attemptid: data.id
-          },
+          }
         });
         yield put({
           type: 'querySummary',
@@ -130,8 +130,8 @@ export default modelExtend(model, {
           payload: {
             data,
             // info: getQuizInfo(data.questions[0].html, data.questions[0].type),
-            answer: getAnswer(data.questions),
-          },
+            answer: getAnswer(data.questions)
+          }
         });
       } else {
         Toast.fail(data.message || '获取失败');
@@ -147,8 +147,8 @@ export default modelExtend(model, {
         yield put({
           type: 'updateState',
           payload: {
-            navigator: data.questions,
-          },
+            navigator: data.questions
+          }
         });
       } else {
         Toast.fail(data.message);
@@ -169,7 +169,7 @@ export default modelExtend(model, {
               quizid,
               navmethod,
               timelimit
-            },
+            }
           }));
         }
 
@@ -188,7 +188,7 @@ export default modelExtend(model, {
               info: {},
               answer: [],
               page: 0,
-              navmethod: '',
+              navmethod: ''
             }
           });
         }
@@ -199,7 +199,7 @@ export default modelExtend(model, {
           Toast.fail(data.message || '提交失败,请稍后再试');
         }
       }
-    },
+    }
   },
   reducers: {
     updateVal (state, { payload }) {
@@ -210,7 +210,7 @@ export default modelExtend(model, {
       });
       return {
         ...state,
-        answer,
+        answer
       };
     },
     updateCheckVal (state, { payload }) {
@@ -220,7 +220,7 @@ export default modelExtend(model, {
       answer.choose.find(item => item.id === id).checked = !currentCheck;
       return {
         ...state,
-        answer,
+        answer
       };
     },
     updateTextVal (state, { payload }) {
@@ -229,8 +229,8 @@ export default modelExtend(model, {
       answer.choose.value = value;
       return {
         ...state,
-        answer,
+        answer
       };
-    },
+    }
   }
 });

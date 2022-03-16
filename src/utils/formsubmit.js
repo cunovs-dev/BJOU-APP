@@ -232,8 +232,6 @@ const submit = (url, param, isCNDefined) => {
 
 
 export default function formsubmit (url, params, images, files = {}, isCNDefined = false) {
-  console.log('formsubmit!!', images, files);
-  
   let param = new FormData();
   const { isOriginal = false, ...fields } = params;
   param.append('__device', 'mobile');

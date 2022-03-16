@@ -4,11 +4,12 @@ import { WhiteSpace } from 'components';
 import Photoheader from 'components/photoheader';
 import { handlerGradeItemClick } from 'utils/commonevents';
 import Refresh from 'components/pulltorefresh';
+import NoContent from 'components/nocontent';
 import { achievementDetailsRow } from 'components/row';
 import styles from './index.less';
 
 const PrefixCls = 'achievementdetails';
-const AchievementDetails = ({ location, dispatch, achievementdetails, app }) => {
+const AchievementDetails = ({ location, dispatch, achievementdetails, app, loading }) => {
   const { gradeItems, refreshing, scrollerTop, courseid: retrunCourseid = '', coursename, graderaw = '' } = achievementdetails,
     { groups } = app,
     { name, courseid } = location.query,
@@ -71,16 +72,21 @@ const AchievementDetails = ({ location, dispatch, achievementdetails, app }) => 
           scrollerTop={scrollerTop}
           onScrollerTop={onScrollerTop.bind(null)}
         >
-          {cnIsArray(gradeItems) && gradeItems.map((item) => {
-            return achievementDetailsRow(item, handlerGradeItemClick, dispatch);
-          })}
+          {
+            cnIsArray(gradeItems) && gradeItems.length > 0 ?
+            gradeItems.map((item) => {
+              return achievementDetailsRow(item, handlerGradeItemClick, dispatch);
+            })
+                                                           :
+            <NoContent isLoading={loading} />
+          }
         </Refresh>
       </div>
     </div>
   );
 };
 export default connect(({ loading, achievementdetails, app }) => ({
-  loading,
+  loading: loading.effects[`${PrefixCls}/queryList`],
   achievementdetails,
   app
 }))(AchievementDetails);

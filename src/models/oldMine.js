@@ -33,6 +33,13 @@ export default modelExtend(model, {
     localFileTotals: cnGetLocalFileSize(),
     clearProgress: 0,
     uploadState: false,
+    showModal: false,
+    dialog: {
+      status: '建议立即下载资源升级APP',
+      content: '',
+      buttonText: '现在升级',
+      statusCode: -1
+    }
   },
   subscriptions: {
     setupHistory ({ dispatch, history }) {

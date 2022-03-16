@@ -36,7 +36,7 @@ export default modelExtend(model, {
   },
   effects: {
     * query ({ payload }, { call, put, select }) {
-      const { success, data, message = '获取数据失败，请稍后再试' } = yield call(queryFolder, payload);
+      const { success, data, message = '获取数据失败，请稍后再试。' } = yield call(queryFolder, payload);
       if (success) {
         yield put({
           type: 'updateState',

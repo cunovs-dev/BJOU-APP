@@ -291,7 +291,7 @@ class Opinion extends Component {
                   rules: [{ required: true, message: '请输入您的意见' }]
                 })}
                 rows={7}
-                placeholder={'您的宝贵意见，就是我们进步的源泉'}
+                placeholder={'您的宝贵意见，就是我们进步的源泉。'}
               />
             </List.Item>
             <InputItem

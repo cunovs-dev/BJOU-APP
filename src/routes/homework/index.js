@@ -20,8 +20,9 @@ const PrefixCls = 'homework';
 @connect(({ homework, loading, app }) => ({ // babel装饰器语法糖
   homework,
   app,
-  loading: loading.effects[`${PrefixCls}/queryHomework`]
-}))
+  loading: loading.effects[`${PrefixCls}/queryHomework`],
+  sending:loading.effects[`${PrefixCls}/sendAssing`]
+  }))
 class Homework extends React.Component {
   constructor (props) {
     super(props);
@@ -64,7 +65,7 @@ class Homework extends React.Component {
     const { name, assignId, cmid } = this.props.location.query,
       { users: currentUser = {}, _useJavaScriptMessage } = this.props.app,
       { data, comments } = this.props.homework,
-      { loading } = this.props,
+      { loading, sending } = this.props,
       { assignmentsName, coursesName, intro = '', introattachments, coursesId: courseid = '', _useScriptFunc = false } = data;
     //用户文件，以课程id_用户id开头；课程文件，以课程id_模块id开头.
     const getFileIdPrefix = (type = '') => {
@@ -120,11 +121,11 @@ class Homework extends React.Component {
                 作业备注
               </List.Item>
             </List>
-            <Status {...data} assignId={assignId} fileIdPrefix={getFileIdPrefix('u')} dispatch={this.props.dispatch} />
+            <Status {...data} assignId={assignId} sending={sending} fileIdPrefix={getFileIdPrefix('u')} dispatch={this.props.dispatch} />
           </div>
         }
         {
-          _useJavaScriptMessage && _useScriptFunc && this.showAlert(_useJavaScriptMessage.info)
+          _useJavaScriptMessage && _useScriptFunc && this.showAlert(_useJavaScriptMessage.warn)
         }
       </div>
     );

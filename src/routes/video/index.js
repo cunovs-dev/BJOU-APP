@@ -44,7 +44,6 @@ class Video extends React.Component {
   }
 
   tetxClick = (video) => {
-    console.log(video);
     if (video.requestFullscreen) {
       video.requestFullscreen();
     } else if (video.mozRequestFullScreen) {

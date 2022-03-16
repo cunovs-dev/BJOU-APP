@@ -7,6 +7,18 @@ import styles from './index.less';
 const { BaseLine } = Layout;
 const courseDetailsGK = ({ courseGK, loading, location, dispatch }) => {
 
+  const getState = (state) => {
+    switch (state) {
+      case 1:
+        return <span style={{ color: '#52C41A' }}>(已通过)</span>;
+      case 2:
+        return <span style={{ color: '#2B83D7' }}>(已注册)</span>;
+      case 3:
+        return <span style={{ color: '#FF0000' }}>(未注册)</span>;
+      default:
+        return '';
+    }
+  };
   const { name = '已选课程', index } = location.query;
   const { data = {} } = courseGK,
     { courseInfos } = data;
@@ -20,7 +32,8 @@ const courseDetailsGK = ({ courseGK, loading, location, dispatch }) => {
             return (
               <div className={styles.card} key={i}>
                 <div className={styles.title}>
-                  {item.courseName}
+                  <span style={{ marginRight: 8 }}>{item.courseName}</span>
+                  {getState(item.userCourseState || '')}
                 </div>
                 <div className={styles.info}>
                   <div>{`课程ID：${item.courseId}`}</div>
@@ -28,7 +41,7 @@ const courseDetailsGK = ({ courseGK, loading, location, dispatch }) => {
                   <div>{`得分：${item.totalScore || '-'}`}</div>
                   <div>{`课程类型：${item.courseType || '-'}`}</div>
                   <div>{`考试单位：${item.examOrg || '-'}`}</div>
-                  <div>{`成绩：${item.score || '-'}`}</div>
+                  <div>{`学分：${item.score || '-'}`}</div>
                 </div>
               </div>
             );

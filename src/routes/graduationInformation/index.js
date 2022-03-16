@@ -36,7 +36,7 @@ const GraduationInformation = ({ dispatch, location, loading, graduationInformat
       <WhiteSpace size="lg" />
       <div className={styles.notice}>
         <Icon type={getLocalIcon('/components/loadingfail.svg')} style={{ marginRight: '10px' }} />
-        各项考核条件需要达到我的条件≥审批条件，才可满足毕业要求
+        各项考核条件需要达到我的条件≥审批条件，才可满足毕业要求。
       </div>
     </div>
   );

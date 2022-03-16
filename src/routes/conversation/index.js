@@ -41,13 +41,21 @@ const Conversation = ({ location, dispatch, conversation, app }) => {
     },
     props = {
       handlerSubmit: onSubmit,
-      dispatch,
+      dispatch
+    },
+    getSelfAvatar = () => {
+
     };
   return (
-    <div >
+    <div>
       <Nav title={name} dispatch={dispatch} hasShadow />
-      <ChatRoom {...props} localArr={appendItems(chartArr, userid)} selfavatar={useravatar} avatar={avatar} />
-    </div >
+      <ChatRoom
+        {...props}
+        localArr={appendItems(chartArr, userid)}
+        selfavatar={useravatar}
+        avatar={avatar}
+      />
+    </div>
   );
 };
 

@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import defaultImg from 'themes/images/default/default.png';
+import defaultImg from 'themes/images/default/default.jpg';
 import defaultUserIcon from 'themes/images/default/userIcon.png';
 import defaultBg from 'themes/images/others/mineBg.png';
 import config, { userTag } from './config';
@@ -24,9 +24,10 @@ const DateChange = function () {
  * 建议用moment.js 当天网不行下不了依赖
  * @param date
  * @param details 是否显示时间默认显示
+ * @param showWeek
  * @constructor
  */
-const getCommonDate = (date, details = true) => {
+const getCommonDate = (date, details = true, showWeek = true) => {
   if (date) {
     let preDate = new Date(date * 1000),
       week = '日一二三四五六'.charAt(preDate.getDay()),
@@ -34,6 +35,9 @@ const getCommonDate = (date, details = true) => {
       hour = preDate.getHours() < 10 ? `0${preDate.getHours()}` : preDate.getHours(),
       minutes = preDate.getMinutes() < 10 ? `0${preDate.getMinutes()}` : preDate.getMinutes();
     if (details) {
+      if (!showWeek) {
+        return `${year}年${preDate.getMonth() + 1}月${preDate.getDate()}日${hour}:${minutes}`;
+      }
       return `${year}年${preDate.getMonth() + 1}月${preDate.getDate()}日 星期${week} ${hour}:${minutes}`;
     }
     return `${year}年${preDate.getMonth() + 1}月${preDate.getDate()}日`;

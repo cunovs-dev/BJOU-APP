@@ -4,13 +4,14 @@ import { Modal, Toast } from 'components';
 import Nav from 'components/nav';
 import NoContent from 'components/nocontent';
 import { routerRedux } from 'dva/router';
-import { cookie, config, formateSeconds } from 'utils';
+import { cookie, config, formateSeconds, getImages } from 'utils';
 import WxImageViewer from 'react-wx-images-viewer';
 import FileBox from './componnets/FilesBox';
 import styles from './index.less';
 
 const { userTag: { userloginname } } = config,
   { _cg } = cookie;
+const alert = Modal.alert;
 
 class CourseWare extends React.PureComponent {
   constructor (props) {
@@ -22,7 +23,7 @@ class CourseWare extends React.PureComponent {
   }
 
   componentDidMount () {
-    const { courseid = '', cmid = '', type = 'mod', modname, coursewareID } = this.props.location.query;
+    const { courseid = '', cmid = '', type = 'mod', modname, coursewareID = '' } = this.props.location.query;
     this.setState(() => ({
       startTime: new Date()
     }));
@@ -36,6 +37,7 @@ class CourseWare extends React.PureComponent {
         modname
       }
     });
+    document.addEventListener('backbutton', this.onBack, false);
   }
 
   componentWillUnmount () {
@@ -70,12 +72,39 @@ class CourseWare extends React.PureComponent {
         }
       });
     }
+    document.removeEventListener('backbutton', this.onBack, false);
   }
 
+  onBack = () => {
+    const { tracking, state } = this.props.location.query;
+    if (tracking === '2' && parseInt(state, 10) === 0) {
+      this.getStatus();
+    } else {
+      this.props.dispatch(routerRedux.goBack());
+    }
+  };
+  onClose = () => {
+    this.props.dispatch({
+      type: 'courseware/updateState',
+      payload: {
+        isOpen: false
+      }
+    });
+  };
+  onBackSubmit = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'courseware/updateState',
+      payload: {
+        showModal: false
+      }
+    });
+    dispatch(routerRedux.goBack());
+  };
   getUrls = () => {
     const { data = {} } = this.props.courseware,
       { mediaPrefix, files = [] } = data;
-    const newMediaPrefix = cnResmUrl ? mediaPrefix.replace(portalResourceUrl, cnResmUrl) : mediaPrefix
+    const newMediaPrefix = cnResmUrl && cnResmUrl !== '' ? mediaPrefix.replace(portalResourceUrl, cnResmUrl) : mediaPrefix;
     if (!files) {
       return [];
     }
@@ -83,8 +112,43 @@ class CourseWare extends React.PureComponent {
     files.map(item => arr.push(newMediaPrefix + item));
     return arr;
   };
-
-
+  getStatus = () => {
+    const { courseid, cmid } = this.props.location.query;
+    this.props.dispatch({
+      type: 'courseware/queryStatus',
+      payload: {
+        courseid,
+        cmid
+      }
+    });
+  };
+  autoHide = () => {
+    const { userLearningFlowID } = this.props.courseware;
+    if (userLearningFlowID === '') {
+      this.setState({
+        isShow: true
+      });
+      setTimeout(() => (
+        this.setState({
+          isShow: false
+        })
+      ), 5000);
+    }
+  };
+  handlerControl = (isOver) => {
+    const { data = {} } = this.props.courseware;
+    const { lastPlayLength = 0 } = data;
+    if (isOver) {
+      document.getElementById('video').currentTime = 0;
+    } else {
+      document.getElementById('video').currentTime = lastPlayLength;
+    }
+    document.getElementById('video')
+      .play();
+    this.setState({
+      isShow: false
+    });
+  };
   handleDivClick = (e) => {
     if (e.target.className === 'pic') {
       let src = e.target.src,
@@ -101,54 +165,34 @@ class CourseWare extends React.PureComponent {
       }
     }
   };
-
-  autoHide = () => {
-    const { userLearningFlowID } = this.props.courseware;
-    if (userLearningFlowID === '') {
-      this.setState({
-        isShow: true
-      });
-      setTimeout(() => (
-        this.setState({
-          isShow: false
-        })
-      ), 5000);
+  showBackMoadl = (showModal) => {
+    if (showModal) {
+      alert('未完成本视频学习', '还未完成，是否继续学习？', [
+        {
+          text: <div style={{ color: '#888' }}>下次再学</div>,
+          onPress: () => this.onBackSubmit()
+        },
+        {
+          text: '继续学习', onPress: () => this.props.dispatch({
+            type: 'courseware/updateState',
+            payload: {
+              showModal: false
+            }
+          })
+        }
+      ]);
     }
   };
-
-  onClose = () => {
-    this.props.dispatch({
-      type: 'courseware/updateState',
-      payload: {
-        isOpen: false
-      }
-    });
-  };
-
-  handlerControl = (isOver) => {
-    const { data = {} } = this.props.courseware;
-    const { lastPlayLength = 0 } = data;
-    if (isOver) {
-      document.getElementById('video').currentTime = 0;
-    } else {
-      document.getElementById('video').currentTime = lastPlayLength;
-    }
-    document.getElementById('video')
-      .play();
-    this.setState({
-      isShow: false
-    });
-  };
-
   renderVideo = (data) => {
     const { mediaPrefix, files, lastPlayLength = 0, coursewareDuration } = data;
     const isOver = lastPlayLength === coursewareDuration;
-    const newMediaPrefix = cnResmUrl ? mediaPrefix.replace(portalResourceUrl, cnResmUrl) :mediaPrefix;
+    const newMediaPrefix = cnResmUrl && cnResmUrl !== '' ? mediaPrefix.replace(portalResourceUrl, cnResmUrl) : mediaPrefix;
     return (
       <div className={styles.videoBox} onClick={this.handleDivClick}>
         {
           files.map((item, i) => (
             <video
+              poster={getImages()}
               id="video"
               key={i}
               ref="video"
@@ -169,11 +213,10 @@ class CourseWare extends React.PureComponent {
       </div>
     );
   };
-
   renderImage = (data) => {
     const { mediaPrefix, files } = data;
     const { isOpen = false, viewImageIndex = -1 } = this.props.courseware;
-    const newMediaPrefix = cnResmUrl ? mediaPrefix.replace(portalResourceUrl, cnResmUrl) : mediaPrefix
+    const newMediaPrefix = cnResmUrl && cnResmUrl !== '' ? mediaPrefix.replace(portalResourceUrl, cnResmUrl) : mediaPrefix;
     return (
       <div onClick={this.handleDivClick}>
         {files.map((item, i) => (
@@ -191,7 +234,6 @@ class CourseWare extends React.PureComponent {
       <FileBox data={data} />
     );
   };
-
   renderContent = (data) => {
     const { loading } = this.props;
     if (data.coursewareType === 5) { // 图片
@@ -210,10 +252,9 @@ class CourseWare extends React.PureComponent {
     return <NoContent isLoading={loading} />;
   };
 
-
   render () {
-    const { name = '', coursewareID, courseid } = this.props.location.query;
-    const { data = {} } = this.props.courseware;
+    const { name = '', coursewareID, courseid, tracking, state } = this.props.location.query;
+    const { data = {}, showModal } = this.props.courseware;
     if (document.getElementById('video')) {
       const { lastPlayLength = 0 } = data;
       document.getElementById('video').onplay = (e) => {
@@ -235,11 +276,17 @@ class CourseWare extends React.PureComponent {
     }
     return (
       <div>
-        <Nav title={name} dispatch={this.props.dispatch} />
+        <Nav
+          title={name}
+          dispatch={this.props.dispatch}
+          navEvent={tracking === '2' && parseInt(state, 10) === 0 ? this.getStatus : null}
+          isMdlres={tracking === '2' && parseInt(state, 10) === 0}
+        />
         <div className={styles.content}>
           <div className={styles.title}>{`课件名称:${data.coursewareName || '-'}`}</div>
           {this.renderContent(data)}
         </div>
+        {showModal && this.showBackMoadl(showModal)}
       </div>
     );
   }

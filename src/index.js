@@ -13,7 +13,6 @@ const app = dva({
   }),
 
   onError (error) {
-    console.log(error);
     //关闭错误提示
     if (error && (error.message && error.message.includes('网络已断开') || error.statusCode === 401)) {
       Toast.offline(error.message);

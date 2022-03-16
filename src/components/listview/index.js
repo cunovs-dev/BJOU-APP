@@ -9,6 +9,8 @@ import styles from './index.less';
 
 let PrefixCls = 'cn-listview',
   { BaseLine } = Layout;
+let timer,
+  timer2;
 
 class Comp extends React.Component {
   static defaultProps = {
@@ -39,26 +41,32 @@ class Comp extends React.Component {
     };
   }
 
+  componentWillMount () {
+    this._isMounted = true;
+  }
+
   componentDidMount () {
     let el = ReactDOM.findDOMNode(this.lv),
       hei = cnhtmlHeight - getOffsetTopByBody(el);
-    setTimeout(() => {
-      let { dataSource } = this.state;
-      if (this.props.dataSource.length) {
-        dataSource = dataSource.cloneWithRows(this.props.dataSource);
-      }
-      this.setState({
-        dataSource,
-        height: hei,
-        refreshing: false,
-        isLoading: false
-      });
-    }, 0);
-    setTimeout(() => {
-      if (this.lv && this.props.scrollerTop > 0) {
-        this.lv.scrollTo(0, this.props.scrollerTop);
-      }
-    }, 100);
+    if (this._isMounted) {
+      timer = setTimeout(() => {
+        let { dataSource } = this.state;
+        if (this.props.dataSource.length) {
+          dataSource = dataSource.cloneWithRows(this.props.dataSource);
+        }
+        this.setState({
+          dataSource,
+          height: hei,
+          refreshing: false,
+          isLoading: false
+        });
+      }, 0);
+      timer2 = setTimeout(() => {
+        if (this.lv && this.props.scrollerTop > 0) {
+          this.lv.scrollTo(0, this.props.scrollerTop);
+        }
+      }, 100);
+    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -72,19 +80,17 @@ class Comp extends React.Component {
   componentDidUpdate () {
     if (this.props.useBodyScroll) {
       document.body.style.overflow = 'auto';
-    } else {
-      // document.body.style.overflow = 'hidden';
     }
   }
 
   componentWillUnmount () {
+    this._isMounted = false;
     let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     if (scrollTop >= 0 && this.props.onScrollerTop && this.props.useBodyScroll) {
       this.props.onScrollerTop(scrollTop);
     }
-    this.setState = (state, callback) => {
-      
-    };
+    clearTimeout(timer);
+    clearTimeout(timer2);
   }
 
   onRefresh = () => {

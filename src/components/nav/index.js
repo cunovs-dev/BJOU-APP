@@ -17,11 +17,12 @@ function Nav (props) {
           showBackModal: true
         }
       });
-    } else {
-      props.dispatch(routerRedux.go(backNum));
+    } else if (props.isMdlres) { // 内容管理系统并且tracking===2
       if (typeof props.navEvent === 'function') {
         props.navEvent();
       }
+    } else {
+      props.dispatch(routerRedux.go(backNum));
     }
   };
   return (
@@ -54,7 +55,9 @@ Nav.defaultProps = {
   isGoBack: true,
   isAlert: false,
   alertTitle: '确定要离开吗？',
-  icon: null
+  icon: null,
+  callback: null,
+  isMdlres: false
 };
 
 export default Nav;

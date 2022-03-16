@@ -32,7 +32,7 @@ class Lessons extends React.Component {
     this.props.dispatch({
       type: 'lessons/updateState',
       payload: {
-        selectedIndex: e.nativeEvent.selectedSegmentIndex
+        selectedIndex: e.nativeEvent.selectedSegmentIndex,
       }
     });
   };
@@ -86,7 +86,7 @@ class Lessons extends React.Component {
             <Refresh
               refreshing={refreshing}
               onRefresh={onRefresh}
-              onScrollerTop={() => onScrollerTop()}
+              onScrollerTop={(top) => onScrollerTop(top)}
               scrollerTop={scrollerTop}
             >
               {cnIsArray(list) && list.map((item) => {

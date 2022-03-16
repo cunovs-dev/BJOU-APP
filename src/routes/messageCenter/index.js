@@ -19,8 +19,8 @@ const PrefixCls = 'messageCenter';
   loadingMessage: loading.effects['messageCenter/queryMessage'],
   loadingTalk: loading.effects['messageCenter/queryTalkMessage'],
   loadingSys: loading.effects['messageCenter/querySysNotice'],
-  app,
-}))
+  app
+  }))
 
 class MessageCenter extends React.Component {
   constructor (props) {
@@ -28,7 +28,7 @@ class MessageCenter extends React.Component {
     this.state = {
       height: cnhtmlHeight,
       color: 'black',
-      sign: true,
+      sign: true
     };
   }
 
@@ -38,30 +38,30 @@ class MessageCenter extends React.Component {
       this.props.dispatch({
         type: `${PrefixCls}/queryTalkMessage`,
         payload: {
-          isRefresh: true,
-        },
+          isRefresh: true
+        }
       });
     }
     if (selectIndex === 2) {
       this.props.dispatch({
         type: `${PrefixCls}/querySysNotice`,
         payload: {
-          isRefresh: true,
-        },
+          isRefresh: true
+        }
       });
     }
     const element = ReactDOM.findDOMNode(this.vl),
       currentHeight = element.offsetHeight,
       currentH = getOffsetTopByBody(ReactDOM.findDOMNode(this.vll));
     this.setState({
-      height: cnhtmlHeight - currentHeight - currentH,
+      height: cnhtmlHeight - currentHeight - currentH
     });
   }
 
 
   render () {
     const {
-        messageList, talkList, sysList, paginations, count: { newsCount, noticeCount, notReadNoticeCount }, selectIndex = 0, type, scrollerTop, hasMoreMessage, hasMoreTalk, isload,
+        messageList, talkList, sysList, paginations, count: { newsCount, noticeCount, notReadNoticeCount }, selectIndex = 0, type, scrollerTop, hasMoreMessage, hasMoreTalk, isload
       } = this.props.messageCenter,
       { loadingMessage, loadingTalk, loadingSys } = this.props,
       { users: { userid } } = this.props.app,
@@ -80,7 +80,7 @@ class MessageCenter extends React.Component {
             talkList: [],
             isload: false
 
-          },
+          }
         });
         if (index === 1) {
           this.props.dispatch({
@@ -110,7 +110,7 @@ class MessageCenter extends React.Component {
           payload: {
             isRefresh: true,
             callback
-          },
+          }
         });
       },
       onEndReached = (callback) => {
@@ -124,7 +124,7 @@ class MessageCenter extends React.Component {
           type: `${PrefixCls}/${type}`,
           payload: {
             callback
-          },
+          }
         });
       },
       onScrollerTop = (top) => {
@@ -132,16 +132,15 @@ class MessageCenter extends React.Component {
           this.props.dispatch({
             type: `${PrefixCls}/updateState`,
             payload: {
-              scrollerTop: top,
-            },
+              scrollerTop: top
+            }
           });
         }
       },
 
       getMessage = (lists) => {
-        const result = [];
-        result.push(
-          <div style={{ padding: '0 12px', marginTop: '10px' }} >
+        return (
+          <div style={{ padding: '0 12px', marginTop: '10px' }}>
             <ListView
               layoutHeader={''}
               dataSource={lists}
@@ -155,15 +154,12 @@ class MessageCenter extends React.Component {
               scrollerTop={scrollerTop}
               useBodyScroll
             />
-          </div >
+          </div>
         );
-
-        return result;
       },
       getTalkMessage = (lists) => {
-        const result = [];
-        result.push(
-          <div style={{ padding: '0 12px', marginTop: '10px' }} >
+        return (
+          <div style={{ padding: '0 12px', marginTop: '10px' }}>
             <ListView
               layoutHeader={''}
               dataSource={lists}
@@ -177,17 +173,14 @@ class MessageCenter extends React.Component {
               scrollerTop={scrollerTop}
               useBodyScroll
             />
-          </div >
+          </div>
         );
-
-        return result;
       },
       getSysMessage = (lists) => {
         const { sysNowPage, sysTotal, sysPageSize } = paginations,
-          hasMoreNotice = (sysTotal > 0) && ((sysNowPage > 1 ? sysNowPage - 1 : 1) * sysPageSize < sysTotal),
-          result = [];
-        result.push(
-          <div style={{ padding: '0 12px', marginTop: '10px' }} >
+          hasMoreNotice = (sysTotal > 0) && ((sysNowPage > 1 ? sysNowPage - 1 : 1) * sysPageSize < sysTotal);
+        return (
+          <div style={{ padding: '0 12px', marginTop: '10px' }}>
             <ListView
               layoutHeader={''}
               dataSource={lists}
@@ -201,16 +194,14 @@ class MessageCenter extends React.Component {
               scrollerTop={scrollerTop}
               useBodyScroll
             />
-          </div >
+          </div>
         );
-
-        return result;
       };
     return (
-      <div className={styles.whiteBox} >
-        <div ref={el => this.vl = el} >
+      <div className={styles.whiteBox}>
+        <div ref={el => this.vl = el}>
           <Nav title="消息中心" dispatch={this.props.dispatch} />
-        </div >
+        </div>
         <Tabs
           className={styles[`${PrefixCls}-tabs`]}
           style={{ height: this.state.height }}
@@ -222,31 +213,37 @@ class MessageCenter extends React.Component {
           tabBarInactiveTextColor="#b7b7b7"
           tabBarUnderlineStyle={{ border: '1px solid #22609c' }}
           tabs={[
-            { title: <Badge overflowCount={99} text={noticeCount} >课程活动</Badge > },
-            { title: <Badge overflowCount={99} text={newsCount} >消息</Badge > },
-            { title: <Badge overflowCount={99} text={notReadNoticeCount} >系统通知</Badge > },
+            { title: <Badge overflowCount={99} text={noticeCount}>课程活动</Badge> },
+            { title: <Badge overflowCount={99} text={newsCount}>消息</Badge> },
+            { title: <Badge overflowCount={99} text={notReadNoticeCount}>系统通知</Badge> }
           ]}
         >
           {loadingMessage && !isload ?
             <ListSkeleton />
             :
-            <div className={styles.reset} >{messageList.length > 0 ? getMessage(messageList) : <NoContent />}</div >}
+            <div className={styles.reset}>{messageList.length > 0 ? getMessage(messageList) : <NoContent />}</div>}
 
           {loadingTalk && !isload ?
             <ListSkeleton />
             :
-            <div className={styles.reset} >{talkList.length > 0 ? getTalkMessage(talkList) : <NoContent />}</div >
+            <div className={styles.reset}>{talkList.length > 0 ? getTalkMessage(talkList) : <NoContent />}</div>
           }
           {loadingSys && !isload ?
             <ListSkeleton />
             :
             <div
-              className={styles.reset} >{cnIsArray(sysList.data) && sysList.data.length > 0 ? getSysMessage(sysList.data) :
-              <NoContent />}</div >
+              className={styles.reset}
+            >
+              {
+                cnIsArray(sysList.data) && sysList.data.length > 0 ?
+                  getSysMessage(sysList.data)
+                  :
+                  <NoContent />
+              }
+            </div>
           }
-          {/*<div className={styles.reset} ><NoContent /></div >*/}
-        </Tabs >
-      </div >
+        </Tabs>
+      </div>
     );
   }
 }

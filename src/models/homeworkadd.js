@@ -80,12 +80,12 @@ export default modelExtend(model, {
               animating: false
             }
           });
-          Toast.fail(errorMsg || '上传文件时，发声未知错误，请稍候重试。');
+          Toast.fail(errorMsg || '上传附件时，发声未知错误，请稍候重试。');
           isContinue = false;
         }
         if (isContinue && i === fileList.length - 1) {
           yield put({
-            type: 'AddHomework',
+            type: 'addHomework',
             payload: {
               ...value,
               filemanager: currentItemid
@@ -94,11 +94,11 @@ export default modelExtend(model, {
         }
       }
     },
-    * AddHomework ({ payload, cb }, { call, put }) {
-      const { success, message = '提交失败', modalAlert = false } = yield call(addHomeWork, payload);
+    * addHomework ({ payload, cb }, { call, put }) {
+      const { success, message = '上传附件失败', modalAlert = false } = yield call(addHomeWork, payload);
       if (success) {
         yield put({ type: 'goBack' });
-        Toast.success('提交成功');
+        Toast.success('保存成功');
         yield put({
           type: 'updateState',
           payload: {

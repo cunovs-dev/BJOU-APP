@@ -64,7 +64,7 @@ class CheckInfo extends React.Component {
     return (
       <div>
         <Nav title="初次登录" dispatch={this.props.dispatch} />
-        <div className={styles.title}>初次登录系统，需要确认手机和邮箱，并修改初始密码</div>
+        <div className={styles.title}>初次登录系统，需要确认手机和邮箱，并修改初始密码。</div>
         <form className={styles.form}>
           <div className={styles.phone}>
             <div

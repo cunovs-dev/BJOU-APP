@@ -127,12 +127,12 @@ module.exports = {
       </div>
     );
   },
-  closeLessonRow: (item,onClick,dispatch) => {
+  closeLessonRow: (item, onClick, dispatch) => {
     // 已开课程列表
     const { fullname, master, id, graderaw = 0, attendance = {}, courseImage = '', isAttendance = false } = item,
       { stat = 0 } = attendance;
     return (
-      <div key={id} className={styles[`${PrefixCls}-closelesson`]} >
+      <div key={id} className={styles[`${PrefixCls}-closelesson`]} onClick={onClick.bind(null, item, dispatch)}>
         <div className={styles[`${PrefixCls}-closelesson-title`]}>{fullname}</div>
         <div className={styles[`${PrefixCls}-closelesson-container`]}>
           <div className={styles[`${PrefixCls}-closelesson-img`]}
@@ -152,7 +152,7 @@ module.exports = {
                 null
               }
               {
-                <div style={{ color: isPass(graderaw) ? '#1eb259' : '#f34e14' }}>{`成绩：${graderaw}`}</div>
+                <div style={{ color: isPass(graderaw) ? '#1eb259' : '#f34e14', marginTop: 6 }}>{`成绩：${graderaw}`}</div>
               }
             </div>
           </div>
@@ -162,7 +162,7 @@ module.exports = {
   },
   openingLessonRow: (item, onClick, onProgressClick, dispatch) => {
     // 在开课程列表
-    const { fullname = '', graderaw = 0, id, master, enddate, isAttendance = false, hasFinalExam = false, courseImage } = item;
+    const { fullname = '', graderaw = 0, graderawexec = 0, id, master, enddate, isAttendance = false, hasFinalExam = false, courseImage } = item;
     return (
       <div key={id} className={styles[`${PrefixCls}-openinglessonout`]} onClick={onClick.bind(null, item, dispatch)}>
         <div className={styles[`${PrefixCls}-openinglessonout-title`]}>{fullname}</div>
@@ -187,7 +187,7 @@ module.exports = {
              onClick={onProgressClick}
         >
           <div className={styles[`${PrefixCls}-openinglessonout-progress-left`]}>
-            <Progress percent={Math.min(graderaw, 100)}
+            <Progress percent={Math.min(graderawexec, 100)}
                       position="normal"
                       barStyle={{ borderColor: isPass(graderaw) ? '#1eb259' : '#f34e14' }}
                       appearTransition
@@ -196,7 +196,7 @@ module.exports = {
           <div className={styles[`${PrefixCls}-openinglessonout-progress-right`]}
                style={{ color: isPass(graderaw) ? '#1eb259' : '#f34e14' }}
           >
-            {`${graderaw}分`}
+            {graderaw}
           </div>
         </div>
       </div>
@@ -216,10 +216,12 @@ module.exports = {
               className={styles[`${PrefixCls}-attendanceRow-content-status`]}>{openState === '0' ? `结课日期：${changeLessonDate(enddate)}` : '已结束'}
             </div>
             <div className={styles[`${PrefixCls}-achievement-grade`]}>{`课程总得分：${graderaw}`}</div>
-            <Tag
-              text={isPass(graderaw) ? '合格' : '不合格'}
-              color={isPass(graderaw) ? '#1eb259' : '#f34e14'}
-              size="xs" />
+            {
+              openState === '0' ? '' : <Tag
+                text={isPass(graderaw) ? '合格' : '不合格'}
+                color={isPass(graderaw) ? '#1eb259' : '#f34e14'}
+                size="xs" />
+            }
           </div>
         </div>
         <WhiteSpace />
@@ -227,7 +229,7 @@ module.exports = {
     );
   },
   achievementDetailsRow: (item, onClick, dispatch) => {
-    const { title = '', grade = '', id = '', itemType = '', grademax = '-', instance = '', enddate = '' } = item;
+    const { title = '', grade = '-', id = '', itemType = '', grademax = '-', enddate = '' } = item;
     return (
       <div
         key={id || (`${itemType}_${cnId()}`)}
@@ -414,7 +416,7 @@ module.exports = {
       </div>
     );
   },
-  forumRow: (rowData, sectionID, rowID, onClick, dispatch, names, group) => {
+  forumRow: (rowData, sectionID, rowID, onClick, dispatch, names, isAssessed, group) => {
     const getGroups = (groups = [], id) => {
       const groupById = groups.find(item => item.id === id);
       return groupById && groupById.name || '';
@@ -428,7 +430,8 @@ module.exports = {
         className={styles[`${PrefixCls}-forum`]}
         onClick={onClick.bind(null, 'forumDetails', {
           discussionid: discussion,
-          names
+          names,
+          isAssessed
         }, dispatch)}
       >
         <div className={styles[`${PrefixCls}-forum-user`]}>
@@ -626,7 +629,7 @@ module.exports = {
     );
   },
   sysNoticeRow: (rowData, sectionID, rowID, onClick, dispatch) => {
-    const { noticeId, noticeTitle, noticeContent, noticeCrateDate, readState, noticeType, extraParam = '' } = rowData;
+    const { noticeId, noticeTitle = '系统通知', noticeContent, noticeCrateDate, readState, noticeType, extraParam = '' } = rowData;
     const path = noticeType === '1' ? 'opiniondetails' : 'details',
       params = noticeType === '1' && JSON.parse(extraParam) ?
         {
@@ -649,7 +652,7 @@ module.exports = {
       >
         <div className={styles[`${PrefixCls}-messagelist-details`]}>
           {readState === '0' ? <Badge text={'未读'} style={{ marginRight: 12 }} /> : null}
-          {noticeTitle}
+          {noticeTitle === '' ? '系统通知' : noticeTitle}
         </div>
         <div className={styles[`${PrefixCls}-messagelist-date`]}>{getCommonDate(noticeCrateDate / 1000)}</div>
       </List.Item>

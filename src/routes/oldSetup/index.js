@@ -76,7 +76,7 @@ class OdSetup extends React.Component {
               if (res.length > 0) {
                 this.uploadSuccess(res);
               } else {
-                Toast.fail('上传失败，请稍后再试', 2);
+                Toast.fail('上传失败，请稍后再试。', 2);
               }
             });
         },

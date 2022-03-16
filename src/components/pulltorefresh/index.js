@@ -33,13 +33,13 @@ class Refresh extends React.Component {
         timer = setTimeout(() => this.setState(() => ({
           height: hei
         })), 0);
+        timer2 = setTimeout(() => {
+          if (this.props.scrollerTop > 0) {
+            el.scrollTop = this.props.scrollerTop;
+          }
+        }, 0);
       }
     }
-    timer2 = setTimeout(() => {
-      if (this.props.scrollerTop > 0) {
-        el.scrollTop = this.props.scrollerTop;
-      }
-    }, 0);
   }
 
   componentWillReceiveProps (nextProps) {
@@ -50,16 +50,14 @@ class Refresh extends React.Component {
         timer = setTimeout(() => this.setState(() => ({
           height: hei
         })), 0);
+        timer2 = setTimeout(() => {
+          if (this.props.scrollerTop > 0 && this.props.scrollerTop !== nextProps.scrollerTop) {
+            el.scrollTop = this.props.scrollerTop;
+          }
+        }, 0);
       }
     }
-    timer2 = setTimeout(() => {
-      if (this.props.scrollerTop > 0 && this.props.scrollerTop !== nextProps.scrollerTop) {
-        el.scrollTop = this.props.scrollerTop;
-      }
-    }, 0);
-
   }
-
 
   componentWillUnmount () {
     this._isMounted = false;

@@ -26,12 +26,12 @@ export default modelExtend(model, {
               }
             });
             dispatch({
-              type: 'queryList',
+              type: 'queryList'
             });
           }
         }
       });
-    },
+    }
   },
 
   effects: {
@@ -43,11 +43,12 @@ export default modelExtend(model, {
           type: 'updateState',
           payload: {
             listData: data,
-          },
+            refreshing: false
+          }
         });
       } else {
         Toast.fail(message);
       }
-    },
-  },
+    }
+  }
 });

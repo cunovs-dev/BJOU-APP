@@ -37,14 +37,13 @@ class SuperClass extends React.PureComponent {
         courseid,
         cmid,
         modname
-
       }
     });
   }
 
   render () {
     const { superclass } = this.props;
-    const {  cmid = '', } = this.props.location.query;
+    const { cmid = '' } = this.props.location.query;
     return (
       <CoursePage dispatch={this.props.dispatch} cmid={cmid} propDatas={superclass} pathname={'superclass'} />
     );

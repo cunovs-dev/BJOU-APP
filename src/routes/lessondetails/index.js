@@ -3,7 +3,7 @@
 /**
  * @author Lowkey
  * @date 2019/2/18
- * @Description:
+ * @Description: 教师端路由 ， 第三个Tab 课程管理
  */
 import React from 'react';
 import { connect } from 'dva';
@@ -127,10 +127,10 @@ class LessonDetails extends React.Component {
 
   render () {
     const { courseid = '' } = this.props.location.query,
-      { data: { name = '', summary = '', section0Summary = '', summaryformat = 0, master, tutor, courseImage, guide, resources, id = '', attendanceRule = '', attendance = {}, enddate, startdate, fullname, isAttendance, _useScriptFlag = false, _useScriptFunc = false }, refreshing, scrollerTop, selected, activityIndex, accordionIndex } = this.props.lessondetails,
-      { weekStat = 0, config = {} } = attendance,
+      { data: { summary = '', section0Summary = '', summaryformat = 0, master, tutor, courseImage, guide, resources, id = '', attendanceRule = '', attendance = {}, format = 'weeks', enddate, startdate, fullname, isAttendance, _useScriptFlag = false, _useScriptFunc = false, openState = '0' }, refreshing, scrollerTop, selected, activityIndex, accordionIndex } = this.props.lessondetails,
+      { weekStat = 0, config = {}, stat = 0 } = attendance,
       { day_pass = '0' } = config,
-      { users: { userid },_useJavaScriptMessage } = this.props.app,
+      { users: { userid }, _useJavaScriptMessage } = this.props.app,
       dispatch = this.props.dispatch,
       props = {
         courseid,
@@ -207,7 +207,7 @@ class LessonDetails extends React.Component {
                 alignItems: 'center'
               }}
               >
-                <Icon type="ellipsis" color='#fff' />
+                <Icon type="ellipsis" color="#fff" />
               </div>
             </Popover>
           }
@@ -219,6 +219,7 @@ class LessonDetails extends React.Component {
           tutor={tutor}
           dispatch={this.props.dispatch}
           weekStat={weekStat}
+          stat={stat}
           daypass={day_pass}
           attendanceClick={handlerChangeRouteClick.bind(null, 'attendancedetails', {
             name: '考勤详情',
@@ -229,11 +230,12 @@ class LessonDetails extends React.Component {
           }, this.props.dispatch)}
           isTeacher={!!isMaster(master, userid)}
           hasAttendance={isAttendance}
+          openState={openState}
         />
         {
           _useScriptFlag || _useScriptFunc
           ?
-          <Notice content={_useJavaScriptMessage.warn} />
+          <Notice content={_useJavaScriptMessage.info} />
           :
           null
         }
@@ -310,6 +312,7 @@ class LessonDetails extends React.Component {
                                                        : <div>
                    <CourseList
                      data={resources}
+                     format={format}
                      activityIndex={activityIndex}
                      accordionIndex={_cg(`defaultActive${courseid}`) || accordionIndex}
                      {...props}

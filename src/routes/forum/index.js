@@ -3,7 +3,7 @@ import Nav from 'components/nav';
 import { connect } from 'dva';
 import { Icon, List, Button, NoticeBar, Modal } from 'components';
 import Introduction from 'components/introduction';
-import { getImages, getDurationDay, getLocalIcon } from 'utils';
+import { getImages, getDurationDay, getLocalIcon, getCommonDate } from 'utils';
 import { forumRow } from 'components/row';
 import NoContent from 'components/nocontent';
 import ListView from 'components/listview';
@@ -54,7 +54,7 @@ class Forum extends React.Component {
   };
 
   render () {
-    const { data: { id, course, intro, discussions = [], cancreatediscussions, numdiscussions = 0, maxattachments, maxbytes, blockafter, blockperiod, warnafter, name: forumName = '', groupid, type = '', _useScriptFunc = false }, scrollerTop, hasMore } = this.props.forum,
+    const { data: { id, course, intro, assesstimestart = 0, assesstimefinish = 0, discussions = [], cancreatediscussions, numdiscussions = 0, maxattachments, maxbytes, blockafter, blockperiod, warnafter, name: forumName = '', groupid, type = '', _useScriptFunc = false }, scrollerTop, hasMore } = this.props.forum,
       { name = '', courseid, forumid, cmid } = this.props.location.query;
     const { groups, _useJavaScriptMessage } = this.props.app,
       onRefresh = (callback) => {
@@ -91,12 +91,14 @@ class Forum extends React.Component {
         }
       },
       getContents = (lists) => {
+        const cur = new Date().getTime() / 1000;
+        const isAssessed = cur < assesstimefinish;
         return (
           <ListView
             layoutHeader={''}
             dataSource={lists}
             layoutRow={(rowData, sectionID, rowID) => {
-              return forumRow(rowData, sectionID, rowID, handlerChangeRouteClick, this.props.dispatch, name, groups);
+              return forumRow(rowData, sectionID, rowID, handlerChangeRouteClick, this.props.dispatch, name, isAssessed, groups);
             }}
             onEndReached={onEndReached}
             onRefresh={onRefresh}
@@ -106,7 +108,24 @@ class Forum extends React.Component {
             useBodyScroll
           />
         );
-      };
+      },
+
+      getIsAssessed = () => {
+        const cur = new Date().getTime() / 1000;
+        if (assesstimefinish > 0) {
+          return cur < assesstimefinish;
+        }
+        return true;
+      },
+
+    getIsStartAssessed = () => {
+      const cur = new Date().getTime() / 1000;
+      if (assesstimestart > 0) {
+        return cur > assesstimestart;
+      }
+      return true;
+    };
+
     return (
       <div>
         <Nav
@@ -128,7 +147,7 @@ class Forum extends React.Component {
            marqueeProps={{ loop: true }}
            mode="closable"
            icon={null}
-         >这是一个问题和解答讨论区。为了能看到其他人的回应，您首先需要发表您的解答</NoticeBar> : ''}
+         >这是一个问题和解答讨论区。为了能看到其他人的回应，您首先需要发表您的解答。</NoticeBar> : ''}
         {blockperiod > 0 ?
          <NoticeBar
            marqueeProps={{ loop: true }}
@@ -139,25 +158,42 @@ class Forum extends React.Component {
           <div className={styles[`${PrefixCls}-head-title`]}>
             {forumName || name}
           </div>
+          {
+            assesstimestart !== 0 || assesstimefinish !== 0 ?
+            <div className={styles.time}>
+              {`发帖开放时间：${getCommonDate(assesstimestart, true, false)}至${getCommonDate(assesstimefinish, true, false)}`}
+            </div>
+                                                            :
+            null
+          }
           <Introduction data={intro} dispatch={this.props.dispatch} courseid={course} />
         </div>
         <div className={styles[`${PrefixCls}-button`]}>
-          {cancreatediscussions ? <Button
-            type="primary"
-            inline
-            size="small"
-            style={{ backgroundColor: '#ff9a18', border: 0 }}
-            onClick={handlerChangeRouteClick.bind(null, 'sendForum', {
-              maxattachments,
-              maxbytes,
-              id,
-              course,
-              type: 'add',
-              groupid
-            }, this.props.dispatch)}
-          >
-            开启一个新话题
-          </Button> : null}
+          {cancreatediscussions && getIsAssessed() && getIsStartAssessed() ? <Button
+                                                     type="primary"
+                                                     inline
+                                                     size="small"
+                                                     style={{ backgroundColor: '#ff9a18', border: 0 }}
+                                                     onClick={handlerChangeRouteClick.bind(null, 'sendForum', {
+                                                       maxattachments,
+                                                       maxbytes,
+                                                       id,
+                                                       course,
+                                                       type: 'add',
+                                                       groupid
+                                                     }, this.props.dispatch)}
+                                                   >
+                                                     开启一个新话题
+                                                   </Button> :
+           getIsAssessed() ?
+           null
+                           :
+           <NoticeBar
+             marqueeProps={{ loop: true }}
+             mode="closable"
+             icon={null}
+           >{`发帖时间已于${getCommonDate(assesstimefinish, true, false)}截至，您不能进行发帖和回帖了`}</NoticeBar>
+          }
         </div>
         <div className={styles.reset} style={{ height: this.state.height }}>
           <div className={styles[`${PrefixCls}-title`]}>
@@ -172,7 +208,7 @@ class Forum extends React.Component {
           }
         </div>
         {
-          _useJavaScriptMessage && _useScriptFunc && this.showAlert(_useJavaScriptMessage.info)
+          _useJavaScriptMessage && _useScriptFunc && this.showAlert(_useJavaScriptMessage.warn)
         }
       </div>
     );

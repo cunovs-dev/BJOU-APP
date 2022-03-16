@@ -219,7 +219,7 @@ class FeedBack extends Component {
           </div>
         }
         {
-          _useJavaScriptMessage && _useScriptFunc && this.showAlert(_useJavaScriptMessage.info)
+          _useJavaScriptMessage && _useScriptFunc && this.showAlert(_useJavaScriptMessage.warn)
         }
       </div>
     );

@@ -1,7 +1,7 @@
 /**
  * @author Lowkey
  * @date 2020/02/28 16:58:23
- * @Description:
+ * @Description:教师端路由
  */
 /* eslint-disable indent */
 import React from 'react';

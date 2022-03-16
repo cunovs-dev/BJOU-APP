@@ -7,7 +7,7 @@ import {
   getErrorImg,
   getImages,
   getLocalIcon,
-  getCommonDate,
+  getCommonDate
 } from 'utils';
 import styles from './index.less';
 
@@ -38,7 +38,7 @@ class RenderChild extends React.Component {
       openLists[id] = true;
       this.setState({
         openLists: openLists,
-        isOpen: true,
+        isOpen: true
       });
       localStorage.setItem('replyOpen', true);
     }
@@ -51,79 +51,79 @@ class RenderChild extends React.Component {
       return (
         <div
           key={id}
-          className={classNames(styles[`${PrefixCls}-child`], { [styles[`${PrefixCls}-bottom-border`]]: hasBorder === true })} >
-          <div className={styles[`${PrefixCls}-child-info`]} >
-            <div className={styles[`${PrefixCls}-child-info-container`]} >
+          className={classNames(styles[`${PrefixCls}-child`], { [styles[`${PrefixCls}-bottom-border`]]: hasBorder === true })}>
+          <div className={styles[`${PrefixCls}-child-info`]}>
+            <div className={styles[`${PrefixCls}-child-info-container`]}>
               <img
                 src={getImages(userpictureurl, '')}
                 alt=""
                 style={{ marginRight: '10px' }}
                 onError={(el => getErrorImg(el, 'user'))}
               />
-              <div className={styles[`${PrefixCls}-forumDetails-info-title`]} >
-                <div >{subject}</div >
-                <div >{`由 ${userfullname} 发布`}</div >
-              </div >
-            </div >
-            <div >{`#${item.level}`}</div >
-          </div >
-          <div className={styles[`${PrefixCls}-child-content`]} >
+              <div className={styles[`${PrefixCls}-forumDetails-info-title`]}>
+                <div>{subject}</div>
+                <div>{`由 ${userfullname} 发布`}</div>
+              </div>
+            </div>
+            <div>{`#${item.level}`}</div>
+          </div>
+          <div className={styles[`${PrefixCls}-child-content`]}>
             <InnerHtml data={message} />
             {
               attachment !== '' ?
-                <Enclosure key={id} data={attachments} />
-                :
-                null
+              <Enclosure key={id} data={attachments} />
+                                :
+              null
             }
             {
               aggregatelabel ?
-                <div className={styles[`${PrefixCls}-forumDetails-grade`]} >
-                  {`${aggregatelabel}${aggregatestr === '' ? '-' : aggregatestr}${count ? `(${count})` : ''}`}
-                </div >
-                :
-                null
+              <div className={styles[`${PrefixCls}-forumDetails-grade`]}>
+                {`${aggregatelabel}${aggregatestr === '' ? '-' : aggregatestr}${count ? `(${count})` : ''}`}
+              </div>
+                             :
+              null
             }
-          </div >
-          <div className={styles[`${PrefixCls}-child-describe`]} >
+          </div>
+          <div className={styles[`${PrefixCls}-child-describe`]}>
             {getCommonDate(created)}
             {canreply ?
-              <div className={styles[`${PrefixCls}-child-reply`]} >
-                <Icon type={getLocalIcon('/components/xiaoxi.svg')} size="xs" />
-                <span
-                  style={{ marginLeft: '3px' }}
-                  onClick={handlerMoreClick.bind(null, 'sendForum', {
-                    maxattachments,
-                    maxbytes,
-                    id,
-                    subject,
-                    type: 'reply',
-                  }, dispatch)}
-                >
+             <div className={styles[`${PrefixCls}-child-reply`]}>
+               <Icon type={getLocalIcon('/components/xiaoxi.svg')} size="xs" />
+               <span
+                 style={{ marginLeft: '3px' }}
+                 onClick={handlerMoreClick.bind(null, 'sendForum', {
+                   maxattachments,
+                   maxbytes,
+                   id,
+                   subject,
+                   type: 'reply'
+                 }, dispatch)}
+               >
                 {`回复`}
-              </span >
-              </div >
-              :
-              null}
-          </div >
+              </span>
+             </div>
+                      :
+             null}
+          </div>
           {
             children.length > 0 ?
-              children.map(items => this.renderChild(items, handlerMoreClick, dispatch, maxattachments, maxbytes))
+            children.map(items => this.renderChild(items, handlerMoreClick, dispatch, maxattachments, maxbytes))
               /*<div
                 className={styles[`${PrefixCls}-child-more`]}
                 onClick={handlerMoreClick.bind(null, 'replyAll', { id }, dispatch)}
               >
                 查看更多
               </div >*/
-              :
-              null
+                                :
+            null
           }
-        </div >
+        </div>
       );
     }
   };
 
   render () {
-    const { item, handlerMoreClick, dispatch, maxattachments, maxbytes } = this.props;
+    const { item, handlerMoreClick, dispatch, maxattachments, maxbytes, isAssessed } = this.props;
     const { canreply, id, created, children, message, subject, userfullname, userpictureurl, attachment = '', attachments, aggregatelabel, aggregatestr = '', count = '' } = item;
     const { openLists, isOpen } = this.state;
     const showLists = item.totalCounts <= 2 || (openLists.hasOwnProperty(id) && openLists[id] === true) ? children : children.slice(0, 2);
@@ -134,68 +134,68 @@ class RenderChild extends React.Component {
         className={styles[`${PrefixCls}-forumDetails`]}
         onError={(el => getErrorImg(el, 'user'))}
       >
-        <div className={styles[`${PrefixCls}-forumDetails-info`]} >
+        <div className={styles[`${PrefixCls}-forumDetails-info`]}>
           <img src={getImages(userpictureurl, '')} alt="" style={{ marginRight: '10px' }}
                onError={(el => getErrorImg(el, 'user'))} />
-          <div className={styles[`${PrefixCls}-forumDetails-info-title`]} >
-            <div >{subject}</div >
-            <div >{`由 ${userfullname} 发布`}</div >
-          </div >
-        </div >
-        <div className={styles[`${PrefixCls}-forumDetails-content`]} >
+          <div className={styles[`${PrefixCls}-forumDetails-info-title`]}>
+            <div>{subject}</div>
+            <div>{`由 ${userfullname} 发布`}</div>
+          </div>
+        </div>
+        <div className={styles[`${PrefixCls}-forumDetails-content`]}>
           <InnerHtml data={message} />
           {
             attachment !== '' ?
-              <Enclosure key={id} data={attachments} />
-              :
-              null
+            <Enclosure key={id} data={attachments} />
+                              :
+            null
           }
           {
             aggregatelabel ?
-              <div className={styles[`${PrefixCls}-forumDetails-grade`]} >
-                {`${aggregatelabel}${aggregatestr === '' ? '-' : aggregatestr}${count ? `(${count})` : ''}`}
-              </div >
-              :
-              null
+            <div className={styles[`${PrefixCls}-forumDetails-grade`]}>
+              {`${aggregatelabel}${aggregatestr === '' ? '-' : aggregatestr}${count ? `(${count})` : ''}`}
+            </div>
+                           :
+            null
           }
-        </div >
-        <div className={styles[`${PrefixCls}-forumDetails-describe`]} >
-          <div >{getCommonDate(created)}</div >
-          {canreply ?
-            <div className={styles[`${PrefixCls}-forumDetails-reply`]} >
-              <Icon type={getLocalIcon('/components/xiaoxi.svg')} size="xs" />
-              <span
-                style={{ marginLeft: '3px' }}
-                onClick={handlerMoreClick.bind(null, 'sendForum', {
-                  maxattachments,
-                  maxbytes,
-                  id,
-                  subject,
-                  type: 'reply',
-                }, dispatch)}
-              >{`回复`}</span >
-            </div >
-            :
-            null}
-        </div >
+        </div>
+        <div className={styles[`${PrefixCls}-forumDetails-describe`]}>
+          <div>{getCommonDate(created)}</div>
+          {canreply && isAssessed === 'true' ?
+           <div className={styles[`${PrefixCls}-forumDetails-reply`]}>
+             <Icon type={getLocalIcon('/components/xiaoxi.svg')} size="xs" />
+             <span
+               style={{ marginLeft: '3px' }}
+               onClick={handlerMoreClick.bind(null, 'sendForum', {
+                 maxattachments,
+                 maxbytes,
+                 id,
+                 subject,
+                 type: 'reply'
+               }, dispatch)}
+             >{`回复`}</span>
+           </div>
+                                             :
+           null}
+        </div>
         {children.length > 0 ?
-          <div className={styles[`${PrefixCls}-forumDetails-children`]} >
-            {
-              children.map((items, index) => this.renderChild(items, handlerMoreClick, dispatch, maxattachments, maxbytes, index === children.length - 1))}
-          </div >
-          : null}
+         <div className={styles[`${PrefixCls}-forumDetails-children`]}>
+           {
+             children.map((items, index) => this.renderChild(items, handlerMoreClick, dispatch, maxattachments, maxbytes, index === children.length - 1))}
+         </div>
+                             : null}
         {item.totalCounts > 3 && !isOpen ?
-          <span
-            className={styles.all}
-            onClick={this.handlerAllClick}
-          >
+         <span
+           className={styles.all}
+           onClick={this.handlerAllClick}
+         >
             <Icon type="down" />
-            {`展开全部`}
-                </span >
-          :
-          null
+           {`展开全部`}
+                </span>
+                                         :
+         null
         }
-      </List.Item >
+      </List.Item>
     );
   }
 }

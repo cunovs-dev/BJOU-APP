@@ -16,7 +16,15 @@ const PrefixCls = 'achievement';
 function Achievement ({ location, dispatch, achievement, loading }) {
   const { listData, scrollerTop, refreshing } = achievement;
   const onRefresh = () => {
-
+      dispatch({
+        type: `${PrefixCls}/updateState`,
+        payload: {
+          refreshing: true
+        }
+      });
+      dispatch({
+        type: `${PrefixCls}/queryList`,
+      });
     },
     onScrollerTop = (top) => {
       if (typeof top !== 'undefined' && !isNaN(top * 1)) {
@@ -40,13 +48,13 @@ function Achievement ({ location, dispatch, achievement, loading }) {
           scrollerTop={scrollerTop}
         >
           {
-            loading ?
+            loading && !refreshing ?
               <ListSkeleton />
               :
-              listData.length > 0 ? listData.map(item => achievementRow(item, item.openState === '0' ? handlerChangeRouteClick.bind(null, 'achievementdetails', {
+              listData.length > 0 ? listData.map(item => achievementRow(item, handlerChangeRouteClick.bind(null, 'achievementdetails', {
                   courseid: item.id,
                   grade: item.graderaw || 0
-                }, dispatch) : () => (Toast.fail('暂时不能查看已结课成绩'))))
+                }, dispatch)))
                 :
                 <NoContent />
           }

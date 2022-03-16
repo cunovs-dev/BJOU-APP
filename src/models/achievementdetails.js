@@ -33,7 +33,7 @@ export default modelExtend(model, {
               }
             });
             dispatch({
-              type: 'query',
+              type: 'queryList',
               payload: {
                 courseid,
               },
@@ -45,7 +45,7 @@ export default modelExtend(model, {
   },
 
   effects: {
-    * query ({ payload }, { call, put, select }) {
+    * queryList ({ payload }, { call, put, select }) {
       const { users: { userid } } = yield select(_ => _.app),
         response = yield call(queryList.queryGradeDetails, { userid, ...payload });
       if (response.success) {
@@ -56,7 +56,7 @@ export default modelExtend(model, {
             coursename,
             courseid,
             gradeItems: getGradeItems(data),
-            graderaw
+            graderaw,
           },
         });
       }

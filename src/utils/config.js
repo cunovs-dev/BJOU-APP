@@ -102,6 +102,7 @@ module.exports = {
     UpdateCompleteStatus: '/resource/view',
     RefreshAttendance: '/attendance/refresh',
     UpdateUrlStatus: '/url/view',
+    QueryStatus: '/course/cmState',
 
     // 门户登录
     Authentication: `${portalServiceUrl}/sso`,
@@ -125,7 +126,7 @@ module.exports = {
     GetInformationGK: `${portalServiceUrl}/mobile/information/informations`, // 国开教学日历
     GetStudentInfo: `${portalServiceUrl}/mobile/studentInfo/findStudentInfo`, // 国开学籍信息
     GetExamGK: `${portalServiceUrl}/mobile/examscore/list`, // 国开考试成绩
-    GetCourseGK: `${portalServiceUrl}/mobile/courseInfo/list`, // 国开已选课程
+    GetCourseGK: `${portalServiceUrl}/mobile/courseInfo/listAll`, // 国开已选课程
     downFiles: `${portalServiceUrl}/mobile/information/stream/zip`, // 文档下载
     EnclosureDownload: `${portalServiceUrl}/file/downloadFile`, // 附件下载
     GetPortalUser: `${portalServiceUrl}/user/getUser`,
@@ -146,6 +147,9 @@ module.exports = {
     GetAccount: `${portalSsoServiceUrl}/cipherreset/getUserByAccountName`,
     FirstUpdatePassword: `${portalSsoServiceUrl}/user/updatePassword`,
     GetNoticeTabs: `${portalServiceUrl}/mobile/information/listCategory`,
+    SetLastIdentity: `${portalSsoServiceUrl}/account/portalSelection`,
+    GetLastIdentity: `${portalSsoServiceUrl}/account/portalSelectionSelect`,
+
     //资源管理
     GetPlayInfo: `${portalResourceUrl}/content/foreign/playInfo`,
     AddPlayInfo: `${portalResourceUrl}/content/foreign/addLearnInfo`,

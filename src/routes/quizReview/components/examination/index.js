@@ -24,7 +24,7 @@ class Examination extends React.Component {
   }
 
   getQuestion = (item) => {
-    if (item.type === 'truefalse' || item.type === 'multichoice') {
+    if (item.type === 'truefalse' || item.type === 'multichoice' || item.type === 'multichoiceset') {
       return <Choose answer={item.choose} type="review" />;
     } else if (item.type === 'essay') {
       return <Essay answer={item.choose} type="review" />;

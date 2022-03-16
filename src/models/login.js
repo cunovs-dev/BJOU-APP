@@ -6,7 +6,9 @@ import {
   queryPortalToken,
   sendPhoneLoginCode,
   queryLoginTips,
-  queryCaptchaImg
+  queryCaptchaImg,
+  queryLastIdentity,
+  setLastIdentity
 } from 'services/login';
 import { queryUserInfo, queryFiles, queryMoodleToken, checkFirstLogin } from 'services/app';
 import { sendCode } from 'services/setup';
@@ -17,7 +19,7 @@ import { setLoginIn, setSession, config, cookie } from 'utils';
 import md5 from 'md5';
 import { pageModel } from './common';
 
-const { userTag: { bkStudentNumber, portalToken, userLoginId,userloginname } } = config,
+const { userTag: { bkStudentNumber, portalToken, userLoginId, userloginname } } = config,
   { _cg } = cookie;
 const encrypt = (word) => {
   return CryptoJS.SHA1(word)
@@ -223,8 +225,8 @@ export default modelExtend(pageModel, {
 
     * queryMoodleToken ({ payload }, { call, put }) {
       const data = yield call(queryMoodleToken, {
-        username: _cg(bkStudentNumber) || _cg(userLoginId).length >= 11 ? _cg(userloginname) : _cg(userLoginId), // 由于测试账号没有学号，保证测试账号能登录
-        usersn: encryptMd5(`${_cg(bkStudentNumber) || _cg(userLoginId).length>=11?_cg(userloginname):_cg(userLoginId)}f3c28dd72e61f16e173a353405af1fbd`)
+        username: _cg(bkStudentNumber) || (_cg(userLoginId).length >= 11 ? _cg(userloginname) : _cg(userLoginId)), // 由于测试账号没有学号，保证测试账号能登录
+        usersn: encryptMd5(`${_cg(bkStudentNumber) || (_cg(userLoginId).length >= 11 ? _cg(userloginname) : _cg(userLoginId))}f3c28dd72e61f16e173a353405af1fbd`)
       });
       if (data.success) {
         const { id: moodleUserId = '', token = '' } = data,
@@ -282,6 +284,7 @@ export default modelExtend(pageModel, {
           });
           setSession({ doubleTake: true });
         } else if (orgList.length === 1) {
+
           if (orgList[0].orgCode === 'bjou_student') {
             yield put({
               type: 'queryMoodleToken'
@@ -317,7 +320,7 @@ export default modelExtend(pageModel, {
       }
     },
     * queryLoginTips ({ payload }, { call, put }) {
-      const { data, success, message = '未知错误，请稍后再试' } = yield call(queryLoginTips, payload);
+      const { data, success, message = '未知错误，请稍后再试。' } = yield call(queryLoginTips, payload);
       if (success) {
         yield put({
           type: 'updateState',
@@ -339,6 +342,22 @@ export default modelExtend(pageModel, {
             captchaImg: data
           }
         });
+      } else {
+        Toast.fail(message);
+      }
+    },
+    * queryLastIdentity ({ payload }, { call, put }) {
+      const { data, success, message = '验证码获取失败' } = yield call(queryLastIdentity, payload);
+      if (success) {
+
+      } else {
+        Toast.fail(message);
+      }
+    },
+    * setLastIdentity ({ payload }, { call, put }) {
+      const { data, success, message = '验证码获取失败' } = yield call(setLastIdentity, payload);
+      if (success) {
+
       } else {
         Toast.fail(message);
       }

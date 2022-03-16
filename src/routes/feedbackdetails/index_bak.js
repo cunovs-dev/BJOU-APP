@@ -249,7 +249,7 @@ class FeedBackDetails extends Component {
   };
 
   showBackMoadl = () => {
-    alert('结束本次答题？', '退出后不保存当前答案！', [
+    alert('结束本次答题？', '离开后不保存当前答案！', [
       {
         text: '取消',
         onPress: () => this.props.dispatch({
@@ -332,7 +332,7 @@ class FeedBackDetails extends Component {
             questionRules.push({
               min: rangefrom * 1,
               max: rangeto * 1,
-              message: `输入超出范围 ，数字应在${rangefrom}~${rangeto}之间`
+              message: `输入超出范围 ，数字应在${rangefrom}~${rangeto}之间。`
             });
           }
           result.push(this.renderCard(this.renderTitle(name, required, questionError), getFieldDecorator(questionKey, {

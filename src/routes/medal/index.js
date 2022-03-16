@@ -57,7 +57,7 @@ class Medal extends React.Component {
               thumb={<Icon type={getLocalIcon('/sprite/medal.svg')} />}
             />
             <Card.Body >
-              <div >同学你好，待你完成“活动4.1结合我的职业生涯，提交《我的学习计划》后就会获得此勋章”</div >
+              <div >同学你好，待你完成“活动4.1结合我的职业生涯，提交《我的学习计划》后就会获得此勋章。”</div >
             </Card.Body >
           </Card >
           <WhiteSpace size="lg" />

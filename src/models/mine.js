@@ -9,22 +9,22 @@ const defaultDatas = [
   {
     icon: require('../themes/images/others/teacher.jpg'),
     text: '我的老师',
-    route: 'teachers',
+    route: 'teachers'
   },
   {
     icon: require('../themes/images/others/group.jpg'),
     text: '我的小组',
-    route: 'group',
+    route: 'group'
   },
   {
     icon: require('../themes/images/others/achievement.jpg'),
     text: '我的成绩',
-    route: 'achievement',
+    route: 'achievement'
   }, {
     icon: require('../themes/images/others/attendance.jpg'),
     text: '我的考勤',
-    route: 'attendance',
-  },
+    route: 'attendance'
+  }
 ];
 export default modelExtend(model, {
   namespace: 'mine',
@@ -33,6 +33,13 @@ export default modelExtend(model, {
     localFileTotals: cnGetLocalFileSize(),
     clearProgress: 0,
     uploadState: false,
+    showModal: false,
+    dialog: {
+      status: '建议立即下载资源升级APP',
+      content: '',
+      buttonText: '现在升级',
+      statusCode: -1
+    }
   },
   subscriptions: {
     setupHistory ({ dispatch, history }) {
@@ -49,7 +56,7 @@ export default modelExtend(model, {
         }
       });
     }
-    ,
+
   },
   effects: {
     * uploadLogState ({ payload }, { call, put, select }) {
@@ -57,7 +64,7 @@ export default modelExtend(model, {
         type: 'updateState',
         payload: {
           uploadLogState: true
-        },
+        }
       });
       const { msg = '无有效信息' } = payload, { users: { userid } } = yield select(_ => _.app),
         result = yield call(uploadRunningLogs, { msg, tags: userid });
@@ -66,10 +73,10 @@ export default modelExtend(model, {
           type: 'updateState',
           payload: {
             uploadLogState: false
-          },
+          }
         });
         Toast.success('提交成功。');
       }
     }
-  },
+  }
 });

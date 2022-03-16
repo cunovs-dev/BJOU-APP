@@ -72,7 +72,6 @@ export default modelExtend(model, {
           dispatch({
             type: 'query'
           });
-
           dispatch({
             type: 'querySysNotice',
             payload: {

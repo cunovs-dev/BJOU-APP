@@ -83,7 +83,7 @@ export default modelExtend(model, {
       const { cmid, coursesId: courseid, assignmentid } = payload;
       const { success, message = '请稍后再试', modalAlert = false } = yield call(sendAssing, { assignmentid });
       if (success) {
-        Toast.success('提交成功');
+        Toast.success('提交作业成功');
         yield put({
           type: 'queryHomework',
           payload: {
