@@ -26,11 +26,11 @@ const MobileTable = (props) => {
           data.map((item, i) => (
             <div className={styles.tr} key={i}>
               <div>{item.courseName}</div>
-              <div>{`${new Date(item.examDate).getFullYear()}-${new Date(item.examDate).getMonth() + 1}`}</div>
+              <div>{item.examNum || '-'}</div>
+              <div>{item.ksdm || '-'}</div>
               <div>{item.normalScore || '-'}</div>
               <div>{item.rollScore || '-'}</div>
               <div>{item.totalScore || '-'}</div>
-              <div style={{ color: item.state === '及格' ? 'green' : 'red' }}>{item.state}</div>
             </div>
           ))
                            :
@@ -48,10 +48,14 @@ const MobileTable = (props) => {
   );
 };
 MobileTable.defaultProps = {
-  thead: [{ label: '课程名称', width: '30%' }, { label: '考试时间', width: '20%' }, {
-    label: '平时成绩',
-    width: '10%'
-  }, { label: '卷面成绩', width: '10%' }, { label: '综合成绩', width: '10%' }, { label: '状态', width: '20%' }],
+  thead: [
+    { label: '课程名称', width: '30%' },
+    { label: '考试次数', width: '10%' },
+    { label: '考试代码', width: '20%' },
+    { label: '平时成绩', width: '10%' },
+    { label: '卷面成绩', width: '10%' },
+    { label: '综合成绩', width: '10%' }
+  ],
   type: 'grade'
 };
 export default MobileTable;

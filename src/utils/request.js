@@ -46,10 +46,14 @@ const { username, usertoken, userpower, userid, useravatar, userloginname, porta
     cnDeleteAlias(_cg(userloginname), _cg(usertoken));
   };
 axios.defaults.baseURL = baseURL;
-axios.defaults.withCredentials = true; // 设置不带cookie 不然存在跨域问题
+axios.defaults.withCredentials = true; // 设置带cookie
 // axios.defaults.timeout = 15000; // 请求超时
 const doDecode = (json) => {
-  return eval(`(${json})`);
+  try {
+    return eval(`(${json})`);
+  } catch (e) {
+    return json;
+  }
 };
 const fetch = (options) => {
   let {
@@ -106,6 +110,15 @@ const fetch = (options) => {
           }
         );
       }
+      if (fetchType === 'bjcb') {
+        return axios.get(url, { params: cloneData },
+          {
+            headers: {
+              token: portalToken
+            }
+          }
+        );
+      }
       if (fetchType === 'blob') {
         return axios({
           method: 'get',
@@ -142,6 +155,7 @@ const fetch = (options) => {
           }
         );
       }
+
       return axios.post(url, qs.stringify(cloneData, {
         indices: false
       }));
@@ -170,12 +184,14 @@ const getResponeseErrMsg = (status) => {
     return '';
   }
   switch (status) {
-
     case 500:
       msg = '服务器发生未知错误.';
       break;
     case 401:
       msg = '认证失败，请重新登录。';
+      break;
+    case 302:
+      msg = '登录超时，请重新登录。';
       break;
     case 403:
       msg = '访问服务器被拒绝';
@@ -203,6 +219,35 @@ const getResponeseErrMsg = (status) => {
   }
   return msg;
 };
+
+// axios.interceptors.request.use(function (config) {
+//   console.log(config);
+//   return config;
+// }, function (error) {
+//   // 对请求错误做些什么
+//   return Promise.reject(error);
+// });
+const ssoInvalid = (string) => { // 返回html判断为登录失效
+  if (typeof (string) === 'string') {
+    return string.indexOf('<!DOCTYPE html>') !== -1 && string.indexOf('校园信息门户') === -1;
+  }
+};
+axios.interceptors.response.use((response) => {
+  const { data } = response;
+
+  if (ssoInvalid(data)) { // html判断为登录失效 返回错误
+    return Promise.reject({
+      response: {
+        ...response,
+        status: 302
+      }
+    });
+  }
+  return response;
+}, (error) => {
+  // 对响应错误做点什么
+  return Promise.reject(error);
+});
 
 export default function request (options) {
   return fetch(options)
@@ -248,8 +293,8 @@ export default function request (options) {
           });
           return Promise.reject({ success: false, statusCode, message: msg });
         } else if (!statusCode) {
-          logoutWith401();
-          hashHistory.replace('/login');
+          // logoutWith401();
+          // hashHistory.replace('/login');
           msg = data.message || getResponeseErrMsg(statusCode) || statusText;
         } else {
           msg = data.message || getResponeseErrMsg(statusCode) || statusText;

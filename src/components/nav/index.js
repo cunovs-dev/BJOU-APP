@@ -20,6 +20,8 @@ function Nav (props) {
     } else if (props.isMdlres) { // 内容管理系统并且tracking===2
       if (typeof props.navEvent === 'function') {
         props.navEvent();
+      } else {
+        props.dispatch(routerRedux.go(backNum));
       }
     } else {
       props.dispatch(routerRedux.go(backNum));

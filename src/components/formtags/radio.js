@@ -33,7 +33,7 @@ class FormRadio extends React.Component {
             wrap
             onClick={() => setTimeout(this.onChange.bind(null, item.value), 1)}
           >
-            {item.label}
+            <div className={styles.htmlBox} dangerouslySetInnerHTML={{ __html: item.label }}/>
           </RadioItem >))}
       </div >
     );

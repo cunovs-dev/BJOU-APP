@@ -31,22 +31,38 @@ const ExaminationGK = ({ dispatch, location, examinationGK, loading }) => {
     }
   };
 
+  const sortId = (a, b, type) => {
+    return Number(b[type]) - Number(a[type]);
+  };
+
+  const sortTable = (table, type) => {
+    table.sort((a, b) => sortId(a, b, type));
+  };
+
   const onSelect = (opt) => {
     if (selectIndex === 1) {
-      dispatch({
-        type: 'examinationGK/queryList',
-        payload: {
-          [opt.props.value]: opt.props.value === 'stateSortValue' ? 'asc' : 'desc'
-        }
-      });
+      if (opt.key === '4') {
+        dispatch({
+          type: 'examinationGK/queryList',
+          payload: {
+            [opt.props.value]: opt.props.value === 'stateSortValue' ? 'asc' : 'desc'
+          }
+        });
+      } else {
+        sortTable(allList, opt.props.value);
+      }
     } else {
-      dispatch({
-        type: 'examinationGK/queryList',
-        payload: {
-          [opt.props.value]: opt.props.value === 'stateSortValue' ? 'asc' : 'desc',
-          examYear: new Date().getFullYear()
-        }
-      });
+      if (opt.key === '4') {
+        dispatch({
+          type: 'examinationGK/queryList',
+          payload: {
+            [opt.props.value]: opt.props.value === 'stateSortValue' ? 'asc' : 'desc',
+            examYear: new Date().getFullYear()
+          }
+        });
+      } else {
+        sortTable(list, opt.props.value);
+      }
     }
     dispatch({
       type: 'examinationGK/updateState',
@@ -60,10 +76,10 @@ const ExaminationGK = ({ dispatch, location, examinationGK, loading }) => {
     <Popover mask
              visible={isShow}
              overlay={[
-               (<Popover.Item key="4" value="cNameSortValue" data-seed="logId">按课程名称排序</Popover.Item>),
-               (<Popover.Item key="5" value="eDateSortValue" style={{ whiteSpace: 'nowrap' }}>按最新课程排序</Popover.Item>),
-               (<Popover.Item key="6" value="stateSortValue">
-                 <span style={{ marginRight: 5 }}>按状态排序</span>
+               (<Popover.Item key="4" value="cNameSortValue" data-seed="logId">课程名称排序</Popover.Item>),
+               (<Popover.Item key="5" value="ksdm" style={{ whiteSpace: 'nowrap' }}>考试代码排序</Popover.Item>),
+               (<Popover.Item key="6" value="totalScore">
+                 <span style={{ marginRight: 5 }}>综合成绩排序</span>
                </Popover.Item>)
              ]}
              align={{
@@ -85,12 +101,13 @@ const ExaminationGK = ({ dispatch, location, examinationGK, loading }) => {
     </Popover>
 
   );
+
   return (
     <div className={styles.outer}>
       <Nav title={name} dispatch={dispatch} renderNavRight={renderRight()} />
       <WhiteSpace />
       <CunovsTab defaultIndex={0} onTabClick={onChange}>
-        <CunovsTab.TabItem label="本年度成绩" tabIndex={0}>
+        <CunovsTab.TabItem label="本次成绩" tabIndex={0}>
           {
             cnIsArray(list) && list.length > 0 ?
             <MobileTable data={list} />
@@ -98,7 +115,7 @@ const ExaminationGK = ({ dispatch, location, examinationGK, loading }) => {
             <NoContent isLoading={loading} />
           }
         </CunovsTab.TabItem>
-        <CunovsTab.TabItem label="往年成绩" tabIndex={1}>
+        <CunovsTab.TabItem label="历次成绩" tabIndex={1}>
           {
             cnIsArray(allList) && allList.length > 0 ?
             <MobileTable data={allList} />

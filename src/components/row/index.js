@@ -121,7 +121,7 @@ module.exports = {
           <div className={styles[`${PrefixCls}-tasklesson-content`]}>
             <div className={styles[`${PrefixCls}-tasklesson-content-teacher`]}>{`责任教师：${master.fullname}`}</div>
             <div
-              className={styles[`${PrefixCls}-tasklesson-content-time`]}>{`结课日期：${changeLessonDate(enddate)}`}</div>
+              className={styles[`${PrefixCls}-tasklesson-content-time`]}>{`结课日期：${changeLessonDate(enddate) || '-'}`}</div>
           </div>
         </div>
       </div>
@@ -130,7 +130,19 @@ module.exports = {
   closeLessonRow: (item, onClick, dispatch) => {
     // 已开课程列表
     const { fullname, master, id, graderaw = 0, attendance = {}, courseImage = '', isAttendance = false } = item,
-      { stat = 0 } = attendance;
+      { stat } = attendance;
+
+    const getStat = () => {
+      switch (stat) {
+        case 0 :
+          return <div style={{ color: '#1eb259' }}>考勤：未达标</div>;
+        case 1:
+          return <div style={{ color: '#1eb259' }}>考勤：达标</div>;
+        default :
+          return null;
+      }
+    };
+
     return (
       <div key={id} className={styles[`${PrefixCls}-closelesson`]} onClick={onClick.bind(null, item, dispatch)}>
         <div className={styles[`${PrefixCls}-closelesson-title`]}>{fullname}</div>
@@ -144,10 +156,7 @@ module.exports = {
             <div className={styles[`${PrefixCls}-closelesson-content-info`]}>
               {
                 isAttendance ?
-                stat ?
-                <div style={{ color: '#1eb259' }}>考勤：达标</div>
-                     :
-                <div style={{ color: '#f34e14' }}>考勤：未达标</div>
+                getStat()
                              :
                 null
               }
@@ -173,7 +182,7 @@ module.exports = {
           <div className={styles[`${PrefixCls}-openinglesson-content`]}>
             <div className={styles[`${PrefixCls}-openinglesson-content-teacher`]}>{`责任教师：${master.fullname}`}</div>
             <div className={styles[`${PrefixCls}-openinglesson-content-time`]}>
-              {`结课日期：${changeLessonDate(enddate)}`}
+              {`结课日期：${changeLessonDate(enddate) || '-'}`}
             </div>
             <div className={styles[`${PrefixCls}-openinglesson-content-type`]}>
               {hasFinalExam ?
@@ -213,7 +222,7 @@ module.exports = {
                style={{ backgroundImage: `url(${getImages(courseImage)})` }} />
           <div className={styles[`${PrefixCls}-achievement-content`]}>
             <div
-              className={styles[`${PrefixCls}-attendanceRow-content-status`]}>{openState === '0' ? `结课日期：${changeLessonDate(enddate)}` : '已结束'}
+              className={styles[`${PrefixCls}-attendanceRow-content-status`]}>{openState === '0' ? `结课日期：${changeLessonDate(enddate) || '-'}` : '已结束'}
             </div>
             <div className={styles[`${PrefixCls}-achievement-grade`]}>{`课程总得分：${graderaw}`}</div>
             {
@@ -409,7 +418,7 @@ module.exports = {
               />
             </div>
             <span
-              className={styles[`${PrefixCls}-attendanceRow-content-time`]}>{`结课日期：${changeLessonDate(enddate)}`}</span>
+              className={styles[`${PrefixCls}-attendanceRow-content-time`]}>{`结课日期：${changeLessonDate(enddate) || '-'}`}</span>
           </div>
         </div>
         <WhiteSpace />

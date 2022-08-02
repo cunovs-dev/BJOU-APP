@@ -33,8 +33,6 @@ const PrefixCls = 'system';
   loading: loading.effects['system/queryList'] || loading.effects['system/queryNoticeTabs']
 }))
 
-
-
 class System extends React.Component {
   constructor (props) {
     super(props);

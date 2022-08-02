@@ -1,8 +1,9 @@
 import { routerRedux } from 'dva/router';
 import { hashHistory } from 'react-router';
 import { Toast } from 'components';
-import { config, cookie, setLoginOut, setSession, bkIdentity, setLoginIn, oldAPP } from 'utils';
+import { config, urlEncode, cookie, setLoginOut, setSession, bkIdentity, setLoginIn, oldAPP } from 'utils';
 import { defaultTabBars } from 'utils/defaults';
+import commonMoadl from 'components/commonModal';
 import {
   queryBaseInfo,
   logout,
@@ -11,17 +12,27 @@ import {
   getVersion,
   queryPortalUser,
   queryMoodleToken,
-  checkFirstLogin
+  checkFirstLogin,
+  queryPaymentKey
 } from 'services/app';
-
+import { pcLogin, queryPcPassword } from 'services/login';
 import md5 from 'md5';
 
 const encryptMd5 = (word) => {
   return md5(word, 'hex');
 };
-
-const { userTag: { username, usertoken, userid, useravatar, portalToken, portalUserName, portalUserId, userloginname, bkStudentNumber, userLoginId } } = config,
+const { userTag: { username, usertoken, userid, useravatar, portalToken, portalUserName, portalUserId, userloginname, bkStudentNumber, userLoginId }, api: { Payment } } = config,
   { _cg } = cookie,
+  head = {
+    'version': 'V1.0',
+    'charset': 'UTF-8',
+    'channel_id': urlEncode('202106180006'),
+    'datetime': urlEncode(new Date().getTime()),
+    'sign_type': 'SHA256WithRSA'
+  },
+  param = {
+    'user_code': _cg(bkStudentNumber) || _cg(userLoginId)
+  },
   getInfoUser = () => {
     const result = {};
     result[username] = _cg(username);
@@ -154,7 +165,7 @@ export default {
         Toast.fail(message);
       }
     },
-    * query ({ payload }, { call, put }) {
+    query: function* ({ payload }, { call, put }) {
       if (_cg(usertoken) === '') {
         yield put(routerRedux.push({
           pathname: '/login'
@@ -180,17 +191,19 @@ export default {
               ...(data.appendConfig || {})
             }
           });
+          // yield put({// 回调任务列表
+          //   type: `${!oldAPP() ? 'dashboard' : 'oldDashboard'}/query`
+          // });
           yield put({
             type: 'userpage/updateState',
             payload: {
               contacts: getContats(data.contacts)
             }
           });
+        } else if (data.modalAlert) {
+          commonMoadl(data.message || '请稍后再试');
         } else {
-          Toast.fail(data.message);
-          /*          yield put(routerRedux.push({
-                      pathname: '/login',
-                    })); */
+          Toast.fail(data.message || '请稍后再试');
         }
       }
     },
@@ -304,6 +317,50 @@ export default {
         }));
       } else {
         Toast.fail(data.message || '查询信息失败');
+      }
+    },
+    // 统一认证集成
+    * queryPcPassword ({ payload }, { call, put }) {
+      const { appType } = payload;
+      const { data, message = '请稍后再试' } = yield call(queryPcPassword, { credential: 'XoBjou60!' });
+      if (data) {
+        yield put({
+          type: 'pcLogin',
+          payload: {
+            username: _cg(bkStudentNumber),
+            password: data,
+            loginMode: 'PasswordLogin',
+            appType
+          }
+        });
+      } else {
+        Toast.fail(message);
+      }
+    },
+    * pcLogin ({ payload }, { call }) {
+      const { appType } = payload;
+      const { success } = yield call(pcLogin, payload);
+      if (success) {
+        cnOpen(appsUrl[appType]);
+      }
+    },
+
+    // 缴费系统集成
+    * queryPaymentKey (_, { call }) {
+      // const blank = window.open('about:blank');
+      const payload = {
+        head: JSON.stringify(head),
+        data: JSON.stringify(param)
+      };
+      const { success, sign, message = '请稍后再试' } = yield call(queryPaymentKey, payload);
+      const { head: paramHead, data } = payload;
+      if (success) {
+        // const url = `${Payment}?head=${paramHead}&data=${data}&sign=${sign}`;
+        const url = encodeURI(`${Payment}?head=${paramHead}&data=${data}&sign=${sign}`);
+        // blank.location = url;
+        cnOpen(url);
+      } else {
+        Toast.fail(message);
       }
     }
   },

@@ -349,10 +349,15 @@ const handlerDivInnerHTMLClick = (e, courseId, dispatch) => {
 
 const handlerChangeRouteClick = (path = '', data = {}, dispatch, e) => {
   e && e.stopPropagation();
-  dispatch(routerRedux.push({
-    pathname: `/${path}`,
-    query: data
-  }));
+  if(path.startsWith('https')||path.startsWith('http')){
+    cnOpen(path)
+  }else{
+    dispatch(routerRedux.push({
+      pathname: `/${path}`,
+      query: data
+    }));
+  }
+
 };
 const handlerMessageClick = ({ type = 1, state, id, jumping, reason = '无法查看此通知, 请使用网页版学习平台查看此通知。' }, data = {}, dispatch, e) => {
   if (type === 1) {

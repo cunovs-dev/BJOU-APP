@@ -64,7 +64,6 @@ class UpLoad extends React.Component {
               discussion: discussionid
             }
           };
-          console.log(data)
         } else {
           data = {
             fileList,
@@ -141,7 +140,6 @@ class UpLoad extends React.Component {
     }
     return false;
   };
-
 
   render () {
     const { getFieldProps } = this.props.form,

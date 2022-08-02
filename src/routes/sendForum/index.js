@@ -23,15 +23,27 @@ class SendForum extends React.Component {
 
   onSubmit = (data) => {
     const { fileList, value } = data;
+    const { message = '' } = value;
+    const str = message.replace(/\n/g, '<br/>')
+      .replace(/( )/g, '\u3000');
     if (fileList.length > 0) {
       this.props.dispatch({
         type: 'sendForum/uploadFile',
-        payload: data,
+        payload: {
+          fileList,
+          value: {
+            ...value,
+            message: str
+          }
+        }
       });
     } else {
       this.props.dispatch({
         type: 'sendForum/AddNewForum',
-        payload: value,
+        payload: {
+          ...value,
+          message: str
+        }
       });
     }
   };
@@ -39,7 +51,7 @@ class SendForum extends React.Component {
   render () {
     const { maxattachments = 0, maxbytes = 0, id, course, type = 'add', subject = '', discussionid } = this.props.location.query,
       { itemid } = this.props.sendForum,
-      { sending,adding } = this.props,
+      { sending, adding } = this.props,
       { groups } = this.props.app;
     const props = {
       maxattachments,
@@ -55,17 +67,17 @@ class SendForum extends React.Component {
       discussionid
     };
     return (
-      <div >
+      <div>
         <Nav title={type === 'add' ? '开启一个新话题' : '回复'} dispatch={this.props.dispatch} />
         <UpLoad {...props} />
-      </div >
+      </div>
     );
   }
 }
 
 export default connect(({ loading, sendForum, forum, app }) => ({
   sending: loading.effects['sendForum/uploadFile'],
-  adding:loading.effects['sendForum/AddNewForum'],
+  adding: loading.effects['sendForum/AddNewForum'],
   sendForum,
   forum,
   loading,

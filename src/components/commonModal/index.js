@@ -3,7 +3,7 @@ import { Modal } from 'components';
 
 const alert = Modal.alert;
 const commonMoadl = (message = '未知错误，请稍后再试。') => {
-  const alertInstance = alert('操作失败', message, [
+  const alertInstance = alert('出现错误', message, [
     { text: '知道了', onPress: () => console.log('ok') },
   ]);
   setTimeout(() => {

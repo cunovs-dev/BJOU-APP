@@ -72,12 +72,18 @@ class CourseWare extends React.PureComponent {
         }
       });
     }
+    this.props.dispatch({
+      type: 'courseware/updateState',
+      payload: {
+        showModal: false
+      }
+    });
     document.removeEventListener('backbutton', this.onBack, false);
   }
 
   onBack = () => {
     const { tracking, state } = this.props.location.query;
-    if (tracking === '2' && parseInt(state, 10) === 0) {
+    if (tracking === '2' && parseInt(state, 10) === 0 && this.getEnded()) {
       this.getStatus();
     } else {
       this.props.dispatch(routerRedux.goBack());
@@ -252,7 +258,16 @@ class CourseWare extends React.PureComponent {
     return <NoContent isLoading={loading} />;
   };
 
+  getEnded = () => {
+    if (document.getElementById('video')) {
+      const video = document.getElementById('video');
+      return !video.ended;
+    }
+    return false;
+  };
+
   render () {
+
     const { name = '', coursewareID, courseid, tracking, state } = this.props.location.query;
     const { data = {}, showModal } = this.props.courseware;
     if (document.getElementById('video')) {
@@ -279,14 +294,14 @@ class CourseWare extends React.PureComponent {
         <Nav
           title={name}
           dispatch={this.props.dispatch}
-          navEvent={tracking === '2' && parseInt(state, 10) === 0 ? this.getStatus : null}
+          navEvent={this.getEnded() ? this.getStatus : null}
           isMdlres={tracking === '2' && parseInt(state, 10) === 0}
         />
         <div className={styles.content}>
           <div className={styles.title}>{`课件名称:${data.coursewareName || '-'}`}</div>
           {this.renderContent(data)}
         </div>
-        {showModal && this.showBackMoadl(showModal)}
+        {this.getEnded() && this.showBackMoadl(showModal)}
       </div>
     );
   }

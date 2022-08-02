@@ -58,6 +58,7 @@ module.exports = {
 
       $('.answer> div')
         .each((index, element) => {
+
           let answer;
           if ($('.answer label').length > 0) {
             answer = $('.answer label')
@@ -65,12 +66,8 @@ module.exports = {
               .text();
           } else {
             answer = $('.answer .d-flex')
-                .eq(index)
-                .text()// 题号
-              +
-              $('.answer .flex-fill')
-                .eq(index)
-                .text();// 题目
+              .eq(index)
+              .html();
           }
 
           items.push({
@@ -80,7 +77,7 @@ module.exports = {
             name: $('.answer input[type="radio"]')
               .eq(index)
               .attr('name'),
-            label: answer,
+            label: answer.replace(/<br>/g, ''),
             value: $('.answer input[type="radio"]')
               .eq(index)
               .val(),
@@ -107,18 +104,22 @@ module.exports = {
               .text();
           } else {
             answer = $('.answer .d-flex')
-                .eq(index)
-                .text()// 题号
-              +
-              $('.answer .flex-fill')
-                .eq(index)
-                .text();// 题目
+              .eq(index)
+              .html();
+            // answer = $('.answer .d-flex')
+            //     .eq(index)
+            //     .text()// 题号
+            //   +
+            //   $('.answer .flex-fill')
+            //     .eq(index)
+            //     .text();// 题目
           }
+
           items.push({
             id: $('.answer input[type="checkbox"]')
               .eq(index)
               .attr('id'),
-            label: answer,
+            label: answer.replace(/<br>/g, ''),
             name: $('.answer input[type="checkbox"]')
               .eq(index)
               .attr('name'),

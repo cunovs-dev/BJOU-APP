@@ -3,6 +3,7 @@ import modelExtend from 'dva-model-extend';
 import { model } from 'models/common';
 import { Toast } from 'components';
 import { queryNoticeList, queryNoticeTabs } from 'services/list';
+import { queryPortalToken, portalLogin, authentication } from 'services/login';
 
 const namespace = 'system';
 const getDefaultPaginations = () => ({
@@ -49,6 +50,9 @@ export default modelExtend(model, {
                 parentId: 'tzgl'
               }
             });
+            // dispatch({
+            //   type: 'authentication'
+            // });
           }
         }
       });
@@ -104,6 +108,29 @@ export default modelExtend(model, {
         });
       } else {
         Toast.fail(message, 2);
+      }
+    },
+    * authentication ({ payload }, { call, put }) {
+      yield put({
+        type: 'updateState',
+        payload: {
+          buttonState: false
+        }
+      });
+      const { code, data, message = '请稍后再试' } = yield call(authentication, payload, true);
+      if (code === 0) {
+
+        yield put({
+          type: 'queryPortalToken'
+        });
+      } else {
+        yield put({
+          type: 'updateState',
+          payload: {
+            buttonState: true
+          }
+        });
+        Toast.fail(message);
       }
     }
   }

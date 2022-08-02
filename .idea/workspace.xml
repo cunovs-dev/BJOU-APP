@@ -2,108 +2,58 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="67cf54e6-7fa5-4d0e-bac7-28e583948699" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/themes/images/default/default.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/oauth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/payment.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/oauth/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/oauth/index.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/payment/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/payment/index.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/themes/images/grids/pay.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report.20200507.174925.6844.0.001.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/addHomework/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/addHomework/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/breviary/index.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/breviary/index.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chatroom/chatbubble/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/chatroom/chatbubble/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chatroom/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/chatroom/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MobileTable/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MobileTable/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/commonModal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/commonModal/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/courselist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/courselist/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/courselist/index.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/courselist/index.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/coursepage/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/coursepage/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/folderList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/folderList/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/formtags/checkBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/formtags/checkBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/formtags/index.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/formtags/index.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/formtags/quizRadio.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/formtags/quizRadio.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/formtags/radio.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/formtags/radio.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/lessonitem/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/lessonitem/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/lessonitem/index.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/lessonitem/index.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/listview/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/listview/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/nav/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/nav/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/photobox/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/photobox/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/pulltorefresh/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pulltorefresh/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/quizType/choose/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/quizType/choose/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/quizType/choose/index.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/quizType/choose/index.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/quizType/icon/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/quizType/icon/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/renderChild/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/renderChild/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/row/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/row/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/row/index.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/row/index.less" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/upLoad/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/upLoad/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/achievement.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/achievement.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/achievementdetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/achievementdetails.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/attendance.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/attendance.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/attendanceReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/attendanceReport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/attendanceStatistics.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/attendanceStatistics.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/courseware.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/courseware.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/finalReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/finalReport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/folder.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/folder.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/homework.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/homework.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/homeworkadd.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/homeworkadd.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/lessons.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/lessons.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/memberAchievement.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/memberAchievement.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/memberAchievementDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/memberAchievementDetails.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/mine.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/mine.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/oldDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/oldDashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/oldMine.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/oldMine.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/quizDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/quizDetails.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/quizReview.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/quizReview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/sendForum.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/sendForum.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/url.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/url.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/examinationGK.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/examinationGK.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/system.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/system.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/public/cunovs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/cunovs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/achievement/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/achievement/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/achievementdetails/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/achievementdetails/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/attendance/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/attendance/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/choice/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/choice/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/closed/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/closed/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/conversation/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/conversation/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/courseDetailsGK/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/courseDetailsGK/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/courseDetailsGK/index.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/courseDetailsGK/index.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/courseware/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/courseware/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/dashboard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/dashboard/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/feedback/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/feedback/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/feedbackdetails/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/feedbackdetails/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/feedbackdetails/index_bak.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/feedbackdetails/index_bak.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/feedbackresultdetails/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/feedbackresultdetails/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/firstLogin/checkInfo/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/firstLogin/checkInfo/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/forum/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/forum/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/forum/index.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/forum/index.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/forumDetails/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/forumDetails/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/graduationInformation/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/graduationInformation/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/groupdetails/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/groupdetails/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/homework/components/status/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/homework/components/status/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/homework/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/homework/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/homeworkadd/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/homeworkadd/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/examinationGK/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/examinationGK/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/lessondetails/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/lessondetails/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/lessons/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/lessons/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/login/components/notesmodal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/login/components/notesmodal/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/medal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/medal/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/messageCenter/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/messageCenter/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/oldSet/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/oldSet/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/oldSetup/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/oldSetup/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/opinion/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/opinion/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/modelManage/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/modelManage/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/quiz/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/quiz/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/quizDetails/components/examination/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/quizDetails/components/examination/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/quiz/index.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/quiz/index.less" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/quizDetails/components/examination/index.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/quizDetails/components/examination/index.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/quizReview/components/examination/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/quizReview/components/examination/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/quizReview/components/examination/component/icon/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/quizReview/components/examination/component/icon/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/quizReview/components/examination/index.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/quizReview/components/examination/index.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/replies/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/replies/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/schoolCalendar/components/FilesBox/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/schoolCalendar/components/FilesBox/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/quizReview/index.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/quizReview/index.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/search/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/search/index.less" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/sendForum/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/sendForum/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/set/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/set/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/superClass/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/superClass/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/userpage/index.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/userpage/index.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/video/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/video/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/system/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/system/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/resource.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/resource.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/analysis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/analysis.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/commonevents.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/commonevents.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/formsubmit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/formsubmit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/cookie.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/cookie.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/defaults.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/defaults.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/request.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn-error.log" beforeDir="false" afterPath="$PROJECT_DIR$/yarn-error.log" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/dist/" />
@@ -119,30 +69,32 @@
     <session id="-1778674101">
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="ejs" value="3" />
+          <entry key="ejs" value="5" />
           <entry key="gitignore" value="1" />
           <entry key="gradle" value="1" />
-          <entry key="html" value="2" />
-          <entry key="jpg" value="9" />
-          <entry key="js" value="451" />
-          <entry key="json" value="16" />
+          <entry key="html" value="3" />
+          <entry key="jpg" value="14" />
+          <entry key="js" value="653" />
+          <entry key="json" value="19" />
+          <entry key="jsp" value="2" />
           <entry key="jsx" value="1" />
-          <entry key="less" value="26" />
+          <entry key="less" value="34" />
           <entry key="lock" value="1" />
           <entry key="log" value="1" />
-          <entry key="png" value="13" />
+          <entry key="png" value="19" />
           <entry key="xml" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="EJS" value="3" />
-          <entry key="HTML" value="2" />
-          <entry key="Image" value="22" />
-          <entry key="JSON" value="16" />
+          <entry key="EJS" value="5" />
+          <entry key="HTML" value="3" />
+          <entry key="Image" value="33" />
+          <entry key="JSON" value="19" />
+          <entry key="JSP" value="2" />
           <entry key="JSX Harmony" value="1" />
-          <entry key="JavaScript" value="451" />
-          <entry key="Less" value="26" />
+          <entry key="JavaScript" value="653" />
+          <entry key="Less" value="34" />
           <entry key="PLAIN_TEXT" value="3" />
           <entry key="XML" value="2" />
           <entry key="yarn.lock" value="1" />
@@ -150,30 +102,30 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="ejs" value="2" />
-          <entry key="js" value="6215" />
-          <entry key="json" value="4" />
-          <entry key="less" value="126" />
+          <entry key="ejs" value="10" />
+          <entry key="js" value="12001" />
+          <entry key="json" value="8" />
+          <entry key="less" value="259" />
           <entry key="xml" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="EJS" value="2" />
-          <entry key="JSON" value="4" />
-          <entry key="JavaScript" value="6215" />
-          <entry key="Less" value="126" />
+          <entry key="EJS" value="10" />
+          <entry key="JSON" value="8" />
+          <entry key="JavaScript" value="12001" />
+          <entry key="Less" value="259" />
           <entry key="XML" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="75" />
-          <entry key="project.open.time.1" value="45" />
-          <entry key="project.open.time.10" value="1" />
-          <entry key="project.open.time.11" value="4" />
-          <entry key="project.open.time.12" value="6" />
-          <entry key="project.open.time.13" value="1" />
+          <entry key="project.closed" value="79" />
+          <entry key="project.open.time.1" value="46" />
+          <entry key="project.open.time.10" value="3" />
+          <entry key="project.open.time.11" value="6" />
+          <entry key="project.open.time.12" value="7" />
+          <entry key="project.open.time.13" value="2" />
           <entry key="project.open.time.15" value="1" />
           <entry key="project.open.time.17" value="1" />
           <entry key="project.open.time.2" value="18" />
@@ -184,13 +136,13 @@
           <entry key="project.open.time.6" value="6" />
           <entry key="project.open.time.7" value="1" />
           <entry key="project.open.time.8" value="3" />
-          <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="103" />
+          <entry key="project.open.time.9" value="3" />
+          <entry key="project.opened" value="112" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
         <counts>
-          <entry key="ESLintLanguageService" value="100" />
+          <entry key="ESLintLanguageService" value="108" />
         </counts>
       </usages-collector>
     </session>
@@ -203,65 +155,19 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/public/cunovs.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="866" column="58" lean-forward="true" selection-start-line="866" selection-start-column="58" selection-end-line="866" selection-end-column="58" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../BuildApp/bjou-moodle-app-jpush-videoPlay-codePush/www/cunovs.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="66">
-              <caret line="923" column="35" lean-forward="true" selection-start-line="923" selection-start-column="35" selection-end-line="923" selection-end-column="35" />
+            <state relative-caret-position="27">
+              <caret line="1022" column="29" selection-start-line="1022" selection-start-column="29" selection-end-line="1022" selection-end-column="29" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/set/index.js">
+        <entry file="file://$PROJECT_DIR$/src/routes/achievement/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="195" column="48" lean-forward="true" selection-start-line="195" selection-start-column="48" selection-end-line="195" selection-end-column="48" />
+            <state relative-caret-position="459">
+              <caret line="17" column="17" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="17" />
               <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="e#107#133#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/oldSet/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-6606">
-              <caret line="32" column="18" lean-forward="true" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
-              <folding>
-                <element signature="e#28#54#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/models/oldMine.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="29" column="21" selection-start-line="29" selection-start-column="14" selection-end-line="29" selection-end-column="21" />
-              <folding>
-                <element signature="e#0#27#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/models/mine.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="42" column="4" lean-forward="true" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="4" />
-              <folding>
-                <element signature="e#0#27#0" expanded="true" />
+                <element signature="e#0#26#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -270,29 +176,67 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/utils/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="12">
-              <caret line="537" column="16" selection-start-line="537" selection-start-column="6" selection-end-line="537" selection-end-column="16" />
+            <state relative-caret-position="-614">
+              <caret line="656" column="18" lean-forward="true" selection-start-line="656" selection-start-column="18" selection-end-line="656" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/utils/formsubmit.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
               <folding>
-                <element signature="e#0#36#0" expanded="true" />
+                <element signature="e#0#43#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/entry.ejs">
+        <entry file="file://$PROJECT_DIR$/src/utils/feedback.js">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/utils/defaults.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="21" column="7" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
+            <state relative-caret-position="310">
+              <caret line="213" column="3" selection-start-line="213" selection-start-column="3" selection-end-line="213" selection-end-column="3" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/pulltorefresh/index.js">
+        <entry file="file://$PROJECT_DIR$/src/utils/cookie.js">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/utils/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="28" column="44" lean-forward="true" selection-start-line="28" selection-start-column="44" selection-end-line="28" selection-end-column="44" />
+            <state relative-caret-position="108">
+              <caret line="4" column="12" lean-forward="true" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/utils/analysis.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="324">
+              <caret line="52" selection-start-line="52" selection-end-line="52" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/utils/commonevents.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-3402">
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -309,36 +253,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>enddate</find>
-      <find>cnCodePush</find>
-      <find>openState</find>
-      <find>renderSize</find>
-      <find>getContent</find>
-      <find>lodash</find>
-      <find>renderStatus</find>
-      <find>alertInstance</find>
-      <find>showAlert</find>
-      <find>this</find>
-      <find>showModal</find>
-      <find>fail</find>
-      <find>_</find>
-      <find>handleClearFileCache</find>
-      <find>Toast</find>
-      <find>KB</find>
-      <find>handleUpdateClick</find>
-      <find>progress</find>
-      <find>mine</find>
       <find>cnRemoteCodeVersion</find>
-      <find>currentCodeVersion</find>
-      <find>defaultDatas</find>
-      <find>oldMine</find>
-      <find>mandatoryInstallMode</find>
-      <find>onPackageDownloaded</find>
-      <find>onUpdateCheck</find>
-      <find>dialog</find>
-      <find>checkForUpdate</find>
-      <find>ON_NEXT_RESUME</find>
-      <find>codePush</find>
+      <find>authentication</find>
+      <find>mdlres</find>
+      <find>superclass</find>
+      <find>onlinetext</find>
+      <find>getDefaultText</find>
+      <find>str</find>
+      <find>onAddSubmit</find>
+      <find>展开全部</find>
+      <find>posts</find>
+      <find>replyList</find>
+      <find>isOpen</find>
+      <find>replyOpen</find>
+      <find>handlerAllClick</find>
+      <find>handlerMoreClick</find>
+      <find>renderChild</find>
+      <find>totalCounts</find>
+      <find>initialValue</find>
+      <find>GetPaymentKey</find>
+      <find>Payment</find>
+      <find>urlEncode</find>
+      <find>bkStudentNumber</find>
+      <find>head</find>
+      <find>paramHead</find>
+      <find>queryPaymentKey</find>
+      <find>202106180006</find>
+      <find>user_code</find>
+      <find>pay</find>
+      <find>pay.png</find>
+      <find>param</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -346,6 +290,7 @@
     <dirStrings>
       <dir>D:\work\BK-portal-app\src</dir>
       <dir>D:\work\BK-portal-app\src\routes\login\components</dir>
+      <dir>D:\work\BK-portal-app\src\themes\images\others</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -357,57 +302,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/routes/systemDetails/components/FilesBox/index.js" />
-        <option value="$PROJECT_DIR$/../BuildApp/ChinaMobile-APP/www/cunovs.js" />
-        <option value="$PROJECT_DIR$/../BuildApp/ChinaMobile-APP/platforms/android/build.gradle" />
-        <option value="$PROJECT_DIR$/../BuildApp/chinaMobile-release/www/cunovs.js" />
-        <option value="$PROJECT_DIR$/src/routes/forumDetails/index.js" />
-        <option value="$PROJECT_DIR$/src/components/renderChild/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/quizDetails/components/examination/index.js" />
-        <option value="$PROJECT_DIR$/src/models/dashboard.js" />
-        <option value="$PROJECT_DIR$/src/components/breviary/index.less" />
-        <option value="$PROJECT_DIR$/src/routes/sendForum/index.js" />
-        <option value="$PROJECT_DIR$/src/models/homeworkadd.js" />
-        <option value="$PROJECT_DIR$/src/routes/login/components/notesmodal/index.js" />
-        <option value="$PROJECT_DIR$/src/components/addHomework/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/homeworkadd/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/homework/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/homework/components/status/index.js" />
-        <option value="$PROJECT_DIR$/src/components/courselist/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/courseDetailsGK/index.less" />
-        <option value="$PROJECT_DIR$/src/routes/courseDetailsGK/index.js" />
-        <option value="$PROJECT_DIR$/src/models/page.js" />
-        <option value="$PROJECT_DIR$/src/components/upLoad/index.js" />
+        <option value="$PROJECT_DIR$/src/models/oldDashboard.js" />
+        <option value="$PROJECT_DIR$/src/routes/quiz/index.less" />
+        <option value="$PROJECT_DIR$/src/routes/lessondetails/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/quiz/index.js" />
+        <option value="$PROJECT_DIR$/src/components/Form/accountForm/index.js" />
+        <option value="$PROJECT_DIR$/src/models/courseware.js" />
+        <option value="$PROJECT_DIR$/src/routes/courseware/index.js" />
+        <option value="$PROJECT_DIR$/src/models/examinationGK.js" />
+        <option value="$PROJECT_DIR$/src/components/MobileTable/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/examinationGK/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/set/index.js" />
+        <option value="$PROJECT_DIR$/src/models/login.js" />
+        <option value="$PROJECT_DIR$/dist/www/cunovs.js" />
+        <option value="$PROJECT_DIR$/src/entry.ejs" />
+        <option value="$PROJECT_DIR$/src/routes/oauth/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/payment/index.js" />
+        <option value="$PROJECT_DIR$/src/router.js" />
+        <option value="$PROJECT_DIR$/src/utils/index.js" />
+        <option value="$PROJECT_DIR$/src/services/login.js" />
+        <option value="$PROJECT_DIR$/src/utils/cookie.js" />
+        <option value="$PROJECT_DIR$/src/services/app.js" />
+        <option value="$PROJECT_DIR$/src/models/oauth.js" />
+        <option value="$PROJECT_DIR$/src/models/payment.js" />
+        <option value="$PROJECT_DIR$/src/components/formtags/checkBox.js" />
+        <option value="$PROJECT_DIR$/src/components/formtags/radio.js" />
+        <option value="$PROJECT_DIR$/src/routes/quizReview/index.less" />
         <option value="$PROJECT_DIR$/src/routes/quizDetails/components/examination/index.less" />
         <option value="$PROJECT_DIR$/src/routes/quizReview/components/examination/index.less" />
-        <option value="$PROJECT_DIR$/src/models/finalReport.js" />
-        <option value="$PROJECT_DIR$/src/models/attendanceReport.js" />
-        <option value="$PROJECT_DIR$/src/models/attendanceStatistics.js" />
-        <option value="$PROJECT_DIR$/src/models/memberAchievementDetails.js" />
-        <option value="$PROJECT_DIR$/src/models/memberAchievement.js" />
-        <option value="$PROJECT_DIR$/src/routes/replies/index.js" />
-        <option value="$PROJECT_DIR$/src/models/oldLogin.js" />
-        <option value="$PROJECT_DIR$/src/services/login.js" />
-        <option value="$PROJECT_DIR$/src/utils/config.js" />
-        <option value="$PROJECT_DIR$/src/models/login.js" />
-        <option value="$PROJECT_DIR$/src/utils/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/lessondetails/index.js" />
-        <option value="$PROJECT_DIR$/src/models/oldDashboard.js" />
-        <option value="$PROJECT_DIR$/src/models/sendForum.js" />
-        <option value="$PROJECT_DIR$/src/utils/analysis.js" />
-        <option value="$PROJECT_DIR$/src/components/pulltorefresh/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/courseware/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/app.js" />
-        <option value="$PROJECT_DIR$/src/routes/forum/index.js" />
-        <option value="$PROJECT_DIR$/src/entry.ejs" />
-        <option value="$PROJECT_DIR$/src/models/lessons.js" />
-        <option value="$PROJECT_DIR$/src/models/mine.js" />
+        <option value="$PROJECT_DIR$/src/components/quizType/choose/index.less" />
+        <option value="$PROJECT_DIR$/src/components/formtags/index.less" />
+        <option value="$PROJECT_DIR$/src/components/quizType/choose/index.js" />
+        <option value="$PROJECT_DIR$/src/models/dashboard.js" />
+        <option value="$PROJECT_DIR$/src/components/formtags/quizRadio.js" />
+        <option value="$PROJECT_DIR$/src/routes/quizReview/components/examination/component/icon/index.js" />
+        <option value="$PROJECT_DIR$/src/components/quizType/icon/index.js" />
+        <option value="$PROJECT_DIR$/src/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/system/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/dashboard/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/modelManage/index.js" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/src/routes/set/index.js" />
-        <option value="$PROJECT_DIR$/src/models/oldMine.js" />
-        <option value="$PROJECT_DIR$/src/routes/oldSet/index.js" />
+        <option value="$PROJECT_DIR$/src/utils/analysis.js" />
+        <option value="$PROJECT_DIR$/src/models/system.js" />
+        <option value="$PROJECT_DIR$/src/utils/request.js" />
         <option value="$PROJECT_DIR$/src/public/cunovs.js" />
-        <option value="$PROJECT_DIR$/../BuildApp/bjou-moodle-app-jpush-videoPlay-codePush/www/cunovs.js" />
+        <option value="$PROJECT_DIR$/src/components/upLoad/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/sendForum/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/forumDetails/index.js" />
+        <option value="$PROJECT_DIR$/src/components/renderChild/index.js" />
+        <option value="$PROJECT_DIR$/src/utils/config.js" />
+        <option value="$PROJECT_DIR$/src/utils/defaults.js" />
+        <option value="$PROJECT_DIR$/src/models/app.js" />
       </list>
     </option>
   </component>
@@ -425,7 +370,7 @@
       <path value="$PROJECT_DIR$/src/components/Loader/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-2" />
     <option name="y" value="25" />
     <option name="width" value="1930" />
@@ -448,24 +393,7 @@
             <path>
               <item name="BK-portal-app" type="b2602c69:ProjectViewProjectNode" />
               <item name="BK-portal-app" type="462c0819:PsiDirectoryNode" />
-              <item name="dist" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="BK-portal-app" type="b2602c69:ProjectViewProjectNode" />
-              <item name="BK-portal-app" type="462c0819:PsiDirectoryNode" />
-              <item name="dist" type="462c0819:PsiDirectoryNode" />
-              <item name="www" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="BK-portal-app" type="b2602c69:ProjectViewProjectNode" />
-              <item name="BK-portal-app" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="BK-portal-app" type="b2602c69:ProjectViewProjectNode" />
-              <item name="BK-portal-app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -482,7 +410,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="D:/project/demo/moodleapp" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../prison" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="$PROJECT_DIR$/node_modules/eslint" />
@@ -492,18 +420,18 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\work\BK-portal-app\src\themes\images\grids" />
       <recent name="D:\work\BK-portal-app\src\routes" />
       <recent name="D:\work\BK-portal-app" />
       <recent name="D:\work\BK-portal-app\src\components\Form" />
       <recent name="D:\work\BK-portal-app\src\components" />
-      <recent name="D:\work\BK-portal-app\src\routes\login\accountLogin" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\work\BK-portal-app\src\themes\images\default" />
-      <recent name="D:\work\BK-portal-app\src\routes\resetPassword\queryUser" />
-      <recent name="D:\work\BK-portal-app\src\themes\images\ntabr" />
-      <recent name="D:\work\BK-portal-app\src\models" />
+      <recent name="D:\work\BK-portal-app\src\themes\images\others" />
       <recent name="D:\work\BK-portal-app\src\routes" />
+      <recent name="D:\work\BK-portal-app\src\models" />
+      <recent name="D:\work\BK-portal-app\src\routes\oauth" />
+      <recent name="D:\work\BK-portal-app\src\themes\images\default" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -537,6 +465,7 @@
         <script value="build:dll" />
       </scripts>
       <node-interpreter value="project" />
+      <package-manager value="npm" />
       <envs />
       <method v="2" />
     </configuration>
@@ -580,8 +509,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.build" />
         <item itemvalue="npm.dev" />
+        <item itemvalue="npm.build" />
         <item itemvalue="npm.build:dll" />
         <item itemvalue="npm.lint" />
         <item itemvalue="npm.build:new" />
@@ -751,12 +680,20 @@
       <workItem from="1645415667732" duration="39698000" />
       <workItem from="1646881250301" duration="14902000" />
       <workItem from="1647220401275" duration="23956000" />
-      <workItem from="1647331230405" duration="28054000" />
+      <workItem from="1647331230405" duration="33106000" />
+      <workItem from="1647574843126" duration="47000" />
+      <workItem from="1647575042795" duration="52811000" />
+      <workItem from="1649210088505" duration="17082000" />
+      <workItem from="1649901137176" duration="74054000" />
+      <workItem from="1652322134087" duration="106464000" />
+      <workItem from="1655347912727" duration="11940000" />
+      <workItem from="1656397075289" duration="16211000" />
+      <workItem from="1658112099912" duration="8068000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="643541000" />
+    <option name="totallyTimeSpent" value="935270000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -768,12 +705,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <layout>
       <window_info id="Favorites" order="0" sideWeight="0.6221498" side_tool="true" weight="0.14541623" />
-      <window_info id="npm" order="1" sideWeight="0.6633499" side_tool="true" weight="0.14120126" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.33665007" visible="true" weight="0.14120126" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.8121607" visible="true" weight="0.14014752" />
+      <window_info id="npm" order="2" sideWeight="0.1878393" side_tool="true" visible="true" weight="0.14014752" />
       <window_info id="Structure" order="3" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" weight="0.32790446" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.5021075" side_tool="true" weight="0.32899022" />
@@ -781,7 +717,7 @@
       <window_info anchor="bottom" id="Docker" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.32899022" />
-      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.49789253" visible="true" weight="0.34527686" />
+      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.49789253" weight="0.34636265" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
@@ -833,178 +769,218 @@
     <state x="243" y="24" width="794" height="632" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1589722369880" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/models/oldLogin.js">
+    <entry file="file://$PROJECT_DIR$/src/components/quizType/choose/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1314">
-          <caret line="13" column="10" lean-forward="true" selection-start-line="13" selection-start-column="10" selection-end-line="13" selection-end-column="10" />
+        <state relative-caret-position="409">
+          <caret line="94" column="27" lean-forward="true" selection-start-line="94" selection-start-column="27" selection-end-line="94" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/setup.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/quizReview/components/examination/component/icon/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="9" column="17" lean-forward="true" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="17" />
+        <state relative-caret-position="108">
+          <caret line="4" column="31" lean-forward="true" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/login.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/system/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="574">
-          <caret line="77" column="37" selection-start-line="77" selection-start-column="22" selection-end-line="77" selection-end-column="37" />
+        <state relative-caret-position="405">
+          <caret line="34" column="2" selection-start-line="34" selection-start-column="2" selection-end-line="34" selection-end-column="2" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/login/Login.js">
+    <entry file="file://$PROJECT_DIR$/src/components/quizType/icon/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="43" column="28" lean-forward="true" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="28" />
+        <state relative-caret-position="108">
+          <caret line="4" column="31" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/dashboardGK.js">
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="63" column="22" selection-start-line="63" selection-start-column="6" selection-end-line="63" selection-end-column="22" />
+        <state relative-caret-position="-716">
+          <caret line="37" column="38" selection-start-line="37" selection-start-column="38" selection-end-line="37" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/login.js">
+    <entry file="file://$PROJECT_DIR$/src/models/achievementdetails.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/quizReview/components/examination/component/choose/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="286" selection-start-line="286" selection-end-line="286" />
+        <state relative-caret-position="-20">
+          <caret line="35" column="32" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/dashboard/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="38" column="128" selection-start-line="38" selection-start-column="121" selection-end-line="38" selection-end-column="128" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
-            <element signature="e#1548#2768#0" />
-            <element signature="e#2825#2998#0" />
-            <element signature="e#3047#3776#0" />
-            <element signature="e#3826#4348#0" />
-            <element signature="e#4393#4870#0" />
+            <element signature="e#93#119#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/models/dashboard.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2052">
-          <caret line="75" column="33" selection-start-line="75" selection-start-column="19" selection-end-line="75" selection-end-column="33" />
+        <state relative-caret-position="334">
+          <caret line="64" column="22" selection-start-line="64" selection-start-column="22" selection-end-line="64" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/oldDashboard.js">
+    <entry file="file://$PROJECT_DIR$/dist/www/index.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/login/Login.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1161">
-          <caret line="49" column="20" selection-start-line="49" selection-start-column="20" selection-end-line="49" selection-end-column="20" />
-        </state>
+        <state relative-caret-position="-365" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/lessondetails/index.js">
+    <entry file="file://$PROJECT_DIR$/src/models/login.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="312" column="30" selection-start-line="312" selection-start-column="20" selection-end-line="312" selection-end-column="30" />
+        <state relative-caret-position="1404">
+          <caret line="71" column="23" selection-start-line="71" selection-start-column="23" selection-end-line="71" selection-end-column="23" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#109#135#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/courselist/index.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/courseware/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-810" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/courseware.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="116" column="20" selection-start-line="116" selection-start-column="6" selection-end-line="116" selection-end-column="20" />
+        <state relative-caret-position="567">
+          <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/finalReport.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/set/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3996">
+          <caret line="169" column="34" selection-start-line="169" selection-start-column="34" selection-end-line="169" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/formtags/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="5" column="11" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/formtags/radio.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/system.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1269">
+          <caret line="52" column="9" selection-start-line="52" selection-start-column="9" selection-end-line="54" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/superClass/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/homework/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3051">
+          <caret line="123" column="19" selection-start-line="123" selection-start-column="13" selection-end-line="123" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/homework/components/status/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2484">
+          <caret line="100" column="14" selection-start-line="100" selection-start-column="8" selection-end-line="100" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/homeworkadd/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret selection-end-line="4" selection-end-column="3" />
+          <caret line="62" column="79" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="79" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/lessonitem/index.js">
+    <entry file="file://$PROJECT_DIR$/src/components/addHomework/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="40" column="21" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
+        <state relative-caret-position="3105">
+          <caret line="116" column="16" selection-start-line="116" selection-start-column="2" selection-end-line="116" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/lessondetails.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/forumDetails/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="499">
-          <caret line="274" selection-start-line="274" selection-end-line="274" />
+        <state relative-caret-position="454">
+          <caret line="157" column="52" selection-start-line="157" selection-start-column="41" selection-end-line="157" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/dashboard/index.js">
+    <entry file="file://$PROJECT_DIR$/src/components/upLoad/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="20" column="49" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="49" />
+        <state relative-caret-position="148">
+          <caret line="45" column="23" lean-forward="true" selection-start-line="45" selection-start-column="23" selection-end-line="45" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/sendForum.js">
+    <entry file="file://$PROJECT_DIR$/src/components/renderChild/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="79" column="14" selection-start-line="79" selection-start-column="14" selection-end-line="79" selection-end-column="14" />
+        <state relative-caret-position="739">
+          <caret line="65" column="20" lean-forward="true" selection-start-line="65" selection-start-column="20" selection-end-line="65" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/oldDashboard/index.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/sendForum/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1647">
-          <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+        <state relative-caret-position="108">
+          <caret line="32" column="19" selection-start-line="32" selection-start-column="19" selection-end-line="32" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils/analysis.js">
+    <entry file="file://$PROJECT_DIR$/src/models/payment.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2862">
-          <caret line="106" column="22" lean-forward="true" selection-start-line="106" selection-start-column="22" selection-end-line="106" selection-end-column="22" />
+        <state relative-caret-position="54">
+          <caret line="26" column="29" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils/config.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/modelManage/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3009">
-          <caret line="122" column="42" selection-start-line="122" selection-start-column="26" selection-end-line="122" selection-end-column="42" />
+        <state relative-caret-position="223">
+          <caret line="245" column="16" lean-forward="true" selection-start-line="245" selection-start-column="16" selection-end-line="245" selection-end-column="16" />
+          <folding>
+            <element signature="e#77#103#0" expanded="true" />
+          </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/themes/images/default/default.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/themes/images/default/default.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/themes/images/others/teacher.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/themes/images/others/success.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/themes/images/others/nomessage.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/themes/images/others/mineBg.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/themes/images/others/homePageBg.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/themes/images/others/group.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/themes/images/others/building.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/themes/images/others/bell.png">
-      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/themes/images/others/attendance.jpg">
       <provider selected="true" editor-type-id="images" />
@@ -1012,175 +988,132 @@
     <entry file="file://$PROJECT_DIR$/src/themes/images/others/achievement.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/courseware/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2052">
-          <caret line="85" column="19" lean-forward="true" selection-start-line="85" selection-start-column="19" selection-end-line="85" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/src/themes/images/others/teacher.jpg">
+      <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2970">
-          <caret line="117" column="7" lean-forward="true" selection-start-line="117" selection-start-column="7" selection-end-line="117" selection-end-column="7" />
-          <folding>
-            <element signature="e#63#89#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/src/themes/images/grids/attendanceReport.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/themes/images/grids/apply.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/themes/images/grids/achievement.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/themes/images/others/group.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/themes/images/others/nomessage.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/themes/images/grids/pay.png">
+      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/models/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5670">
-          <caret line="226" column="21" selection-start-line="226" selection-start-column="12" selection-end-line="226" selection-end-column="21" />
+        <state relative-caret-position="9018">
+          <caret line="352" column="35" selection-start-line="352" selection-start-column="35" selection-end-line="352" selection-end-column="35" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/forum/index.js">
+    <entry file="file://$PROJECT_DIR$/src/models/modelManage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="161" column="18" selection-start-line="161" selection-start-column="18" selection-end-line="161" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dist/www/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="2" column="61" lean-forward="true" selection-start-line="2" selection-start-column="61" selection-end-line="2" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/row/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4293">
-          <caret line="175" column="47" selection-start-line="175" selection-start-column="40" selection-end-line="175" selection-end-column="47" />
+        <state>
           <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#181#221#0" expanded="true" />
+            <element signature="e#0#27#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/lessons/index.js">
+    <entry file="file://$PROJECT_DIR$/src/utils/request.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="10" column="34" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
+        <state relative-caret-position="7506">
+          <caret line="285" column="40" selection-start-line="285" selection-start-column="40" selection-end-line="285" selection-end-column="40" />
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#0#43#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/lessons.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="13" column="4" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/entry.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="21" column="7" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/pulltorefresh/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="28" column="44" lean-forward="true" selection-start-line="28" selection-start-column="44" selection-end-line="28" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dist/www/cunovs.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="12" column="19" lean-forward="true" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="37" column="38" selection-start-line="37" selection-start-column="38" selection-end-line="37" selection-end-column="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12">
-          <caret line="537" column="16" selection-start-line="537" selection-start-column="6" selection-end-line="537" selection-end-column="16" />
+        <state relative-caret-position="297">
+          <caret line="12" column="5" lean-forward="true" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
           <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/mine.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="42" column="4" lean-forward="true" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/oldMine.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="29" column="21" selection-start-line="29" selection-start-column="14" selection-end-line="29" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/oldSet/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6606">
-          <caret line="32" column="18" lean-forward="true" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
-          <folding>
-            <element signature="e#28#54#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/set/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="195" column="48" lean-forward="true" selection-start-line="195" selection-start-column="48" selection-end-line="195" selection-end-column="48" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#107#133#0" expanded="true" />
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/public/cunovs.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="866" column="58" lean-forward="true" selection-start-line="866" selection-start-column="58" selection-end-line="866" selection-end-column="58" />
+        <state relative-caret-position="27">
+          <caret line="1022" column="29" selection-start-line="1022" selection-start-column="29" selection-end-line="1022" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../BuildApp/bjou-moodle-app-jpush-videoPlay-codePush/www/cunovs.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/achievement/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="923" column="35" lean-forward="true" selection-start-line="923" selection-start-column="35" selection-end-line="923" selection-end-column="35" />
+        <state relative-caret-position="459">
+          <caret line="17" column="17" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-614">
+          <caret line="656" column="18" lean-forward="true" selection-start-line="656" selection-start-column="18" selection-end-line="656" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/formsubmit.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/feedback.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/defaults.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="213" column="3" selection-start-line="213" selection-start-column="3" selection-end-line="213" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/cookie.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="4" column="12" lean-forward="true" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/analysis.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="52" selection-start-line="52" selection-end-line="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/commonevents.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3402">
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -8,7 +8,7 @@ import Nav from 'components/nav';
 import { connect } from 'dva';
 import { Icon, List, Button, NoticeBar, WingBlank, WhiteSpace, Modal } from 'components';
 import { handlerChangeRouteClick } from 'utils/commonevents';
-import { getImages, getErrorImg, getLocalIcon } from 'utils';
+import { getImages, getErrorImg, getLocalIcon, getCommonDate } from 'utils';
 import { ContentSkeleton } from 'components/skeleton';
 import Introduction from 'components/introduction';
 import StatusBox from 'components/statusBox';
@@ -122,9 +122,19 @@ class Quiz extends PureComponent {
     );
   };
 
+  getLimitText = (date, type) => {
+    const cur = new Date().getTime() / 1000;
+    if (type === 'open') {
+      return cur > date ? '已开始' : '开始';
+    }
+    if (type === 'close') {
+      return cur > date ? '已关闭' : '关闭';
+    }
+  };
+
   render () {
     const { name, cmid } = this.props.location.query,
-      { data: { id, intro, options = {}, supportedMsg, buttontext, hasquestions, visiblebutton, attempts = [], feedbacktext, hasfeedback, finalgrade, grademethod, maxgrade, isfinished, preventnewattemptreasons = [], courseid, name: quizName = '', navmethod = '', timelimit = 0, sumgrades, decimalpoints, _useScriptFunc = false }, info = {} } = this.props.quiz,
+      { data: { id, intro, options = {}, supportedMsg, buttontext, hasquestions, visiblebutton, attempts = [], feedbacktext, hasfeedback, finalgrade, grademethod, maxgrade, isfinished, preventnewattemptreasons = [], courseid, name: quizName = '', navmethod = '', timelimit = 0, timeclose = 0, timeopen = 0, sumgrades, decimalpoints, _useScriptFunc = false }, info = {} } = this.props.quiz,
       { preventaccessreasons = [] } = options,
       { loading, dispatch } = this.props;
     const { _useJavaScriptMessage } = this.props.app;
@@ -174,6 +184,10 @@ class Quiz extends PureComponent {
               return <div key={i}>{item}</div>;
             })}
           </div>
+          {timeopen > 0 ? <div
+            className={styles.limit}>{`${this.getLimitText(timeopen, 'open')}：${getCommonDate(timeopen)}`}</div> : null}
+          {timeclose > 0 ? <div
+            className={styles.limit}>{`${this.getLimitText(timeclose, 'close')}：${getCommonDate(timeclose)}`}</div> : null}
           <div className={styles[`${PrefixCls}-method`]}>
             <span>评分方法</span>
             <span>{this.getMethod(grademethod)}</span>

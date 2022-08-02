@@ -47,7 +47,7 @@ class RenderChild extends React.Component {
   renderChild = (item, handlerMoreClick, dispatch, maxattachments, maxbytes, hasBorder) => {
     const { isOpen } = this.state;
     const { canreply, id, created, children = [], message, subject, userpictureurl, userfullname, attachment = '', attachments, aggregatelabel, aggregatestr = '', count = '', num } = item;
-    if (num < 2 || isOpen) {
+    if (num < 3 || isOpen) {
       return (
         <div
           key={id}

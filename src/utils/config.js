@@ -111,7 +111,8 @@ module.exports = {
     SendPhoneLoginCode: `${portalSsoServiceUrl}/captcha/sms`,
     CheckFirstLogin: `${portalSsoServiceUrl}/current`,
     GetCaptchaImg: `${portalSsoServiceUrl}/captcha/img`,
-
+    SsoPCLogin: `${portalSsoServiceUrl}/security_check`,
+    SsogetPcPassword: `${portalSsoServiceUrl}/security/encode`,
     // 门户接口
     GetPaymentState: `${portalServiceUrl}/mobile/bkuser/getpaymentState`, // 缴费情况
     GetUserInfo: `${portalServiceUrl}/mobile/bkuser/get`, // 门户获取个人信息接口
@@ -125,7 +126,8 @@ module.exports = {
     GetNoticeDetails: `${portalServiceUrl}/mobile/information/get`, // 通知制度详情
     GetInformationGK: `${portalServiceUrl}/mobile/information/informations`, // 国开教学日历
     GetStudentInfo: `${portalServiceUrl}/mobile/studentInfo/findStudentInfo`, // 国开学籍信息
-    GetExamGK: `${portalServiceUrl}/mobile/examscore/list`, // 国开考试成绩
+    // GetExamGK: `${portalServiceUrl}/mobile/examscore/list`, // 旧版国开考试成绩
+    GetExamGK: `${portalServiceUrl}/workbench/examscore/listKsdm`, // 2022.4新需求国开考试成绩
     GetCourseGK: `${portalServiceUrl}/mobile/courseInfo/listAll`, // 国开已选课程
     downFiles: `${portalServiceUrl}/mobile/information/stream/zip`, // 文档下载
     EnclosureDownload: `${portalServiceUrl}/file/downloadFile`, // 附件下载
@@ -150,9 +152,14 @@ module.exports = {
     SetLastIdentity: `${portalSsoServiceUrl}/account/portalSelection`,
     GetLastIdentity: `${portalSsoServiceUrl}/account/portalSelectionSelect`,
 
-    //资源管理
+    // 资源管理
     GetPlayInfo: `${portalResourceUrl}/content/foreign/playInfo`,
     AddPlayInfo: `${portalResourceUrl}/content/foreign/addLearnInfo`,
-    UpdatePlayInfo: `${portalResourceUrl}/content/foreign/updateUserLearningFlow`
+    UpdatePlayInfo: `${portalResourceUrl}/content/foreign/updateUserLearningFlow`,
+
+    // 集成
+    GetBjcb: 'https://www.bjcb.org.cn/oauths/token',
+    Payment: 'https://bjkfdx.mp.sinojy.cn/api/user/loginByInterface',
+    GetPaymentKey: 'http://192.168.0.204:8080/other/sso/jwgl',
   }
 };

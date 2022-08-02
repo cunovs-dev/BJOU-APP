@@ -70,17 +70,17 @@ export default modelExtend(model, {
             type: 'queryCount'
           });
           dispatch({
-            type: 'query'
-          });
-          dispatch({
             type: 'querySysNotice',
             payload: {
               nowPage: 1,
               pageSize: 10
             }
           });
+          // dispatch({
+          //   type: 'queryPaymentState'
+          // });
           dispatch({
-            type: 'queryPaymentState'
+            type: 'query'
           });
         }
       });
@@ -88,6 +88,7 @@ export default modelExtend(model, {
   },
   effects: {
     * query ({ payload }, { call, put }) {
+
       if (_cg(usertoken) !== '') {
         const { success, data, message = '请稍后再试' } = yield call(queryCurrentTask, { userid: _cg(userid) });
         if (success) {
@@ -139,8 +140,6 @@ export default modelExtend(model, {
             sysNotice: data.data[0] || {}
           }
         });
-      } else {
-
       }
     },
     * queryMenus ({ payload }, { call, put, select }) {

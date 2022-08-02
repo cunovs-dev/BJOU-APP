@@ -42,13 +42,13 @@ class FormCheckBox extends React.Component {
 
   render () {
     return (
-      <div id={this.props.keys || ''} className={styles.checkbox} >
+      <div id={this.props.keys || ''} className={styles.checkbox}>
         {this.CheckboxItems.map(item =>
           <CheckboxItem key={item.id} checked={this.state.value[item.id] === true} wrap
-                        onClick={() => setTimeout(this.onChange.bind(null, item), 1)} >
-            {item.label}
-          </CheckboxItem >)}
-      </div >
+                        onClick={() => setTimeout(this.onChange.bind(null, item), 1)}>
+            <div className={styles.htmlBox} dangerouslySetInnerHTML={{ __html: item.label }} />
+          </CheckboxItem>)}
+      </div>
     );
   }
 }

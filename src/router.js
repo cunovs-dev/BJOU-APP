@@ -955,6 +955,24 @@ const Routers = function ({ history, app }) {
           },
         },
         {
+          path: 'payment',
+          getComponent (nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('models/payment'));
+              cb(null, require('routes/payment/'));
+            }, 'payment');
+          },
+        },
+        {
+          path: 'oauth',
+          getComponent (nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('models/oauth'));
+              cb(null, require('routes/oauth/'));
+            }, 'oauth');
+          },
+        },
+        {
           path: '*',
           getComponent (nextState, cb) {
             const { location: { pathname } } = nextState;

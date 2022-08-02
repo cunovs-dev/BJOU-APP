@@ -643,6 +643,17 @@ const getValideError = (obj = {}) => {
   }
 };
 
+const urlEncode = (str) => {
+  str = (str + '').toString();
+  return encodeURIComponent(str)
+    .replace(/!/g, '%21')
+    .replace(/'/g, '%27')
+    .replace(/\(/g, '%28')
+    .replace(/\)/g, '%29')
+    .replace(/\*/g, '%2A')
+    .replace(/%20/g, '+');
+};
+
 module.exports = {
   config,
   request,
@@ -689,5 +700,6 @@ module.exports = {
   setOldLoginIn,
   oldAPP,
   getValideError,
-  getAttendanceTime
+  getAttendanceTime,
+  urlEncode
 };

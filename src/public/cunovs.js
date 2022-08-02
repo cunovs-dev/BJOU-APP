@@ -2,8 +2,8 @@
 
 var cunovs = {
   cnVersion: '3.0.0',
-  cnCodeVersion: '1.0.1',
-  cnRemoteCodeVersion: '1.0.0',
+  cnCodeVersion: '1.1.1',
+  cnRemoteCodeVersion: '1.0.0', //默认无需修改
   cnVersionInfo: {
     title: '当前版本过低',
     content: '为保证正常使用，请先升级应用。'
@@ -18,8 +18,8 @@ var cunovs = {
   cnhtmlHeight: document.documentElement.clientHeight,
   // cnApiServiceUrl: 'http://edudemo.cunovs.com:9000', //公司测试环境
   //金正测试环境
-  //portalServiceUrl: 'https://bjou.preview.klxedu.com',
-  //portalSsoServiceUrl: 'https://bjousso.preview.klxedu.com',
+  // portalServiceUrl: 'https://bjou.preview.klxedu.com',
+  // portalSsoServiceUrl: 'https://bjousso.preview.klxedu.com',
   //学校测试环境
   // cnApiServiceUrl: 'http://etestapp.bjou.edu.cn:8080',
   // cnApiServiceUrl: 'http://moodle.cunovs.com:8080/',
@@ -41,6 +41,10 @@ var cunovs = {
 
   cnDownloadFileTag: 'tag_cun' +
     'ovs_download_files',
+  appsUrl:{
+    xyjd:'http://jwgl.bjou.edu.cn/sso/jzOauthLogin?&ljdz=xsxy%2Fxsxyqk_cxXsxyqkIndex.html%3Fgnmkdm%3DN105515%26layout%3Ddefault',
+    xkxx:'http://jwgl.bjou.edu.cn/sso/jzOauthLogin?&ljdz=xsxk%2Fzzxkyzb_cxZzxkYzbIndex.html%3Fgnmkdm%3DN253512%26layout%3Ddefault'
+  },
   cnDeviceType: function (onlyPlayer) {
 
     /*android 设备时 - android修改*/

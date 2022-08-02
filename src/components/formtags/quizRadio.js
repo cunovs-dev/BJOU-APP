@@ -27,8 +27,11 @@ class FormRadio extends React.Component {
     return (
       <div>
         {radioItems.map(item =>
-          <RadioItem checked={this.state.value === item.value} wrap
-                     onClick={() => setTimeout(this.onChange.bind(null, item.value), 1)}>
+          <RadioItem
+            checked={this.state.value === item.value}
+            wrap
+            onClick={() => setTimeout(this.onChange.bind(null, item.value), 1)}
+          >
             {item.label}
           </RadioItem>)}
       </div>

@@ -1,6 +1,6 @@
 import { request, config } from 'utils';
 
-const { api: { userLogout, GetBaseInfo, GetUserInfo, GetMoodleUserInfo, GetMedalList, AddContacts, DeleteContacts, GetAttendance, GetAttendanceList, AccessTime, Log, OpinionAdd, SeedOpinionFiles, GetVersion, GetAppealDetail, ReplyAppeal, ReadAppeal, UploadRunningLogsApi, GetSchoolCalendar, GetGraduationInfo, GetMenusApi, sendMenusApi, GetPaymentState, GetStudentInfo, GetPortalUser, Collection, GetInformationGK, EnclosureDownload, GetMoodleToken, CheckFirstLogin, GetPersonal, GetCurrentUser, ChangCode, RefreshAttendance } } = config;
+const { api: { userLogout, GetBaseInfo, GetUserInfo, GetMoodleUserInfo, GetMedalList, AddContacts, DeleteContacts, GetAttendance, GetAttendanceList, AccessTime, Log, OpinionAdd, SeedOpinionFiles, GetVersion, GetAppealDetail, ReplyAppeal, ReadAppeal, UploadRunningLogsApi, GetSchoolCalendar, GetGraduationInfo, GetMenusApi, sendMenusApi, GetPaymentState, GetStudentInfo, GetPortalUser, Collection, GetInformationGK, EnclosureDownload, GetMoodleToken, CheckFirstLogin, GetPersonal, GetCurrentUser, ChangCode, RefreshAttendance, GetBjcb, GetPaymentKey } } = config;
 
 
 export async function logout () {
@@ -30,6 +30,24 @@ export async function queryUserInfo (data) {
   });
 }
 
+export async function queryBjcb (data) {
+  return request({
+    url: GetBjcb,
+    method: 'get',
+    data,
+    hasToken: false,
+    fetchType: 'bjcb'
+  });
+}
+
+export async function queryPaymentKey (data) {
+  return request({
+    url: GetPaymentKey,
+    method: 'post',
+    data,
+    hasToken: false
+  });
+}
 
 export async function queryPersonal (data) {
   return request({

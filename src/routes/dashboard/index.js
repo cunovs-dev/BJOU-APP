@@ -6,7 +6,7 @@
 import React from 'react';
 import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
-import { Layout, WhiteSpace, Icon, List, Tabs, Badge, Grid } from 'components';
+import { Layout, WhiteSpace, ActivityIndicator, Icon, List, Tabs, Badge, Grid, Modal } from 'components';
 import Refresh from 'components/pulltorefresh';
 import { taskRow, taskLessonRow } from 'components/row';
 import { getLocalIcon, config, cookie } from 'utils';
@@ -25,10 +25,11 @@ import { ListSkeleton } from 'components/skeleton';
 
 import styles from './index.less';
 
+const alert = Modal.alert;
 const { userTag: { userLoginId } } = config,
   { _cg } = cookie;
 const PrefixCls = 'dashboard';
-const Dashboard = ({ dashboard, loadingTask, loadingAllTask, dispatch }) => {
+const Dashboard = ({ dashboard, loadingTask, opening = false, loadingAllTask, dispatch }) => {
   const tabs = [
     { title: '本周未完成任务' },
     { title: '全部未完成任务' }
@@ -100,9 +101,10 @@ const Dashboard = ({ dashboard, loadingTask, loadingAllTask, dispatch }) => {
       }
     },
     renderItem = (el) => {
-      const { icon = '', text = '', badge = false } = el;
-      return (
-        badge ?
+      if (el) {
+        const { icon = '', text = '', badge = false } = el;
+        return (
+          badge ?
           (
             <div className={styles.items}>
               <Badge text={0} overflowCount={99}>
@@ -111,21 +113,45 @@ const Dashboard = ({ dashboard, loadingTask, loadingAllTask, dispatch }) => {
               <div className={styles.text}>{text}</div>
             </div>
           )
-          :
+                :
           (
             <div className={styles.items}>
               <img className={styles.img} src={icon} alt="" />
               <div className={styles.text}>{text}</div>
             </div>
           )
-      );
+        );
+      }
     },
 
-    gridClick = ({ path, text, queryType }) => {
-      handlerChangeRouteClick(path, {
-        name: text,
-        queryType
-      }, dispatch);
+    gridClick = ({ path, text, queryType, appType }) => {
+      if (path === 'alert') {
+        alert('优化中', '此模块正在优化升级，敬请期待!', [
+
+          {
+            text: '知道了',
+            onPress: () =>
+              console.log('ok')
+          }
+        ]);
+      } else if (path === 'oauth') {
+        dispatch({
+          type: 'app/queryPcPassword',
+          payload: {
+            appType
+          }
+        });
+      } else if (path === 'payment') {
+        dispatch({
+          type: 'app/queryPaymentKey'
+        });
+      } else {
+        handlerChangeRouteClick(path, {
+          name: text,
+          queryType,
+          appType
+        }, dispatch);
+      }
     },
 
     getMenus = (str) => {
@@ -148,27 +174,27 @@ const Dashboard = ({ dashboard, loadingTask, loadingAllTask, dispatch }) => {
       <div className={styles.content}>
         <div className={styles.grid}>
           {JSON.stringify(sysNotice) !== '{}' && sysNotice.noticeContent && sysNotice.noticeContent !== '' ?
-            <div className={styles.systemNotice}>
-              <Notice
-                content={sysNotice.noticeContent}
-                handlerClose={() => handlerClose()}
-                handlerClick={() => moreMessage(sysNotice.noticeContent)}
-              />
-            </div>
-            :
-            null
+           <div className={styles.systemNotice}>
+             <Notice
+               content={sysNotice.noticeContent}
+               handlerClose={() => handlerClose()}
+               handlerClick={() => moreMessage(sysNotice.noticeContent)}
+             />
+           </div>
+                                                                                                           :
+           null
           }
           {
-            _cg(`menu_${_cg(userLoginId)}`)||menuStr ?
-              <Grid
-                data={[...getMenus(_cg(`menu_${_cg(userLoginId)}`) || menuStr), menus]}
-                hasLine={false}
-                columnNum={4}
-                renderItem={renderItem}
-                onClick={gridClick}
-              />
-              :
-              null
+            _cg(`menu_${_cg(userLoginId)}`) || menuStr ?
+            <Grid
+              data={[...getMenus(_cg(`menu_${_cg(userLoginId)}`) || menuStr), menus]}
+              hasLine={false}
+              columnNum={4}
+              renderItem={renderItem}
+              onClick={gridClick}
+            />
+                                                       :
+            null
           }
         </div>
         <WhiteSpace size="xs" />
@@ -196,56 +222,59 @@ const Dashboard = ({ dashboard, loadingTask, loadingAllTask, dispatch }) => {
             <div className={styles.tasklist}>
               <WhiteSpace />
               {loadingTask && !refreshing ?
-                <ListSkeleton />
-                :
-                cnIsArray(taskList) && taskList.length > 0 ?
-                  <Refresh
-                    refreshing={refreshing}
-                    onRefresh={() => onRefresh('query')}
-                    onScrollerTop={() => onScrollerTaskTop()}
-                    scrollerTop={taskTop}
-                  >
-                    {taskList.map((item) => {
-                      return taskRow(item, () => handlerCourseClick(item, item.courseid, dispatch), (e) => handlerDivInnerHTMLClick(e, item.courseid, dispatch));
-                    })}
-                    <BaseLine />
-                  </Refresh>
-                  :
-                  <NoContent />
+               <ListSkeleton />
+                                          :
+               cnIsArray(taskList) && taskList.length > 0 ?
+               <Refresh
+                 refreshing={refreshing}
+                 onRefresh={() => onRefresh('query')}
+                 onScrollerTop={() => onScrollerTaskTop()}
+                 scrollerTop={taskTop}
+               >
+                 {taskList.map((item) => {
+                   return taskRow(item, () => handlerCourseClick(item, item.courseid, dispatch), (e) => handlerDivInnerHTMLClick(e, item.courseid, dispatch));
+                 })}
+                 <BaseLine />
+               </Refresh>
+                                                          :
+               <NoContent />
               }
             </div>
           </div>
           <div className={styles[`${PrefixCls}-tasklist`]}>
             <WhiteSpace />
             {loadingAllTask && !refreshing ?
-              <ListSkeleton />
-              :
-              cnIsArray(taskAllList) && taskAllList.length > 0 ?
-                <Refresh
-                  refreshing={refreshing}
-                  onRefresh={() => onRefresh('queryAllTask')}
-                  onScrollerTop={() => onScrollerLessonTop()}
-                  scrollerTop={lessonTop}
-                >
-                  {taskAllList.map((item) => {
-                    return taskLessonRow(item, handlerLessonListClick, dispatch);
-                  })}
-                  <BaseLine />
-                </Refresh>
-                :
-                <NoContent />
+             <ListSkeleton />
+                                           :
+             cnIsArray(taskAllList) && taskAllList.length > 0 ?
+             <Refresh
+               refreshing={refreshing}
+               onRefresh={() => onRefresh('queryAllTask')}
+               onScrollerTop={() => onScrollerLessonTop()}
+               scrollerTop={lessonTop}
+             >
+               {taskAllList.map((item) => {
+                 return taskLessonRow(item, handlerLessonListClick, dispatch);
+               })}
+               <BaseLine />
+             </Refresh>
+                                                              :
+             <NoContent />
             }
           </div>
         </Tabs>
       </div>
+      <ActivityIndicator animating={opening} toast text="正在打开系统..." />
     </div>
   );
 };
 
 Dashboard.propTypes = {};
 
-export default connect(({ dashboard, loading }) => ({
+export default connect(({ dashboard, loading, app }) => ({
   dashboard,
+  app,
   loadingTask: loading.effects[`${PrefixCls}/query`],
-  loadingAllTask: loading.effects[`${PrefixCls}/queryAllTask`]
+  loadingAllTask: loading.effects[`${PrefixCls}/queryAllTask`],
+  opening: loading.effects['app/queryPcPassword'] || loading.effects['app/pcLogin'] || loading.effects['app/queryPaymentKey']
 }))(Dashboard);

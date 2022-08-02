@@ -1,7 +1,7 @@
 import { request, config } from 'utils';
 
 const { api } = config;
-const { Login, Authentication, PortalLogin, GetPortalToken, SendPhoneLoginCode, GetLoginTips, GetCaptchaImg, GetLastIdentity, SetLastIdentity } = api;
+const { Login, Authentication, PortalLogin, GetPortalToken, SendPhoneLoginCode, GetLoginTips, GetCaptchaImg, GetLastIdentity, SetLastIdentity,SsoPCLogin,SsogetPcPassword } = api;
 
 export async function login (data, serverError = false) {
   return request({
@@ -9,6 +9,23 @@ export async function login (data, serverError = false) {
     method: 'post',
     data,
     serverError,
+    hasToken: false
+  });
+}
+
+export async function queryPcPassword (payload) {
+  return request({
+    url: SsogetPcPassword,
+    data: payload,
+    hasToken: false
+  });
+}
+
+export async function pcLogin (data) {
+  return request({
+    url: SsoPCLogin,
+    method: 'post',
+    data,
     hasToken: false
   });
 }

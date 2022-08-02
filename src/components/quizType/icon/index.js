@@ -3,7 +3,7 @@ import { Icon } from 'components';
 import { getLocalIcon } from 'utils';
 
 const ResultIcon = (props) => {
-  if (props.currect === '不正确') {
+  if (props.currect === '不正确' || props.currect === '错误') {
     return (
       <Icon
         style={{ marginLeft: '10px' }}

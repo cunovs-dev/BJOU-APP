@@ -35,14 +35,14 @@ export default modelExtend(model, {
           yield put({
             type: 'updateState',
             payload: {
-              list: data.examScoreList || []
+              list: data.examScoreList || [],
             }
           });
         } else {
           yield put({
             type: 'updateState',
             payload: {
-              allList: data.examScoreList || []
+              allList: data.examScoreList || [],
             }
           });
         }

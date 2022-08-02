@@ -64,6 +64,8 @@ class LessonDetails extends React.Component {
       }));
     }, 300);
     const { courseid = '', cmid = '', type = 'mod', modname } = this.props.location.query;
+    const { users: { userid } } = this.props.app;
+    const { data: { master } } = this.props.lessondetails;
     this.setState(() => ({
       startTime: new Date()
     }));
@@ -77,12 +79,14 @@ class LessonDetails extends React.Component {
         modname: ''
       }
     });
-    this.props.dispatch({
-      type: 'lessondetails/queryAppealCount',
-      payload: {
-        courseId: courseid
-      }
-    });
+    if (isMaster(master, userid)) {
+      this.props.dispatch({
+        type: 'lessondetails/queryAppealCount',
+        payload: {
+          courseId: courseid
+        }
+      });
+    }
   }
 
   componentWillUnmount () {
@@ -127,7 +131,7 @@ class LessonDetails extends React.Component {
 
   render () {
     const { courseid = '' } = this.props.location.query,
-      { data: { summary = '', section0Summary = '', summaryformat = 0, master, tutor, courseImage, guide, resources, id = '', attendanceRule = '', attendance = {}, format = 'weeks', enddate, startdate, fullname, isAttendance, _useScriptFlag = false, _useScriptFunc = false, openState = '0' }, refreshing, scrollerTop, selected, activityIndex, accordionIndex } = this.props.lessondetails,
+      { data: { summary = '', section0Summary = '', summaryformat = 0, master, tutor, courseImage, guide, resources, id = '', attendanceRule = '', attendance = {}, format = 'weeks', enddate, startdate, fullname, isAttendance, _useScriptFlag = false, _useScriptFunc = false, _enableNoticeBar = false, _enableNoticeBarMessage = '', openState = '0' }, refreshing, scrollerTop, selected, activityIndex, accordionIndex } = this.props.lessondetails,
       { weekStat = 0, config = {}, stat = 0 } = attendance,
       { day_pass = '0' } = config,
       { users: { userid }, _useJavaScriptMessage } = this.props.app,
@@ -237,6 +241,12 @@ class LessonDetails extends React.Component {
           ?
           <Notice content={_useJavaScriptMessage.info} />
           :
+          null
+        }
+        {
+          _enableNoticeBar === true ?
+          <Notice content={_enableNoticeBarMessage} />
+                                    :
           null
         }
         <div className={styles[`${PrefixCls}-tagbox`]}>

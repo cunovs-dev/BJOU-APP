@@ -66,41 +66,41 @@ const LessonItem = (props) => {
             </div>
             {
               tracking !== 0
-                ?
-                (
-                  <div className={styles[`${PrefixCls}-outer-top-content-check`]}>
-                    <Checkbox
-                      state={state}
-                      tracking={tracking}
-                      id={id}
-                      handlerClick={(callback, e) => handlerCheckboxClick(callback, e)}
-                    />
-                  </div>
-                )
-                : ''
+              ?
+              (
+                <div className={styles[`${PrefixCls}-outer-top-content-check`]}>
+                  <Checkbox
+                    state={state}
+                    tracking={tracking}
+                    id={id}
+                    handlerClick={(callback, e) => handlerCheckboxClick(callback, e)}
+                  />
+                </div>
+              )
+              : ''
             }
           </div>
         </div>
         {
           description ?
-            <div className={styles[`${PrefixCls}-outer-describe`]}>
-              <div
-                dangerouslySetInnerHTML={{ __html: description }}
-                onClick={(e) => handlerDiscriptionClick(e)}
-              />
-              <div className={styles[`${PrefixCls}-outer-describe-mask`]} onClick={(e) => handlerDiscriptionClick(e)}>
+          <div className={styles[`${PrefixCls}-outer-describe`]}>
+            <div
+              dangerouslySetInnerHTML={{ __html: description }}
+              onClick={(e) => handlerDiscriptionClick(e)}
+            />
+            <div className={styles[`${PrefixCls}-outer-describe-mask`]} onClick={(e) => handlerDiscriptionClick(e)}>
               更多
-              </div>
             </div>
-            :
-            ''
+          </div>
+                      :
+          ''
         }
         {availabilityinfo !== '' ?
-          <div
-            className={styles[`${PrefixCls}-outer-available`]}
-            dangerouslySetInnerHTML={{ __html: availabilityinfo }}
-            onClick={handDivClick}
-          /> : ''}
+         <div
+           className={styles[`${PrefixCls}-outer-available`]}
+           dangerouslySetInnerHTML={{ __html: availabilityinfo }}
+           onClick={handDivClick}
+         /> : ''}
       </div>
     );
   } else if (modname === 'label') {
@@ -109,24 +109,25 @@ const LessonItem = (props) => {
         <InnerHtml data={description} handleClick={handDivClick} />
         {
           tracking !== 0
-            ?
-            (
-              <div className={styles[`${PrefixCls}-outer-top-content-check`]}>
-                <Checkbox
-                  state={state}
-                  loadingCheck={loadingCheck}
-                  tracking={tracking}
-                  id={id}
-                  handlerClick={handlerCheckboxClick}
-                />
-              </div>
-            )
-            : ''
+          ?
+          (
+            <div className={styles[`${PrefixCls}-outer-top-content-check`]}>
+              <Checkbox
+                state={state}
+                loadingCheck={loadingCheck}
+                tracking={tracking}
+                id={id}
+                handlerClick={handlerCheckboxClick}
+              />
+            </div>
+          )
+          : ''
         }
       </div>
     );
   }
 };
+
 LessonItem.defaultProps = {
   icon: '',
   title: '课件',

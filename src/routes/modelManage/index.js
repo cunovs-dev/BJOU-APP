@@ -12,16 +12,17 @@ import {
   WhiteSpace,
   Grid,
   ActivityIndicator,
-  Toast
+  Toast,
+  Modal
 } from 'components';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { handlerChangeRouteClick } from 'utils/commonevents';
 import { allModule } from 'utils/defaults';
 import { getLocalIcon } from 'utils';
-// import arrayMove from 'array-move';
 import Nav from 'components/nav';
 import styles from './index.less';
 
+const alert = Modal.alert;
 const arrayMoveMutate = (array, from, to) => {
   const startIndex = to < 0 ? array.length + to : to;
   const item = array.splice(from, 1)[0];
@@ -127,8 +128,8 @@ class ModelManage extends React.Component {
     }
   };
 
-  gridClick = (item) => {
-    const { path = '', text = '', queryType } = item;
+  gridClick = (item = {}) => {
+    const { path = '', text = '', queryType, appType } = item;
     if (this.state.isEdit) {
       if (this.state.dragModules.length >= 7) {
         Toast.fail('最多只能选择7各模块');
@@ -138,10 +139,31 @@ class ModelManage extends React.Component {
           allModules: this.state.allModules.filter(ev => ev.id !== item.id)
         });
       }
+    } else if (path === 'oauth') {
+      this.props.dispatch({
+        type: 'app/queryPcPassword',
+        payload: {
+          appType
+        }
+      });
+    } else if (path === 'alert') {
+      alert('优化中', '此模块正在优化升级，敬请期待!', [
+
+        {
+          text: '知道了',
+          onPress: () =>
+            console.log('ok')
+        }
+      ]);
+    } else if (path === 'payment') {
+      this.props.dispatch({
+        type: 'app/queryPaymentKey'
+      });
     } else {
       handlerChangeRouteClick(path, {
         name: text,
-        queryType
+        queryType,
+        appType
       }, this.props.dispatch);
     }
   };
@@ -162,8 +184,8 @@ class ModelManage extends React.Component {
   );
 
   render () {
-    const { sending = false } = this.props;
-    const SortableItem = SortableElement(({ value }) => {
+    const { sending = false, opening = false } = this.props;
+    const SortableItem = SortableElement(({ value = {} }) => {
         const { icon = '', text = '' } = value;
         return (
           <div className={styles.dragItems} onClick={() => this.dragGridClick(value)}>
@@ -231,16 +253,16 @@ class ModelManage extends React.Component {
           />
         </div>
         <ActivityIndicator animating={sending} toast text="修改中..." />
+        <ActivityIndicator animating={opening} toast text="正在打开系统..." />
       </div>
     );
   }
 }
 
-ModelManage.defaultProps = {};
-ModelManage.propTypes = {};
-
-export default connect(({ loading, modelManage }) => ({
+export default connect(({ loading, modelManage, app }) => ({
   modelManage,
+  app,
   loading,
-  sending: loading.effects['modelManage/sendMenus']
+  sending: loading.effects['modelManage/sendMenus'],
+  opening: loading.effects['app/queryPcPassword'] || loading.effects['app/pcLogin'] || loading.effects['app/queryPaymentKey']
 }))(ModelManage);

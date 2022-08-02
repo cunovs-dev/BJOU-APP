@@ -202,7 +202,8 @@ const allModule = [
     id: '1',
     icon: require('themes/images/grids/progress.png'),
     text: '学业进度',
-    path: 'progressList'
+    // path: 'progressList'
+    path: 'alert' // 临时弹窗
   },
   {
     id: '2',
@@ -214,7 +215,8 @@ const allModule = [
     id: '3',
     icon: require('themes/images/grids/graduationInformation.png'),
     text: '毕业信息',
-    path: 'graduationInformation'
+    // path: 'graduationInformation'
+    path: 'alert' // 临时弹窗
   },
   {
     id: '4',
@@ -266,12 +268,25 @@ const allModule = [
     icon: require('../themes/images/grids/contacts.png'),
     text: '联系人',
     path: 'contacts'
-  }
+  },
+  {
+    id: '12',
+    icon: require('../themes/images/grids/pay.png'),
+    text: '缴费系统',
+    path: 'payment'
+  },
   // {
-  //   id: '12',
+  //   id: '13',
   //   icon: require('../themes/images/others/attendance.jpg'),
-  //   text: '我的消息',
-  //   route: 'contacts'
+  //   text: '选课信息',
+  //   appType: 'xkxx',
+  //   path: 'oauth'
+  // },
+  // {
+  //   id: '14',
+  //   icon: require('../themes/images/others/attendance.jpg'),
+  //   text: '学分银行',
+  //   path: 'oauth'
   // }
 
 ];

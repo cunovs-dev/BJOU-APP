@@ -84,7 +84,7 @@ class Choose extends React.Component {
                   onClick={type === 'quiz' ? () => this.radioChange(item.value) : null}
                 >
                   <div className={styles.answer} >
-                    {item.label}
+                    <div className={styles.htmlBox} dangerouslySetInnerHTML={{ __html: item.label }}/>
                     {
                       item.currect !== '' && <ResultIcon currect={item.currect} />
                     }
@@ -99,7 +99,7 @@ class Choose extends React.Component {
                 onChange={type === 'quiz' ? () => this.checkboxChange(item) : () => (false)}
               >
                 <div className={styles.answer} >
-                  {item.label}
+                  <div className={styles.htmlBox} dangerouslySetInnerHTML={{ __html: item.label }}/>
                   {
                     item.currect !== '' && <ResultIcon currect={item.currect} />
                   }
